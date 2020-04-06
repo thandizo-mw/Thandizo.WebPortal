@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thandizo.WebPortal", "Thandizo.WebPortal\Thandizo.WebPortal.csproj", "{8EEDD6C9-C991-49E7-9C74-8D3D29CCFF88}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8EEDD6C9-C991-49E7-9C74-8D3D29CCFF88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EEDD6C9-C991-49E7-9C74-8D3D29CCFF88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EEDD6C9-C991-49E7-9C74-8D3D29CCFF88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EEDD6C9-C991-49E7-9C74-8D3D29CCFF88}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {298DDEF6-546A-4518-9AFB-AFD329DC0A91}
+	EndGlobalSection
+EndGlobal
