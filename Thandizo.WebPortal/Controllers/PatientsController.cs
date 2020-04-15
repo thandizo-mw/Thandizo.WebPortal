@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Thandizo.DataModels.Patients;
+using Thandizo.DataModels.Patients.Responses;
 using Thandizo.WebPortal.Services;
 
 namespace Thandizo.WebPortal.Controllers
@@ -36,13 +37,13 @@ namespace Thandizo.WebPortal.Controllers
         public async Task<IActionResult> IndexAsync()
         {
             string url = $"{PatientsApiUrl}Patients/GetAll";
-            var patients = Enumerable.Empty<PatientDTO>();
+            var patients = Enumerable.Empty<PatientResponse>();
 
             var response = await _httpRequestHandler.Get(url);
           
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                patients = response.ContentAsType<IEnumerable<PatientDTO>>();
+                patients = response.ContentAsType<IEnumerable<PatientResponse>>();
             }
             else 
             {
@@ -56,13 +57,13 @@ namespace Thandizo.WebPortal.Controllers
         public async Task<IActionResult> ConfirmPatient([FromQuery] long pid)
         {
             string url = $"{PatientsApiUrl}/api/Patients/GetById?patientId={pid}";
-            var patient = new PatientDTO();
+            var patient = new PatientResponse();
 
             var response = await _httpRequestHandler.Get(url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                patient = response.ContentAsType<PatientDTO>();
+                patient = response.ContentAsType<PatientResponse>();
             }
             else
             {
