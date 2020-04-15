@@ -1,14 +1,13 @@
 ﻿@model IEnumerable<Thandizo.DataModels.Patients.Responses.PatientResponse>
 <div class="row heading-bg  bg-thandizo-green">
     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-        <h5 class="txt-light">Patient List</h5>
+        <h5 class="txt-light">Confirm Patients</h5>
     </div>
     <!-- Breadcrumb -->
     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
         <ol class="breadcrumb">
             <li><a asp-action="Dashboard" asp-controller="Home">Dashboard</a></li>
-            <li><a href="#"><span>Patients</span></a></li>
-            <li><a class="active"><span>Patient List</span></a></li>
+            <li><a class="active"><span>Confirm Patients</span></a></li>
         </ol>
     </div>
     <!-- /Breadcrumb -->
@@ -35,10 +34,7 @@
                                         <th>Gender</th>
                                         <th>Age</th>
                                         <th>Phone Number</th>
-                                        <th>ID Type</th>
-                                        <th>ID Number</th>
                                         <th>Status</th>
-                                        <th></th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -60,16 +56,9 @@
                                                 <td>@Html.DisplayFor(modelItem => item.Gender)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.Age)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.IdentitificationTypeName)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.IdentificationNumber)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.PatientStatusName)</td>
                                                 <td>
-                                                    <a asp-action="Details" asp-route-pid="@item.PatientId">
-                                                        <i class="fa fa-search"></i><span class="help">View</span>
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <a asp-action="ConfirmPatient" asp-route-pid="@item.PatientId" data-toggle="tooltip" title="Confirm Patient">
+                                                    <a asp-action="ConfirmPatient" asp-route-patientId="@item.PatientId" data-toggle="tooltip" title="Confirm Patient">
                                                         <i class="fa fa-check-circle"></i><span class="help"></span>
                                                     </a>
                                                 </td>
