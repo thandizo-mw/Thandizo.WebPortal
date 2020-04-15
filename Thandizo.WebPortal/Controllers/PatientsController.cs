@@ -54,9 +54,9 @@ namespace Thandizo.WebPortal.Controllers
             return View(patients);
         }        
 
-        public async Task<IActionResult> ConfirmPatient([FromQuery] long pid)
+        public async Task<IActionResult> ConfirmPatient([FromQuery] long patientId)
         {
-            string url = $"{PatientsApiUrl}/api/Patients/GetById?patientId={pid}";
+            string url = $"{PatientsApiUrl}Patients/GetById?patientId={patientId}";
             var patient = new PatientResponse();
 
             var response = await _httpRequestHandler.Get(url);
@@ -71,6 +71,26 @@ namespace Thandizo.WebPortal.Controllers
 
             }
             return View(patient);
+        }
+
+        [HttpPost, ActionName("ConfirmPatient")]
+        public async Task<IActionResult> VerifyConfirmPatient(long patientId)
+        {
+            string url = $"{PatientsApiUrl}Patients/ConfirmPatient?patientId={patientId}";
+            var patient = new PatientResponse();
+
+            var response = await _httpRequestHandler.Put(url, patientId);
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                ModelState.AddModelError("", HttpResponseHandler.Process(response));
+
+            }
+            return RedirectToAction(nameof(ConfirmPatient), new { patientId });
         }
     }
 }
