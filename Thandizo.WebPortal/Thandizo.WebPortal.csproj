@@ -35,9 +35,8 @@
     <Content Include="wwwroot\vendors\bower_components\datatables\media\images\sort_both.png" />
     <Content Include="wwwroot\vendors\bower_components\datatables\media\images\sort_desc.png" />
     <Content Include="wwwroot\vendors\bower_components\datatables\media\images\sort_desc_disabled.png" />
-    <Content Include="wwwroot\vendors\bower_components\jquery\.bower.json" />
-    <Content Include="wwwroot\vendors\bower_components\jquery\bower.json" />
-    <Content Include="wwwroot\vendors\bower_components\jquery\MIT-LICENSE.txt" />
+    <Content Include="wwwroot\vendors\bower_components\jquery-toast-plugin\dist\jquery.toast.min.css" />
+    <Content Include="wwwroot\vendors\bower_components\jquery-toast-plugin\src\jquery.toast.css" />
   </ItemGroup>
 
   <ItemGroup>
@@ -68,6 +67,8 @@
     <None Include="wwwroot\vendors\bower_components\datatables\media\js\jquery.dataTables.js" />
     <None Include="wwwroot\vendors\bower_components\datatables\media\js\jquery.dataTables.min.js" />
     <None Include="wwwroot\vendors\bower_components\datatables\media\js\jquery.js" />
+    <None Include="wwwroot\vendors\bower_components\jquery-toast-plugin\dist\jquery.toast.min.js" />
+    <None Include="wwwroot\vendors\bower_components\jquery-toast-plugin\src\jquery.toast.js" />
     <None Include="wwwroot\vendors\bower_components\jquery\dist\jquery.js" />
     <None Include="wwwroot\vendors\bower_components\jquery\dist\jquery.min.js" />
     <None Include="wwwroot\vendors\bower_components\jquery\dist\jquery.min.map" />
