@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 /*------------------------------------------------------------------
 [Master Stylesheet]
 Project:	KENNY
@@ -6432,4 +6432,13 @@ footer .brand-logo-footer {
 }
 .thandizo-logo-footer{
   height: 30px;
+}
+
+/*Data Table*/
+.dt-dataTable > tbody > tr {
+    color: #595959;
+}
+.dt-dataTable > thead > tr > th {
+    color: #2f2c2c;
+    font-weight: 600;
 }
