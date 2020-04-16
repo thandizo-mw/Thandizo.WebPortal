@@ -1,16 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Thandizo.DataModels.Patients;
 using Thandizo.DataModels.Patients.Responses;
+using Thandizo.WebPortal.Helpers;
+using Thandizo.WebPortal.Helpers.General;
 using Thandizo.WebPortal.Services;
 
 namespace Thandizo.WebPortal.Controllers
@@ -89,10 +85,12 @@ namespace Thandizo.WebPortal.Controllers
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
+                AppContextHelper.SetToastMessage("Patient has been successfully confirmed", MessageType.Success, 1, Response);
                 return RedirectToAction(nameof(ConfirmPatients));
             }
             else
             {
+                AppContextHelper.SetToastMessage("Failed to confirm patient", MessageType.Danger, 1, Response);
                 TempData["ModelError"] = HttpResponseHandler.Process(response);
             }
             return RedirectToAction(nameof(ConfirmPatient), new { patientId });
