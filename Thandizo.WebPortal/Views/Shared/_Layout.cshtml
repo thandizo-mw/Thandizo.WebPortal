@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Thandizo.WebPortal.Helpers;
+@using Thandizo.WebPortal.Helpers.General;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -368,7 +371,7 @@
         <!-- /#wrapper -->
     </div>
 
-    
+
     <!-- /#wrapper -->
     <!-- JavaScript -->
     <!-- jQuery -->
@@ -390,5 +393,48 @@
     <script src="~/js/dropdown-bootstrap-extended.js"></script>
     <!-- Init JavaScript -->
     <script src="~/js/init.js"></script>
+
+    @if (!string.IsNullOrEmpty(Context.Request.Cookies[AppContextHelper.ToastMessageCookie]) && Context.Request.Cookies[AppContextHelper.ToastMessageTypeCookie].Equals(MessageType.Success.ToString()))
+    {
+
+        <script>
+            $(document).ready(function () {
+                $.toast({
+                    heading: 'Patient Confirmation',
+                    text: '@Context.Request.Cookies[AppContextHelper.ToastMessageCookie]',
+                    position: 'top-right',
+                    loaderBg: '#3cb878',
+                    icon: 'success',
+                    hideAfter: 4500
+                });
+            });
+
+        </script>
+
+        AppContextHelper.RemoveToastMessage(Context.Response);
+    }
+
+    @if (!string.IsNullOrEmpty(Context.Request.Cookies[AppContextHelper.ToastMessageCookie]) && Context.Request.Cookies[AppContextHelper.ToastMessageTypeCookie].Equals(MessageType.Danger.ToString()))
+    {
+
+        <script>
+            $(document).ready(function () {
+
+                $.toast({
+                    heading: 'Patient Confirmation',
+                    text: '@Context.Request.Cookies[AppContextHelper.ToastMessageCookie]',
+                    position: 'top-right',
+                    loaderBg:'#3cb878',
+                    icon: 'error',
+                    hideAfter: 4500
+                });
+            });
+
+        </script>
+
+        AppContextHelper.RemoveToastMessage(Context.Response);
+    }
+
+
 </body>
 </html>
