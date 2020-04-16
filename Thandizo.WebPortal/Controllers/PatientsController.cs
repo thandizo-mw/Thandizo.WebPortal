@@ -70,6 +70,12 @@ namespace Thandizo.WebPortal.Controllers
                 ModelState.AddModelError("", HttpResponseHandler.Process(response));
 
             }
+
+            if(TempData["ModelError"] != null)
+            {
+                ModelState.AddModelError("", TempData["ModelError"].ToString());
+            }
+
             return View(patient);
         }
 
@@ -87,8 +93,7 @@ namespace Thandizo.WebPortal.Controllers
             }
             else
             {
-                ModelState.AddModelError("", HttpResponseHandler.Process(response));
-
+                TempData["ModelError"] = HttpResponseHandler.Process(response);
             }
             return RedirectToAction(nameof(ConfirmPatient), new { patientId });
         }
