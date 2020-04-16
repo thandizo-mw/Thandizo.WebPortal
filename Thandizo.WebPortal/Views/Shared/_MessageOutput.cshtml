@@ -1,0 +1,12 @@
+﻿@if (ViewBag.Exception == "true")
+{
+    @Html.Partial("_exception", (string)ViewBag.ExceptionMessage)
+}
+
+@if (ViewData.ModelState.Any(x => x.Value.Errors.Any()))
+{
+    <div class="alert alert-danger">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        @Html.ValidationSummary()
+    </div>
+}
