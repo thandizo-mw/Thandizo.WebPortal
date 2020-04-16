@@ -34,7 +34,7 @@ namespace Thandizo.WebPortal.Controllers
             }
         }
         
-        public async Task<IActionResult> IndexAsync()
+        public async Task<IActionResult> ConfirmPatients()
         {
             string url = $"{PatientsApiUrl}Patients/GetAll";
             var patients = Enumerable.Empty<PatientResponse>();
@@ -89,7 +89,7 @@ namespace Thandizo.WebPortal.Controllers
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(ConfirmPatients));
             }
             else
             {
