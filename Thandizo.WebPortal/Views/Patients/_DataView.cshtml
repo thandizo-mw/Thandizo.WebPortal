@@ -1,0 +1,93 @@
+﻿@model Thandizo.DataModels.Patients.Responses.PatientResponse
+
+<div class="alert alert-warning">
+    <span class="fa fa-exclamation"></span>
+    <span class="bold-text-600">Alert: </span>Are you sure you want to confirm this record?
+</div>
+<div class="row">
+    <div class="col-md-2 text-right">
+        <label class="bold-text-600 txt-dark">Name</label>
+    </div><div class="col-md-10">
+        @Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.OtherNames) @Html.DisplayFor(model => model.LastName)
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 text-right">
+        <label class="bold-text-600 txt-dark">Status</label>
+    </div><div class="col-md-10">
+        @Html.DisplayFor(model => model.PatientStatusName)
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 text-right">
+        <label class="bold-text-600 txt-dark">Date of Birth</label>
+    </div><div class="col-md-10">
+        @Model.DateOfBirth.ToString("dd-MMM-yyyy")
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 text-right">
+        <label class="bold-text-600 txt-dark">Gender</label>
+    </div>
+    <div class="col-md-10">
+        @Html.DisplayFor(model => model.GenderName)
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 text-right">
+        <label class="bold-text-600 txt-dark">Phone Number</label>
+    </div><div class="col-md-10">
+        @Html.DisplayFor(model => model.PhoneNumber)
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 text-right">
+        <label class="bold-text-600 txt-dark">Identification Type</label>
+    </div><div class="col-md-10">
+        @Html.DisplayFor(model => model.IdentitificationTypeName)
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2 text-right">
+        <label class="bold-text-600 txt-dark">Indentification Number</label>
+    </div><div class="col-md-10">
+        @Html.DisplayFor(model => model.IdentificationNumber)
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 text-right">
+        <label class="bold-text-600 txt-dark">Physical Address</label>
+    </div><div class="col-md-10">
+        @Html.DisplayFor(model => model.PhysicalAddress)
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 text-right">
+        <label class="bold-text-600 txt-dark">Residing District</label>
+    </div><div class="col-md-10">
+        @Html.DisplayFor(model => model.DistrictName)
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 text-right">
+        <label class="bold-text-600 txt-dark">Home Address</label>
+    </div><div class="col-md-10">
+        @Html.DisplayFor(model => model.HomeAddress)
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 text-right">
+        <label class="bold-text-600 txt-dark">Nationality</label>
+    </div><div class="col-md-10">
+        @Html.DisplayFor(model => model.NationalityName)
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2 text-right">
+        <label class="bold-text-600 txt-dark">Source</label>
+    </div><div class="col-md-10">
+        @Html.DisplayFor(model => model.SourceName)
+    </div>
+</div>
