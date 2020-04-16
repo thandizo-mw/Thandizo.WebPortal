@@ -12,6 +12,9 @@
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
+    <!-- Toastr Alerts CSS-->
+    <link href="~/vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css" rel="stylesheet" type="text/css">
+
     <!-- Data table CSS -->
     <link href="~/vendors/bower_components/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
 
@@ -36,11 +39,11 @@
                         <i class="fa fa-search top-nav-icon"></i>
                     </a>
                 </li>
-                
+
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle pr-0" data-toggle="dropdown"><img src="~/img/user1.png" alt="user_auth" class="user-auth-img img-circle" /><span class="user-online-status"></span></a>
                     <ul class="dropdown-menu user-auth-dropdown" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                        
+
                         <li>
                             <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
                         </li>
@@ -71,7 +74,7 @@
         <div class="fixed-sidebar-left">
             <ul class="nav navbar-nav side-nav nicescroll-bar">
                 <li>
-                    <a href="#"><i class="fa fa-dashboard  mr-10"></i>Dasboard</a>
+                    <a href="#"><i class="fa fa-dashboard  mr-10"></i>Dashboard</a>
                 </li>
                 <li>
                     <a href="javascript:void(0);" data-toggle="collapse" data-target="#users_dr"><i class="fa fa-users mr-10"></i>Users <span class="pull-right"><span class="label label-success mr-10">4</span><i class="fa fa-fw fa-angle-down"></i></span></a>
@@ -364,6 +367,8 @@
         </div>
         <!-- /#wrapper -->
     </div>
+
+    
     <!-- /#wrapper -->
     <!-- JavaScript -->
     <!-- jQuery -->
@@ -371,6 +376,9 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="~/vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Toastr Alert JavaScript-->
+    <script src="~/vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.js"></script>
 
     <!-- Data table JavaScript -->
     <script src="~/vendors/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
