@@ -143,7 +143,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a asp-action="Index"asp-controller="ResponseTeamMembers"><i class="fa fa-user-md  mr-10"></i>Response Team Members</a>
+                    <a asp-action="Index" asp-controller="ResponseTeamMembers"><i class="fa fa-user-md  mr-10"></i>Response Team Members</a>
                 </li>
             </ul>
         </div>
@@ -239,6 +239,7 @@
         AppContextHelper.RemoveToastMessage(Context.Response);
     }
 
+    @RenderSection("scripts", false)
 
 </body>
 </html>
