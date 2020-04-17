@@ -1,0 +1,14 @@
+﻿@model Thandizo.DataModels.Core.Responses.TeamMappingResponse
+
+<div class="col-md-8 col-lg-offset-2">
+    <div class="input-group">
+        <input type="text" class="form-control" id="txtDistrictName" asp-for="DistrictName" required
+               placeholder="District" readonly />
+        <div class="input-group-btn">
+            <button type="button" class="btn btn-default" id="btnSelectDistrict">
+                <i class="fa fa-search"></i><span>Select</span>
+            </button>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="txtDistrictCode" asp-for="DistrictCode" />

@@ -1,0 +1,16 @@
+﻿@model Thandizo.DataModels.Core.Responses.TeamMappingResponse
+
+<div class="row">
+    <div class="col-md-2 text-right">
+        <label class="bold-text-600 txt-dark">Name</label>
+    </div><div class="col-md-10">
+        (@ViewBag.TeamMemberName)
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 text-right">
+        <label class="bold-text-600 txt-dark">District</label>
+    </div><div class="col-md-10">
+        @Html.DisplayFor(model => model.DistrictName)
+    </div>
+</div>
