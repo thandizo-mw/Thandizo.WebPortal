@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Thandizo.DataModels.Core.DistrictDTO>
+
+<div class="table-responsive table-extended">
+    <table id="dtDistrictsDataTable" class="table team-members-table table-hover display  pb-30 dt-dataTable">
+        <thead>
+            <tr>
+                <th>District Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model is null)
+            {
+                <tr>
+                    <td colspan="5">
+                        <div class="text-center">No Data Found</div>
+                    </td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.DistrictName)</td>
+                        <td>
+                            <label class="district-code" hidden>@Html.DisplayFor(modelItem => item.DistrictCode)</label>
+                            <a href='#' class="select-district btn btn-primary btn-sm">
+                                <i class="fa fa-check"></i><span class="with-icon">Select</span>
+                            </a>
+                        </td>
+                       
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#dtDistrictsDataTable').DataTable({
+            scrollY: '350px',
+            scrollCollapse: true,
+            paging: false
+        });
+
+        $("#dtDistrictsDataTable").on("click", ".select-district", function () {
+            var districtName = $(this).parents('tr').find("td:eq(0)").text();
+            var districtCode = $(this).parents('tr').find(".district-code").text();
+            console.log("loantype" + districtName)
+            $("#txtDistrictName").val(districtName);
+            $("#txtDistrictCode").val(districtCode);
+            $('#searchDistrictsModal').modal('hide');
+        });
+    });
+</script>
