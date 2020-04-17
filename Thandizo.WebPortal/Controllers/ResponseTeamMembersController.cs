@@ -46,38 +46,35 @@ namespace Thandizo.WebPortal.Controllers
             else
             {
                 ModelState.AddModelError("", HttpResponseHandler.Process(response));
-
             }
-
             return View(ResponseTeamMembers);
         }
 
         public IActionResult Create()
         {
-            return View(new ResponseTeamMemberDTO
-            {
-                CreatedBy = "SYS"
+            return View(new ResponseTeamMemberDTO { 
+                CreatedBy="SYS"
             });
         }
 
         [HttpPost]
         public async Task<IActionResult> Create([Bind] ResponseTeamMemberDTO responseTeamMember)
-        {
+        {   
             string url = $"{CoreApiUrl}ResponseTeamMembers/Add";
-
             var response = await _httpRequestHandler.Post(url, responseTeamMember);
 
             if (response.StatusCode == HttpStatusCode.Created)
             {
-                AppContextHelper.SetToastMessage("ResponseTeamMember has been successfully created", MessageType.Success, 1, Response);
+                AppContextHelper.SetToastMessage("Response team member has been successfully created", MessageType.Success, 1, Response);
                 return RedirectToAction(nameof(Index));
             }
             else
             {
                 AppContextHelper.SetToastMessage("Failed to create response team member", MessageType.Danger, 1, Response);
-                TempData["ModelError"] = HttpResponseHandler.Process(response);
+                ModelState.AddModelError("", HttpResponseHandler.Process(response));
             }
-            return RedirectToAction(nameof(Create));
+            
+            return View(responseTeamMember);
         }
 
         public async Task<IActionResult> Edit([FromQuery] int teamMemberId)
@@ -101,9 +98,9 @@ namespace Thandizo.WebPortal.Controllers
             else
             {
                 AppContextHelper.SetToastMessage("Failed to update response team member", MessageType.Danger, 1, Response);
-                TempData["ModelError"] = HttpResponseHandler.Process(response);
+                ModelState.AddModelError("", HttpResponseHandler.Process(response));
             }
-            return RedirectToAction(nameof(Edit), new { teamMemberId = responseTeamMember.TeamMemberId});
+            return View(responseTeamMember);
         }
 
         public async Task<IActionResult> Details([FromQuery] int teamMemberId)
@@ -129,7 +126,7 @@ namespace Thandizo.WebPortal.Controllers
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 AppContextHelper.SetToastMessage("Response team tember has been successfully deleted", MessageType.Success, 1, Response);
-                return RedirectToAction(nameof(Delete));
+                return RedirectToAction(nameof(Index));
             }
             else
             {
@@ -153,7 +150,11 @@ namespace Thandizo.WebPortal.Controllers
             else
             {
                 ModelState.AddModelError("", HttpResponseHandler.Process(response));
-
+            }
+            if (TempData["ModelError"] != null)
+            {
+                ModelState.AddModelError("", TempData["ModelError"].ToString());
+                TempData["ModelError"] = null;
             }
             return responseTeamMember;
         }
