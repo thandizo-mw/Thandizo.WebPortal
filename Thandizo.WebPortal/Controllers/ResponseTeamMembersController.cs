@@ -31,7 +31,7 @@ namespace Thandizo.WebPortal.Controllers
                 return _configuration["CoreApiUrl"];
             }
         }
-
+        
         public async Task<IActionResult> Index()
         {
             string url = $"{CoreApiUrl}ResponseTeamMembers/GetAll";
@@ -58,6 +58,7 @@ namespace Thandizo.WebPortal.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind] ResponseTeamMemberDTO responseTeamMember)
         {   
             string url = $"{CoreApiUrl}ResponseTeamMembers/Add";
@@ -79,11 +80,12 @@ namespace Thandizo.WebPortal.Controllers
 
         public async Task<IActionResult> Edit([FromQuery] int teamMemberId)
         {
-            var responseTeamMember = await getResponseTeamMember(teamMemberId);
+            var responseTeamMember = await GetResponseTeamMember(teamMemberId);
             return View(responseTeamMember);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit([Bind]ResponseTeamMemberDTO responseTeamMember)
         {
             string url = $"{CoreApiUrl}ResponseTeamMembers/Update";
@@ -105,22 +107,21 @@ namespace Thandizo.WebPortal.Controllers
 
         public async Task<IActionResult> Details([FromQuery] int teamMemberId)
         {
-            var responseTeamMember = await getResponseTeamMember(teamMemberId);
+            var responseTeamMember = await GetResponseTeamMember(teamMemberId);
             return View(responseTeamMember);
         }
 
         public async Task<IActionResult> Delete([FromQuery] int teamMemberId)
         {
-            var responseTeamMember = await getResponseTeamMember(teamMemberId);
+            var responseTeamMember = await GetResponseTeamMember(teamMemberId);
             return View(responseTeamMember);
         }
 
         [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> VerifyDelete(long teamMemberId)
+        public async Task<IActionResult> VerifyDelete(int teamMemberId)
         {
             string url = $"{CoreApiUrl}ResponseTeamMembers/Delete?teamMemberId={teamMemberId}";
-            var ResponseTeamMember = new ResponseTeamMemberDTO();
-
+            
             var response = await _httpRequestHandler.Delete(url);
 
             if (response.StatusCode == HttpStatusCode.OK)
@@ -136,7 +137,7 @@ namespace Thandizo.WebPortal.Controllers
             return RedirectToAction(nameof(Delete), new { teamMemberId });
         }
 
-        private async Task<ResponseTeamMemberDTO> getResponseTeamMember(int teamMemberId)
+        private async Task<ResponseTeamMemberDTO> GetResponseTeamMember(int teamMemberId)
         {
             string url = $"{CoreApiUrl}ResponseTeamMembers/GetById?teamMemberId={teamMemberId}";
             var responseTeamMember = new ResponseTeamMemberDTO();
@@ -155,6 +156,23 @@ namespace Thandizo.WebPortal.Controllers
             {
                 ModelState.AddModelError("", TempData["ModelError"].ToString());
                 TempData["ModelError"] = null;
+            }
+            return responseTeamMember;
+        }
+        public async Task<IEnumerable<ResponseTeamMemberDTO>> GetResponseTeamMembers()
+        {
+            string url = $"{CoreApiUrl}ResponseTeamMembers/GetAll";
+            var responseTeamMember = Enumerable.Empty<ResponseTeamMemberDTO>();
+
+            var response = await _httpRequestHandler.Get(url);
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                responseTeamMember = response.ContentAsType<IEnumerable<ResponseTeamMemberDTO>>();
+            }
+            else
+            {
+                ModelState.AddModelError("", HttpResponseHandler.Process(response));
             }
             return responseTeamMember;
         }
