@@ -1,0 +1,23 @@
+﻿@model Thandizo.DataModels.Core.ResponseTeamMemberDTO
+
+<div class="row">
+    <div class="col-md-2 text-right">
+        <label class="bold-text-600 txt-dark">Name</label>
+    </div><div class="col-md-10">
+        @Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.OtherNames) @Html.DisplayFor(model => model.Surname)
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 text-right">
+        <label class="bold-text-600 txt-dark">Phone Number</label>
+    </div><div class="col-md-10">
+        @Html.DisplayFor(model => model.PhoneNumber)
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 text-right">
+        <label class="bold-text-600 txt-dark">Email Address</label>
+    </div><div class="col-md-10">
+        @Html.DisplayFor(model => model.EmailAddress)
+    </div>
+</div>
