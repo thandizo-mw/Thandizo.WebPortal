@@ -47,6 +47,7 @@
                                         <th></th>
                                         <th></th>
                                         <th></th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -79,6 +80,11 @@
                                                 <td>
                                                     <a asp-action="Delete" asp-route-teamMemberId="@item.TeamMemberId">
                                                         <i class="fa fa-trash"></i><span class="with-icon">Delete</span>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a asp-action="Index" asp-controller="ResponseTeamMappings" asp-route-teamMemberId="@item.TeamMemberId" asp-route-teamMemberName="@item.FirstName @item.OtherNames @item.Surname">
+                                                        <i class="fa fa-map-marker"></i><span class="with-icon">Map Member</span>
                                                     </a>
                                                 </td>
                                             </tr>
