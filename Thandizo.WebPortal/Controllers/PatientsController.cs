@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Thandizo.DataModels.Patients.Responses;
+using Thandizo.WebPortal.Filters;
 using Thandizo.WebPortal.Helpers;
 using Thandizo.WebPortal.Helpers.General;
 using Thandizo.WebPortal.Services;
@@ -29,27 +30,29 @@ namespace Thandizo.WebPortal.Controllers
                 return _configuration["PatientsApiUrl"];
             }
         }
-        
+
+        [HandleExceptionFilter]
         public async Task<IActionResult> ConfirmPatients()
         {
             string url = $"{PatientsApiUrl}Patients/GetAll";
             var patients = Enumerable.Empty<PatientResponse>();
 
             var response = await _httpRequestHandler.Get(url);
-          
+
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 patients = response.ContentAsType<IEnumerable<PatientResponse>>();
             }
-            else 
+            else
             {
                 ModelState.AddModelError("", HttpResponseHandler.Process(response));
-                
-            }
-                       
-            return View(patients);
-        }        
 
+            }
+
+            return View(patients);
+        }
+
+        [HandleExceptionFilter]
         public async Task<IActionResult> ConfirmPatient([FromQuery] long patientId)
         {
             string url = $"{PatientsApiUrl}Patients/GetById?patientId={patientId}";
@@ -67,7 +70,7 @@ namespace Thandizo.WebPortal.Controllers
 
             }
 
-            if(TempData["ModelError"] != null)
+            if (TempData["ModelError"] != null)
             {
                 ModelState.AddModelError("", TempData["ModelError"].ToString());
             }
@@ -76,6 +79,8 @@ namespace Thandizo.WebPortal.Controllers
         }
 
         [HttpPost, ActionName("ConfirmPatient")]
+        [ValidateAntiForgeryToken]
+        [HandleExceptionFilter]
         public async Task<IActionResult> VerifyConfirmPatient(long patientId)
         {
             string url = $"{PatientsApiUrl}Patients/ConfirmPatient?patientId={patientId}";

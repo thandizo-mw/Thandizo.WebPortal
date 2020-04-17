@@ -7,6 +7,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Thandizo.DataModels.Core;
 using Thandizo.DataModels.Patients.Responses;
+using Thandizo.WebPortal.Filters;
 using Thandizo.WebPortal.Helpers;
 using Thandizo.WebPortal.Helpers.General;
 using Thandizo.WebPortal.Services;
@@ -31,7 +32,8 @@ namespace Thandizo.WebPortal.Controllers
                 return _configuration["CoreApiUrl"];
             }
         }
-        
+
+        [HandleExceptionFilter]
         public async Task<IActionResult> Index()
         {
             string url = $"{CoreApiUrl}ResponseTeamMembers/GetAll";
@@ -50,17 +52,20 @@ namespace Thandizo.WebPortal.Controllers
             return View(ResponseTeamMembers);
         }
 
+        [HandleExceptionFilter]
         public IActionResult Create()
         {
-            return View(new ResponseTeamMemberDTO { 
-                CreatedBy="SYS"
+            return View(new ResponseTeamMemberDTO
+            {
+                CreatedBy = "SYS"
             });
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [HandleExceptionFilter]
         public async Task<IActionResult> Create([Bind] ResponseTeamMemberDTO responseTeamMember)
-        {   
+        {
             string url = $"{CoreApiUrl}ResponseTeamMembers/Add";
             var response = await _httpRequestHandler.Post(url, responseTeamMember);
 
@@ -74,10 +79,11 @@ namespace Thandizo.WebPortal.Controllers
                 AppContextHelper.SetToastMessage("Failed to create response team member", MessageType.Danger, 1, Response);
                 ModelState.AddModelError("", HttpResponseHandler.Process(response));
             }
-            
+
             return View(responseTeamMember);
         }
 
+        [HandleExceptionFilter]
         public async Task<IActionResult> Edit([FromQuery] int teamMemberId)
         {
             var responseTeamMember = await GetResponseTeamMember(teamMemberId);
@@ -86,6 +92,7 @@ namespace Thandizo.WebPortal.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [HandleExceptionFilter]
         public async Task<IActionResult> Edit([Bind]ResponseTeamMemberDTO responseTeamMember)
         {
             string url = $"{CoreApiUrl}ResponseTeamMembers/Update";
@@ -105,12 +112,14 @@ namespace Thandizo.WebPortal.Controllers
             return View(responseTeamMember);
         }
 
+        [HandleExceptionFilter]
         public async Task<IActionResult> Details([FromQuery] int teamMemberId)
         {
             var responseTeamMember = await GetResponseTeamMember(teamMemberId);
             return View(responseTeamMember);
         }
 
+        [HandleExceptionFilter]
         public async Task<IActionResult> Delete([FromQuery] int teamMemberId)
         {
             var responseTeamMember = await GetResponseTeamMember(teamMemberId);
@@ -118,10 +127,12 @@ namespace Thandizo.WebPortal.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [HandleExceptionFilter]
         public async Task<IActionResult> VerifyDelete(int teamMemberId)
         {
             string url = $"{CoreApiUrl}ResponseTeamMembers/Delete?teamMemberId={teamMemberId}";
-            
+
             var response = await _httpRequestHandler.Delete(url);
 
             if (response.StatusCode == HttpStatusCode.OK)
@@ -159,6 +170,7 @@ namespace Thandizo.WebPortal.Controllers
             }
             return responseTeamMember;
         }
+        [HandleExceptionFilter]
         public async Task<IEnumerable<ResponseTeamMemberDTO>> GetResponseTeamMembers()
         {
             string url = $"{CoreApiUrl}ResponseTeamMembers/GetAll";

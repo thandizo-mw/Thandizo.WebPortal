@@ -7,6 +7,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Thandizo.DataModels.Core;
 using Thandizo.DataModels.Core.Responses;
+using Thandizo.WebPortal.Filters;
 using Thandizo.WebPortal.Helpers;
 using Thandizo.WebPortal.Helpers.General;
 using Thandizo.WebPortal.Services;
@@ -33,6 +34,7 @@ namespace Thandizo.WebPortal.Controllers
                 return _configuration["CoreApiUrl"];
             }
         }
+        [HandleExceptionFilter]
         public async Task<IActionResult> Index(int teamMemberId, string teamMemberName)
         {
             if (teamMemberId == 0 && (teamMemberName.Equals("") || teamMemberName.Equals(null)))
@@ -40,7 +42,7 @@ namespace Thandizo.WebPortal.Controllers
                 return RedirectToAction("Index", "ResponseTeamMembers");
             }
 
-            ViewBag.TeamMemberName= teamMemberName;
+            ViewBag.TeamMemberName = teamMemberName;
             _teamMemberName = teamMemberName;
             _teamMemberId = teamMemberId;
             string url = $"{CoreApiUrl}ResponseTeamMappings/GetByMember?teamMemberId={teamMemberId}";
@@ -59,9 +61,10 @@ namespace Thandizo.WebPortal.Controllers
             return View(ResponseTeamMembers);
         }
 
+        [HandleExceptionFilter]
         public IActionResult Create()
         {
-            ViewBag.TeamMemberName=_teamMemberName;
+            ViewBag.TeamMemberName = _teamMemberName;
             if (_teamMemberId == 0)
             {
                 return RedirectToAction("Index", "ResponseTeamMembers");
@@ -74,6 +77,8 @@ namespace Thandizo.WebPortal.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [HandleExceptionFilter]
         public async Task<IActionResult> Create([Bind] TeamMappingResponse teamMappingResponse)
         {
             ResponseTeamMappingDTO responseTeamMember = new ResponseTeamMappingDTO
@@ -101,22 +106,25 @@ namespace Thandizo.WebPortal.Controllers
             return View(responseTeamMember);
         }
 
+        [HandleExceptionFilter]
         public async Task<IActionResult> Edit([FromQuery] int mappingId)
         {
-            ViewBag.TeamMemberName= _teamMemberName;
+            ViewBag.TeamMemberName = _teamMemberName;
             var responseTeamMember = await getResponseTeamMapping(mappingId);
             return View(responseTeamMember);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [HandleExceptionFilter]
         public async Task<IActionResult> Edit([Bind] TeamMappingResponse teamMappingResponse)
         {
             ResponseTeamMappingDTO responseTeamMember = new ResponseTeamMappingDTO
             {
-               CreatedBy = teamMappingResponse.CreatedBy,
-               DistrictCode = teamMappingResponse.DistrictCode,
-               MappingId = teamMappingResponse.MappingId,
-               TeamMemberId = teamMappingResponse.TeamMemberId
+                CreatedBy = teamMappingResponse.CreatedBy,
+                DistrictCode = teamMappingResponse.DistrictCode,
+                MappingId = teamMappingResponse.MappingId,
+                TeamMemberId = teamMappingResponse.TeamMemberId
             };
 
             string url = $"{CoreApiUrl}ResponseTeamMappings/Update";
@@ -137,25 +145,29 @@ namespace Thandizo.WebPortal.Controllers
             return View(teamMappingResponse);
         }
 
+        [HandleExceptionFilter]
         public async Task<IActionResult> Details([FromQuery] int mappingId)
         {
-            ViewBag.TeamMemberName= _teamMemberName;
+            ViewBag.TeamMemberName = _teamMemberName;
             var responseTeamMember = await getResponseTeamMapping(mappingId);
             return View(responseTeamMember);
         }
 
+        [HandleExceptionFilter]
         public async Task<IActionResult> Delete([FromQuery] int mappingId)
         {
-            ViewBag.TeamMemberName= _teamMemberName;
+            ViewBag.TeamMemberName = _teamMemberName;
             var responseTeamMember = await getResponseTeamMapping(mappingId);
             return View(responseTeamMember);
         }
 
         [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [HandleExceptionFilter]
         public async Task<IActionResult> VerifyDelete(int mappingId)
         {
             string url = $"{CoreApiUrl}ResponseTeamMappings/Delete?mappingId={mappingId}";
-           
+
             var response = await _httpRequestHandler.Delete(url);
 
             if (response.StatusCode == HttpStatusCode.OK)
