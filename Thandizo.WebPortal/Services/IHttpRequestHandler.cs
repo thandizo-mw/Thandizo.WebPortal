@@ -8,5 +8,6 @@ namespace Thandizo.WebPortal.Services
         Task<HttpResponseMessage> Get(string url);
         Task<HttpResponseMessage> Post(string url, object value);
         Task<HttpResponseMessage> Put(string url, object value);
+        Task<HttpResponseMessage> Delete(string url);
     }
 }

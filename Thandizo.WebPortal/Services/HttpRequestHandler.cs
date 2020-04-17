@@ -42,5 +42,16 @@ namespace Thandizo.WebPortal.Services
             request.Headers.Accept.Clear();
             return await client.SendAsync(request);
         }
+        public async Task<HttpResponseMessage> Delete(string url)
+        {
+            var client = new HttpClient();
+            var request = new HttpRequestMessage
+            {
+                Method = new HttpMethod("Delete"),
+                RequestUri = new Uri(url),
+            };
+            request.Headers.Accept.Clear();
+            return await client.SendAsync(request);
+        }
     }
 }
