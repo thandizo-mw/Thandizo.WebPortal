@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,6 +26,7 @@ namespace Thandizo.WebPortal
         {
             services.AddControllersWithViews()
                 .AddRazorRuntimeCompilation();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddDomainServices();
         }
 
@@ -42,6 +44,7 @@ namespace Thandizo.WebPortal
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseCookiePolicy();
 
             app.UseRouting();
 
