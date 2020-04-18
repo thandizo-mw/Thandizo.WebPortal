@@ -16,7 +16,8 @@ namespace Thandizo.WebPortal
         /// <param name="services"></param>
         public static IServiceCollection AddDomainServices(this IServiceCollection services)
         {
-            return services.AddScoped<IHttpRequestHandler, HttpRequestHandler>();
+            services.AddScoped<IHttpRequestHandler, HttpRequestHandler>();
+            return services.AddScoped<ICookieService, CookieService>();
         }
     }
 }
