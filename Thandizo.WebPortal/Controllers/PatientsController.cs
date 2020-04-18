@@ -15,12 +15,14 @@ namespace Thandizo.WebPortal.Controllers
     public class PatientsController : Controller
     {
         private readonly IConfiguration _configuration;
+        private readonly ICookieService _cookieService;
         IHttpRequestHandler _httpRequestHandler;
 
-        public PatientsController(IConfiguration configuration, IHttpRequestHandler httpRequestHandler)
+        public PatientsController(IConfiguration configuration,ICookieService cookieService, IHttpRequestHandler httpRequestHandler)
         {
             _configuration = configuration;
             _httpRequestHandler = httpRequestHandler;
+            _cookieService = cookieService;
         }
 
         public string PatientsApiUrl
@@ -46,7 +48,6 @@ namespace Thandizo.WebPortal.Controllers
             else
             {
                 ModelState.AddModelError("", HttpResponseHandler.Process(response));
-
             }
 
             return View(patients);

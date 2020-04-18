@@ -17,12 +17,14 @@ namespace Thandizo.WebPortal.Controllers
     public class DistrictsController : Controller
     {
         private readonly IConfiguration _configuration;
+        private readonly ICookieService _cookieService;
         IHttpRequestHandler _httpRequestHandler;
 
-        public DistrictsController(IConfiguration configuration, IHttpRequestHandler httpRequestHandler)
+        public DistrictsController(IConfiguration configuration,ICookieService cookieService, IHttpRequestHandler httpRequestHandler)
         {
             _configuration = configuration;
             _httpRequestHandler = httpRequestHandler;
+            _cookieService = cookieService;
         }
 
         public string CoreApiUrl

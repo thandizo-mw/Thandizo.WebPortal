@@ -17,12 +17,14 @@ namespace Thandizo.WebPortal.Controllers
     public class ResponseTeamMembersController : Controller
     {
         private readonly IConfiguration _configuration;
+        private readonly ICookieService _cookieService;
         IHttpRequestHandler _httpRequestHandler;
 
-        public ResponseTeamMembersController(IConfiguration configuration, IHttpRequestHandler httpRequestHandler)
+        public ResponseTeamMembersController(IConfiguration configuration,ICookieService cookieService, IHttpRequestHandler httpRequestHandler)
         {
             _configuration = configuration;
             _httpRequestHandler = httpRequestHandler;
+            _cookieService = cookieService;
         }
 
         public string CoreApiUrl
