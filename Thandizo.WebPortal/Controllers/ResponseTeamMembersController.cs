@@ -139,7 +139,7 @@ namespace Thandizo.WebPortal.Controllers
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                AppContextHelper.SetToastMessage("Response team tember has been successfully deleted", MessageType.Success, 1, Response);
+                AppContextHelper.SetToastMessage("Response team member has been successfully deleted", MessageType.Success, 1, Response);
                 return RedirectToAction(nameof(Index));
             }
             else
