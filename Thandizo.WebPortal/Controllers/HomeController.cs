@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 using Thandizo.WebPortal.Models;
 using Thandizo.WebPortal.Services;
 
@@ -20,7 +17,7 @@ namespace Thandizo.WebPortal.Controllers
             _logger = logger;
             _cookieService = cookieService;
         }
-        
+        [Authorize]
         public IActionResult Dashboard()
         {
             _cookieService.Add("UserName", "vvinkhumbo");
