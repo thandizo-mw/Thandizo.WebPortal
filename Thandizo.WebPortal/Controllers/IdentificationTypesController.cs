@@ -64,10 +64,10 @@ namespace Thandizo.WebPortal.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [HandleExceptionFilter]
-        public async Task<IActionResult> Create([Bind] IdentificationTypeDTO IdentificationType)
+        public async Task<IActionResult> Create([Bind] IdentificationTypeDTO identificationType)
         {
             string url = $"{CoreApiUrl}IdentificationTypes/Add";
-            var response = await _httpRequestHandler.Post(url, IdentificationType);
+            var response = await _httpRequestHandler.Post(url, identificationType);
 
             if (response.StatusCode == HttpStatusCode.Created)
             {
@@ -80,7 +80,7 @@ namespace Thandizo.WebPortal.Controllers
                 ModelState.AddModelError("", HttpResponseHandler.Process(response));
             }
 
-            return View(IdentificationType);
+            return View(identificationType);
         }
 
         [HandleExceptionFilter]
@@ -137,12 +137,12 @@ namespace Thandizo.WebPortal.Controllers
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                AppContextHelper.SetToastMessage("Response team tember has been successfully deleted", MessageType.Success, 1, Response);
+                AppContextHelper.SetToastMessage("Identification type has been successfully deleted", MessageType.Success, 1, Response);
                 return RedirectToAction(nameof(Index));
             }
             else
             {
-                AppContextHelper.SetToastMessage("Failed to delete identificationType", MessageType.Danger, 1, Response);
+                AppContextHelper.SetToastMessage("Failed to delete identification Type", MessageType.Danger, 1, Response);
                 TempData["ModelError"] = HttpResponseHandler.Process(response);
             }
             return RedirectToAction(nameof(Delete), new { identificationTypeId });
