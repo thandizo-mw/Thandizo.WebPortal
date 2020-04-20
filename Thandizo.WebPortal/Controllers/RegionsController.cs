@@ -64,10 +64,10 @@ namespace Thandizo.WebPortal.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [HandleExceptionFilter]
-        public async Task<IActionResult> Create([Bind] RegionDTO Region)
+        public async Task<IActionResult> Create([Bind] RegionDTO region)
         {
             string url = $"{CoreApiUrl}Regions/Add";
-            var response = await _httpRequestHandler.Post(url, Region);
+            var response = await _httpRequestHandler.Post(url, region);
 
             if (response.StatusCode == HttpStatusCode.Created)
             {
@@ -80,7 +80,7 @@ namespace Thandizo.WebPortal.Controllers
                 ModelState.AddModelError("", HttpResponseHandler.Process(response));
             }
 
-            return View(Region);
+            return View(region);
         }
 
         [HandleExceptionFilter]
@@ -137,7 +137,7 @@ namespace Thandizo.WebPortal.Controllers
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                AppContextHelper.SetToastMessage("Response team tember has been successfully deleted", MessageType.Success, 1, Response);
+                AppContextHelper.SetToastMessage("Region has been successfully deleted", MessageType.Success, 1, Response);
                 return RedirectToAction(nameof(Index));
             }
             else
