@@ -166,7 +166,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
     <PackageReference Include="NETCore.Encrypt" Version="2.0.8" />
     <PackageReference Include="Thandizo.ApiExtensions" Version="1.0.0.5" />
-    <PackageReference Include="Thandizo.DataModels" Version="1.0.2.7" />
+    <PackageReference Include="Thandizo.DataModels" Version="1.0.3.2" />
   </ItemGroup>
 
 
