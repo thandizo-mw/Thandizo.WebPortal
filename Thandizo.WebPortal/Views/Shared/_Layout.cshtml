@@ -103,7 +103,7 @@
                             <a asp-action="Index" asp-controller="Regions">Regions</a>
                         </li>
                         <li>
-                            <a href="#">Countries</a>
+                            <a asp-action="Index" asp-controller="Countries" >Countries</a>
                         </li>
                         <li>
                             <a href="#">Nationalities</a>
@@ -225,7 +225,7 @@
             $(document).ready(function () {
 
                 $.toast({
-                    heading: 'Patient Confirmation',
+                    heading: 'Task completion',
                     text: '@Context.Request.Cookies[AppContextHelper.ToastMessageCookie]',
                     position: 'top-right',
                     loaderBg:'#3cb878',
