@@ -36,7 +36,9 @@ namespace Thandizo.WebPortal.Controllers
         [HandleExceptionFilter]
         public async Task<IActionResult> ConfirmPatients()
         {
-            string url = $"{PatientsApiUrl}Patients/GetAll";
+            string valuesFilter = "false";
+            string phoneNumber = _cookieService.Get("PhoneNumber");
+            string url = $"{PatientsApiUrl}Patients/GetByResponseTeamMember?phoneNumber={phoneNumber}&valuesFilter={valuesFilter}";
             var patients = Enumerable.Empty<PatientResponse>();
 
             var response = await _httpRequestHandler.Get(url);

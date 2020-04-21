@@ -1,0 +1,16 @@
+﻿@model Thandizo.DataModels.Patients.PatientStatusDTO
+
+<div class="row">
+    <div class="col-md-2 text-right">
+        <label class="bold-text-600 txt-dark">Status Name</label>
+    </div><div class="col-md-10">
+        @Html.DisplayFor(model => model.PatientStatusName)
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 text-right">
+        <label class="bold-text-600 txt-dark">Severity</label>
+    </div><div class="col-md-10">
+        @Html.DisplayFor(model => model.Severity)
+    </div>
+</div>

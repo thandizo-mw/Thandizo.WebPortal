@@ -1,15 +1,16 @@
-﻿@model Thandizo.DataModels.Core.ResponseTeamMemberDTO
+﻿@model Thandizo.DataModels.Patients.PatientSymptomDTO
 
 <div class="row heading-bg  bg-th-grey">
     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-        <h5 class="txt-dark">Team Member Details</h5>
+        <h5 class="txt-dark">Details</h5>
     </div>
     <!-- Breadcrumb -->
     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
         <ol class="breadcrumb">
             <li><a asp-action="Dashboard" asp-controller="Home">Dashboard</a></li>
-            <li><a asp-action="Index"><span>Response Team Members</span></a></li>
-            <li><a class="active"><span>Team Member Details</span></a></li>
+            <li><a href="#"><span>Static Maintenance</span></a></li>
+            <li><a asp-action="Index"><span>Patient Symptoms</span></a></li>
+            <li><a class="active"><span>Details</span></a></li>
         </ol>
     </div>
     <!-- /Breadcrumb -->
@@ -19,13 +20,12 @@
 <div class="row">
     <div class="col-md-5 text-right col-lg-offset-7">
         <div class="btn-group" role="group" aria-label="...">
-            <button class="btn btn-default btn-sm" onclick="location.href='@Url.Action("Index", "ResponseTeamMembers")'">
+            <button class="btn btn-default btn-sm" onclick="location.href='@Url.Action("Index", "PatientSymptoms")'">
                 <i class="fa fa-arrow-left"></i><span class="with-icon">Back</span>
             </button>
         </div>
     </div>
 </div>
-
 
 <!-- Row -->
 <div class="row">
@@ -51,7 +51,7 @@
                     <div class="text-right">
                         <div class="btn-group" role="group" aria-label="...">
 
-                            <button class="btn btn-default btn-sm" type="button" onclick="location.href='@Url.Action("Index", "ResponseTeamMembers")'">
+                            <button class="btn btn-default btn-sm" type="button" onclick="location.href='@Url.Action("Index", "PatientSymptoms")'">
                                 <i class="fa fa-times"></i><span class="with-icon">Cancel</span>
                             </button>
                         </div>

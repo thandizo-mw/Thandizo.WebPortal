@@ -100,10 +100,7 @@
                     <a href="javascript:void(0);" data-toggle="collapse" data-target="#sm_dr"><i class="fa fa-list-alt mr-10"></i>Static Maintenance<span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
                     <ul id="sm_dr" class="collapse collapse-level-1">
                         <li>
-                            <a href="#">Regions</a>
-                        </li>
-                        <li>
-                            <a href="#">Districts</a>
+                            <a asp-action="Index" asp-controller="Regions">Regions</a>
                         </li>
                         <li>
                             <a href="#">Countries</a>
@@ -112,13 +109,13 @@
                             <a href="#">Nationalities</a>
                         </li>
                         <li>
-                            <a href="#">Identification Types</a>
+                            <a asp-action="Index" asp-controller="IdentificationTypes">Identification Types</a>
                         </li>
                         <li>
-                            <a href="#">Patient Statuses</a>
+                            <a asp-action="Index" asp-controller="PatientStatuses">Patient Statuses</a>
                         </li>
                         <li>
-                            <a href="#">Patient Symptoms</a>
+                            <a asp-action="Index" asp-controller="PatientSymptoms">Patient Symptoms</a>
                         </li>
                         <li>
                             <a href="#">Data Centers</a>
