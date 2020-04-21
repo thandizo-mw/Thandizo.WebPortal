@@ -124,6 +124,9 @@
                             <a asp-action="Index" asp-controller="FacilityTypes">Facility Types</a>
                         </li>
                         <li>
+                            <a asp-action="Index" asp-controller="TransmissionClassifications">Transmission Classifications</a>
+                        </li>
+                        <li>
                             <a href="#">Health Care Workers</a>
                         </li>
                     </ul>
@@ -204,7 +207,7 @@
         <script>
             $(document).ready(function () {
                 $.toast({
-                    heading: 'Patient Confirmation',
+                    heading: 'Task Successful',
                     text: '@Context.Request.Cookies[AppContextHelper.ToastMessageCookie]',
                     position: 'top-right',
                     loaderBg: '#3cb878',
@@ -225,7 +228,7 @@
             $(document).ready(function () {
 
                 $.toast({
-                    heading: 'Task completion',
+                    heading: 'Task Failed',
                     text: '@Context.Request.Cookies[AppContextHelper.ToastMessageCookie]',
                     position: 'top-right',
                     loaderBg:'#3cb878',
