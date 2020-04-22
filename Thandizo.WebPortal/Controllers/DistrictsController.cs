@@ -1,13 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Thandizo.DataModels.Core;
 using Thandizo.DataModels.Core.Responses;
-using Thandizo.DataModels.Patients.Responses;
 using Thandizo.WebPortal.Filters;
 using Thandizo.WebPortal.Helpers;
 using Thandizo.WebPortal.Helpers.General;
@@ -55,7 +54,8 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{CoreApiUrl}Districts/GetByRegionId?regionId={_regionId}";
             var districts = Enumerable.Empty<DistrictResponse>();
 
-            var response = await _httpRequestHandler.Get(url);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _httpRequestHandler.Get(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -87,7 +87,9 @@ namespace Thandizo.WebPortal.Controllers
         {
             DistrictDTO district = districtResponse;
             string url = $"{CoreApiUrl}Districts/Add";
-            var response = await _httpRequestHandler.Post(url, district);
+
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _httpRequestHandler.Post(accessToken, url, district);
 
             if (response.StatusCode == HttpStatusCode.Created)
             {
@@ -118,7 +120,8 @@ namespace Thandizo.WebPortal.Controllers
             DistrictDTO district = districtResponse;
             string url = $"{CoreApiUrl}Districts/Update";
 
-            var response = await _httpRequestHandler.Put(url, district);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _httpRequestHandler.Put(accessToken, url,  district);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -154,7 +157,8 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{CoreApiUrl}Districts/Delete?districtCode={districtCode}";
             var District = new DistrictDTO();
 
-            var response = await _httpRequestHandler.Delete(url);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _httpRequestHandler.Delete(accessToken, url); 
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -174,7 +178,8 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{CoreApiUrl}Districts/GetById?districtCode={districtCode}";
             var district = new DistrictResponse();
 
-            var response = await _httpRequestHandler.Get(url);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _httpRequestHandler.Get(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -199,7 +204,8 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{CoreApiUrl}Districts/GetAll";
             var districts = Enumerable.Empty<DistrictDTO>();
 
-            var response = await _httpRequestHandler.Get(url);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _httpRequestHandler.Get(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {

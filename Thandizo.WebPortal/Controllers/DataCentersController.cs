@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +43,8 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{CoreApiUrl}DataCenters/GetAll";
             var DataCenters = Enumerable.Empty<DataCenterResponse>();
 
-            var response = await _httpRequestHandler.Get(url);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _httpRequestHandler.Get(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -77,7 +79,9 @@ namespace Thandizo.WebPortal.Controllers
         {
             DataCenterDTO dataCenter = dataCenterResponseViewModel.DataCenterResponse;
             string url = $"{CoreApiUrl}DataCenters/Add";
-            var response = await _httpRequestHandler.Post(url, dataCenter);
+
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _httpRequestHandler.Post(accessToken, url, dataCenter);
 
             if (response.StatusCode == HttpStatusCode.Created)
             {
@@ -114,7 +118,8 @@ namespace Thandizo.WebPortal.Controllers
             DataCenterDTO dataCenter = dataCenterResponseViewModel.DataCenterResponse;
             string url = $"{CoreApiUrl}DataCenters/Update";
 
-            var response = await _httpRequestHandler.Put(url, dataCenter);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _httpRequestHandler.Put(accessToken, url,  dataCenter);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -152,7 +157,8 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{CoreApiUrl}DataCenters/Delete?centerId={centerId}";
             var DataCenter = new DataCenterDTO();
 
-            var response = await _httpRequestHandler.Delete(url);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _httpRequestHandler.Delete(accessToken, url); 
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -172,7 +178,8 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{CoreApiUrl}DataCenters/GetById?centerId={centerId}";
             var dataCenter = new DataCenterResponse();
 
-            var response = await _httpRequestHandler.Get(url);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _httpRequestHandler.Get(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -197,7 +204,8 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{CoreApiUrl}DataCenters/GetAll";
             var DataCenters = Enumerable.Empty<DataCenterDTO>();
 
-            var response = await _httpRequestHandler.Get(url);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _httpRequestHandler.Get(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -215,7 +223,8 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{CoreApiUrl}Districts/GetAll";
             var districts = Enumerable.Empty<DistrictDTO>();
 
-            var response = await _httpRequestHandler.Get(url);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _httpRequestHandler.Get(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -233,7 +242,8 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{CoreApiUrl}FacilityTypes/GetAll";
             var facilityTypes = Enumerable.Empty<FacilityTypeDTO>();
 
-            var response = await _httpRequestHandler.Get(url);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _httpRequestHandler.Get(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {

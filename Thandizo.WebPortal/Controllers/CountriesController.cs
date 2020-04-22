@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +40,8 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{CoreApiUrl}Countries/GetAll";
             var Countries = Enumerable.Empty<CountryDTO>();
 
-            var response = await _httpRequestHandler.Get(url);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _httpRequestHandler.Get(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -67,7 +69,9 @@ namespace Thandizo.WebPortal.Controllers
         public async Task<IActionResult> Create([Bind] CountryDTO country)
         {
             string url = $"{CoreApiUrl}Countries/Add";
-            var response = await _httpRequestHandler.Post(url, country);
+
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _httpRequestHandler.Post(accessToken, url, country);
 
             if (response.StatusCode == HttpStatusCode.Created)
             {
@@ -97,7 +101,8 @@ namespace Thandizo.WebPortal.Controllers
         {
             string url = $"{CoreApiUrl}Countries/Update";
 
-            var response = await _httpRequestHandler.Put(url, country);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _httpRequestHandler.Put(accessToken, url,  country);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -133,7 +138,8 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{CoreApiUrl}Countries/Delete?countryCode={countryCode}";
             var Country = new CountryDTO();
 
-            var response = await _httpRequestHandler.Delete(url);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _httpRequestHandler.Delete(accessToken, url); 
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -153,7 +159,8 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{CoreApiUrl}Countries/GetByCode?countryCode={countryCode}";
             var Country = new CountryDTO();
 
-            var response = await _httpRequestHandler.Get(url);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _httpRequestHandler.Get(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -178,7 +185,8 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{CoreApiUrl}Countries/GetAll";
             var Countries = Enumerable.Empty<CountryDTO>();
 
-            var response = await _httpRequestHandler.Get(url);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _httpRequestHandler.Get(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {

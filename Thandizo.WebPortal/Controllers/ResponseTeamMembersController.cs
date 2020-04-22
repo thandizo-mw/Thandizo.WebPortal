@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Thandizo.DataModels.Core;
+using Thandizo.DataModels.Identity.DataTransfer;
 using Thandizo.DataModels.Patients.Responses;
 using Thandizo.WebPortal.Filters;
 using Thandizo.WebPortal.Helpers;
@@ -41,7 +43,8 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{CoreApiUrl}ResponseTeamMembers/GetAll";
             var ResponseTeamMembers = Enumerable.Empty<ResponseTeamMemberDTO>();
 
-            var response = await _httpRequestHandler.Get(url);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _httpRequestHandler.Get(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -69,10 +72,17 @@ namespace Thandizo.WebPortal.Controllers
         public async Task<IActionResult> Create([Bind] ResponseTeamMemberDTO responseTeamMember)
         {
             string url = $"{CoreApiUrl}ResponseTeamMembers/Add";
-            var response = await _httpRequestHandler.Post(url, responseTeamMember);
+
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _httpRequestHandler.Post(accessToken, url, responseTeamMember);
 
             if (response.StatusCode == HttpStatusCode.Created)
             {
+                var identityResponse =  await _httpRequestHandler.Post("", new UserDTO { PhoneNumber = responseTeamMember.PhoneNumber});
+                if (identityResponse.StatusCode == HttpStatusCode.Created)
+                {
+                    AppContextHelper.SetToastMessage("User account has been successfully created", MessageType.Danger, 1, Response);
+                }
                 AppContextHelper.SetToastMessage("Response team member has been successfully created", MessageType.Success, 1, Response);
                 return RedirectToAction(nameof(Index));
             }
@@ -99,7 +109,8 @@ namespace Thandizo.WebPortal.Controllers
         {
             string url = $"{CoreApiUrl}ResponseTeamMembers/Update";
 
-            var response = await _httpRequestHandler.Put(url, responseTeamMember);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _httpRequestHandler.Put(accessToken, url,  responseTeamMember);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -135,7 +146,8 @@ namespace Thandizo.WebPortal.Controllers
         {
             string url = $"{CoreApiUrl}ResponseTeamMembers/Delete?teamMemberId={teamMemberId}";
 
-            var response = await _httpRequestHandler.Delete(url);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _httpRequestHandler.Delete(accessToken, url); 
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -155,7 +167,8 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{CoreApiUrl}ResponseTeamMembers/GetById?teamMemberId={teamMemberId}";
             var responseTeamMember = new ResponseTeamMemberDTO();
 
-            var response = await _httpRequestHandler.Get(url);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _httpRequestHandler.Get(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -178,7 +191,8 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{CoreApiUrl}ResponseTeamMembers/GetAll";
             var responseTeamMember = Enumerable.Empty<ResponseTeamMemberDTO>();
 
-            var response = await _httpRequestHandler.Get(url);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _httpRequestHandler.Get(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {

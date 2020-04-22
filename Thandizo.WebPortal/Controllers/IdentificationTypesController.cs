@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +40,8 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{CoreApiUrl}IdentificationTypes/GetAll";
             var IdentificationTypes = Enumerable.Empty<IdentificationTypeDTO>();
 
-            var response = await _httpRequestHandler.Get(url);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _httpRequestHandler.Get(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -67,7 +69,9 @@ namespace Thandizo.WebPortal.Controllers
         public async Task<IActionResult> Create([Bind] IdentificationTypeDTO identificationType)
         {
             string url = $"{CoreApiUrl}IdentificationTypes/Add";
-            var response = await _httpRequestHandler.Post(url, identificationType);
+
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _httpRequestHandler.Post(accessToken, url, identificationType);
 
             if (response.StatusCode == HttpStatusCode.Created)
             {
@@ -97,7 +101,8 @@ namespace Thandizo.WebPortal.Controllers
         {
             string url = $"{CoreApiUrl}IdentificationTypes/Update";
 
-            var response = await _httpRequestHandler.Put(url, identificationType);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _httpRequestHandler.Put(accessToken, url,  identificationType);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -133,7 +138,8 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{CoreApiUrl}IdentificationTypes/Delete?identificationTypeId={identificationTypeId}";
             var IdentificationType = new IdentificationTypeDTO();
 
-            var response = await _httpRequestHandler.Delete(url);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _httpRequestHandler.Delete(accessToken, url); 
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -153,7 +159,8 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{CoreApiUrl}IdentificationTypes/GetById?identificationTypeId={identificationTypeId}";
             var IdentificationType = new IdentificationTypeDTO();
 
-            var response = await _httpRequestHandler.Get(url);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _httpRequestHandler.Get(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -178,7 +185,8 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{CoreApiUrl}IdentificationTypes/GetAll";
             var IdentificationTypes = Enumerable.Empty<IdentificationTypeDTO>();
 
-            var response = await _httpRequestHandler.Get(url);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await _httpRequestHandler.Get(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
