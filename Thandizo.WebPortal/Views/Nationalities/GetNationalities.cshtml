@@ -1,10 +1,10 @@
-﻿@model IEnumerable<Thandizo.DataModels.Core.DistrictDTO>
+﻿@model IEnumerable<Thandizo.DataModels.Core.NationalityDTO>
 
 <div class="table-responsive table-extended">
-    <table id="dtDistrictsDataTable" class="table team-members-table table-hover display  pb-30 dt-dataTable">
+    <table id="dtNationalitysDataTable" class="table team-members-table table-hover display  pb-30 dt-dataTable">
         <thead>
             <tr>
-                <th>District Name</th>
+                <th>Nationality Name</th>
                 <th></th>
             </tr>
         </thead>
@@ -22,10 +22,10 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@Html.DisplayFor(modelItem => item.DistrictName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.NationalityName)</td>
                         <td class="table-action-button-100">
-                            <label class="district-code" hidden>@Html.DisplayFor(modelItem => item.DistrictCode)</label>
-                            <a href='#' class="select-district btn btn-primary btn-sm">
+                            <label class="nationality-code" hidden>@Html.DisplayFor(modelItem => item.NationalityCode)</label>
+                            <a href='#' class="select-nationality btn btn-primary btn-sm">
                                 <i class="fa fa-check"></i><span class="with-icon">Select</span>
                             </a>
                         </td>
@@ -41,19 +41,19 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#dtDistrictsDataTable').DataTable({
+        $('#dtNationalitysDataTable').DataTable({
             scrollY: '200px',
             scrollCollapse: true,
             paging: false
         });
 
-        $("#dtDistrictsDataTable").on("click", ".select-district", function () {
-            var districtName = $(this).parents('tr').find("td:eq(0)").text();
-            var districtCode = $(this).parents('tr').find(".district-code").text();
+        $("#dtNationalitysDataTable").on("click", ".select-nationality", function () {
+            var nationalityName = $(this).parents('tr').find("td:eq(0)").text();
+            var nationalityCode = $(this).parents('tr').find(".nationality-code").text();
             
-            $("#txtDistrictName").val(districtName);
-            $("#txtDistrictCode").val(districtCode);
-            $('#searchDistrictsModal').modal('hide');
+            $("#txtNationalityName").val(nationalityName);
+            $("#txtNationalityCode").val(nationalityCode);
+            $('#searchNationalitiesModal').modal('hide');
         });
     });
 </script>

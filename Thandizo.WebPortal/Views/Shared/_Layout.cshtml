@@ -80,18 +80,7 @@
                     <a href="#"><i class="fa fa-dashboard  mr-10"></i>Dashboard</a>
                 </li>
                 <li>
-                    <a href="javascript:void(0);" data-toggle="collapse" data-target="#users_dr"><i class="fa fa-users mr-10"></i>Users <span class="pull-right"><span class="label label-success mr-10">4</span><i class="fa fa-fw fa-angle-down"></i></span></a>
-                    <ul id="users_dr" class="collapse collapse-level-1">
-                        <li>
-                            <a href="#">User List</a>
-                        </li>
-                        <li>
-                            <a href="#">User Groups</a>
-                        </li>
-                        <li>
-                            <a href="#">User Roles</a>
-                        </li>
-                    </ul>
+                    <a asp-action="Index" asp-controller="ResponseTeamMembers"><i class="fa fa-user-md  mr-10"></i>Team Members</a>
                 </li>
                 <li>
                     <a asp-controller="Patients" asp-action="ConfirmPatients"><i class="fa fa-wheelchair mr-10"></i>Confirm Patients</a>
@@ -106,7 +95,7 @@
                             <a asp-action="Index" asp-controller="Countries" >Countries</a>
                         </li>
                         <li>
-                            <a href="#">Nationalities</a>
+                            <a asp-action="Index" asp-controller="Nationalities">Nationalities</a>
                         </li>
                         <li>
                             <a asp-action="Index" asp-controller="IdentificationTypes">Identification Types</a>
@@ -145,9 +134,7 @@
                         </li>
                     </ul>
                 </li>
-                <li>
-                    <a asp-action="Index" asp-controller="ResponseTeamMembers"><i class="fa fa-user-md  mr-10"></i>Response Team Members</a>
-                </li>
+                
             </ul>
         </div>
         <!-- /Left Sidebar Menu -->

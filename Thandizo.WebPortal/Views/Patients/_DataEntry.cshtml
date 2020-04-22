@@ -1,0 +1,351 @@
+﻿@model Thandizo.DataModels.ViewModels.Patients.PatientResponseViewModel
+
+
+<div class="tab-struct custom-tab-2 mt-40">
+    <ul role="tablist" class="nav nav-tabs" id="myTabs_15">
+        <li class="active" role="presentation"><a aria-expanded="true" data-toggle="tab" role="tab" id="general_tab" href="#general">General</a></li>
+        <li role="presentation" class=""><a data-toggle="tab" id="location_tab" role="tab" href="#location" aria-expanded="false">Location</a></li>
+        <li role="presentation" class=""><a data-toggle="tab" id="next_of_kin_tab" role="tab" href="#next_of_kin" aria-expanded="false">Next of Kin</a></li>
+    </ul>
+    <div class="tab-content" id="myTabContent_15">
+        <div id="general" class="tab-pane fade active in" role="tabpanel">
+            <div class="form-group row">
+                <label class="bold-text-600 col-md-3 control-label">First Name</label>
+
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+                        <input type="text" class="form-control input" placeholder="Enter name"
+                              asp-for="PatientResponse.FirstName" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="bold-text-600 col-md-3 control-label">Other Names</label>
+
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+                        <input type="text" class="form-control input" placeholder="Enter number"
+                              asp-for="PatientResponse.OtherNames" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="bold-text-600 col-md-3 control-label">Last Name</label>
+
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+                        <input type="text" class="form-control input" placeholder="Enter number"
+                              asp-for="PatientResponse.LastName" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="bold-text-600 col-md-3 control-label">Status</label>
+
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-arrow-down"></i></span>
+                        <Select class="form-control input"asp-for="PatientResponse.PatientStatusId"
+                                asp-items="@(new SelectList(Model.PatientStatuses, "PatientStatusId", "PatientStatusName"))" required>
+                        </Select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="bold-text-600 col-md-3 control-label">Date of Birth</label>
+
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+                        <input type="text" class="form-control input" placeholder="Select date"
+                              asp-for="PatientResponse.DateOfBirth" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="bold-text-600 col-md-3 control-label">Gender</label>
+
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-arrow-down"></i></span>
+                        <Select class="form-control input"asp-for="PatientResponse.Gender" required>
+                            <option value="M">Male</option>
+                            <option value="F">Female</option>
+                        </Select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="bold-text-600 col-md-3 control-label">Phone Number</label>
+
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+                        <input type="text" class="form-control input" placeholder="Enter number"
+                              asp-for="PatientResponse.PhoneNumber" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="bold-text-600 col-md-3 control-label">Identification Type</label>
+
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-arrow-down"></i></span>
+                        <Select class="form-control input"asp-for="PatientResponse.IdentificationTypeId"
+                                asp-items="@(new SelectList(Model.IdentificationTypes, "IdentificationTypeId", "Description"))" required>
+                        </Select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="bold-text-600 col-md-3 control-label">Identification Number</label>
+
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+                        <input type="text" class="form-control input" placeholder="Enter number"
+                              asp-for="PatientResponse.IdentificationNumber" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="bold-text-600 col-md-3 control-label">Transmission Classification</label>
+
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+                        <Select class="form-control input"asp-for="PatientResponse.ClassificationId"
+                                asp-items="@(new SelectList(Model.TransmissionClassifications, "ClassificationId", "ClassificationName"))" required>
+                        </Select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="location" class="tab-pane fade" role="tabpanel">
+
+            <div class="form-group row">
+                <label class="bold-text-600 col-md-3 control-label">Physical Address</label>
+
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+                        <input type="text" class="form-control input" placeholder="Enter Address"
+                               asp-for="PatientResponse.PhysicalAddress" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="bold-text-600 col-md-3 control-label">Residing District</label>
+
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="txtDistrictName" asp-for="PatientResponse.DistrictName" required
+                               placeholder="District" readonly />
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default" id="btnSelectDistrict">
+                                <i class="fa fa-search"></i><span>Select</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="txtDistrictCode" asp-for="PatientResponse.DistrictCode" />
+            </div>
+            <div class="form-group row">
+                <label class="bold-text-600 col-md-3 control-label">Home Address</label>
+
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+                        <input type="text" class="form-control input" placeholder="Enter Address"
+                               asp-for="PatientResponse.HomeAddress" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="bold-text-600 col-md-3 control-label">Country of Residence</label>
+
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="txtCountryName" asp-for="PatientResponse.CountryName" required
+                               placeholder="Country" readonly />
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default" id="btnSelectCountry">
+                                <i class="fa fa-search"></i><span>Select</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="txtCountryCode" asp-for="PatientResponse.ResidenceCountryCode" />
+            </div>
+
+            <div class="form-group row">
+                <label class="bold-text-600 col-md-3 control-label">Nationality</label>
+
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="txtNationalityName" asp-for="PatientResponse.NationalityName" required
+                               placeholder="Nationality" readonly />
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default" id="btnSelectNationality">
+                                <i class="fa fa-search"></i><span>Select</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="txtNationalityCode" asp-for="PatientResponse.NationalityCode" />
+            </div>
+
+
+        </div>
+        <div id="next_of_kin" class="tab-pane fade " role="tabpanel">
+            <div class="form-group row">
+                <label class="bold-text-600 col-md-3 control-label">First Name</label>
+
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+                        <input type="text" class="form-control input" placeholder="Enter number"
+                              asp-for="PatientResponse.NextOfKinFirstName" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="bold-text-600 col-md-3 control-label">Last Name</label>
+
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+                        <input type="text" class="form-control input" placeholder="Enter number"
+                              asp-for="PatientResponse.NextOfKinLastName" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="bold-text-600 col-md-3 control-label">Phone Number</label>
+
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+                        <input type="text" class="form-control input" placeholder="Enter number"
+                              asp-for="PatientResponse.NextOfKinPhoneNumber" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="searchDistrictsModal" class="modal fade" role="dialog"
+     aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Select District</h4>
+            </div>
+            <div class="modal-body">
+                <div id="divsearchDictrictError"></div>
+                <div id="divRetrievedDistricts"></div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div id="divProcessDistricts">
+                            <div class="processing-horizontal text-info text-left">
+                                <i class="fa fa-spin fa-circle-o-notch"></i><span class="with-icon">Processing</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="button" class="btn btn-warning btn-sm" id="btnRefreshDistricts">
+                                <i class="fa fa-refresh"></i><span class="with-icon">Refresh</span>
+                            </button>
+                            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" id="Cancel">
+                                <i class="fa fa-times"></i><span class="with-icon">Cancel</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="searchCountriesModal" class="modal fade" role="dialog"
+     aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Select Country</h4>
+            </div>
+            <div class="modal-body">
+                <div id="divsearchCountryError"></div>
+                <div id="divRetrievedCountries"></div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div id="divProcessCountries">
+                            <div class="processing-horizontal text-info text-left">
+                                <i class="fa fa-spin fa-circle-o-notch"></i><span class="with-icon">Processing</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="button" class="btn btn-warning btn-sm" id="btnRefreshCountries">
+                                <i class="fa fa-refresh"></i><span class="with-icon">Refresh</span>
+                            </button>
+                            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" id="Cancel">
+                                <i class="fa fa-times"></i><span class="with-icon">Cancel</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="searchNationalitiesModal" class="modal fade" role="dialog"
+     aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Select Nationality</h4>
+            </div>
+            <div class="modal-body">
+                <div id="divsearchNationalityError"></div>
+                <div id="divRetrievedNationalities"></div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div id="divProcessNationalities">
+                            <div class="processing-horizontal text-info text-left">
+                                <i class="fa fa-spin fa-circle-o-notch"></i><span class="with-icon">Processing</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="button" class="btn btn-warning btn-sm" id="btnRefreshNationalities">
+                                <i class="fa fa-refresh"></i><span class="with-icon">Refresh</span>
+                            </button>
+                            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" id="Cancel">
+                                <i class="fa fa-times"></i><span class="with-icon">Cancel</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
