@@ -21,8 +21,9 @@ namespace Thandizo.WebPortal.Controllers
         public IActionResult Dashboard()
         {
             _cookieService.Add("UserName", "vvinkhumbo");
-           // _cookieService.Add("UserId", "vvin");
-           // _cookieService.Add("PhoneNumber", "0884776533");
+            // _cookieService.Add("UserId", "vvin");
+            // _cookieService.Add("PhoneNumber", "0884776533");
+            //var accessToken = await HttpContext.GetTokenAsync("access_token");
             return View();
         }
 
@@ -30,6 +31,11 @@ namespace Thandizo.WebPortal.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult Logout()
+        {
+            return SignOut("Cookies", "oidc");
         }
     }
 }
