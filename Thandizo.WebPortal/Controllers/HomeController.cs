@@ -25,7 +25,7 @@ namespace Thandizo.WebPortal.Controllers
         {
             _cookieService.Add("UserName", "vvinkhumbo");
            // _cookieService.Add("UserId", "vvin");
-           // _cookieService.Add("PhoneNumber", "0884776533");
+            _cookieService.Add("PhoneNumber", "0884776533");
             return View();
         }
 
