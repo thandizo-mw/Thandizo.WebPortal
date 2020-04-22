@@ -49,7 +49,7 @@ namespace Thandizo.WebPortal.Controllers
         {
             string valuesFilter = "false";
             string phoneNumber = _cookieService.Get("PhoneNumber");
-            string url = $"{PatientsApiUrl}Patients/GetByResponseTeamMember?phoneNumber={phoneNumber}&valuesFilter={valuesFilter}";
+            string url = $"{PatientsApiUrl}GetByResponseTeamMember?phoneNumber={phoneNumber}&valuesFilter={valuesFilter}";
             var patients = Enumerable.Empty<PatientResponse>();
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
@@ -70,7 +70,7 @@ namespace Thandizo.WebPortal.Controllers
         [HandleExceptionFilter]
         public async Task<IActionResult> ConfirmPatient([FromQuery] long patientId)
         {
-            string url = $"{PatientsApiUrl}Patients/GetById?patientId={patientId}";
+            string url = $"{PatientsApiUrl}GetById?patientId={patientId}";
             var patient = new PatientResponse();
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
@@ -99,7 +99,7 @@ namespace Thandizo.WebPortal.Controllers
         [HandleExceptionFilter]
         public async Task<IActionResult> VerifyConfirmPatient(long patientId)
         {
-            string url = $"{PatientsApiUrl}Patients/ConfirmPatient?patientId={patientId}";
+            string url = $"{PatientsApiUrl}ConfirmPatient?patientId={patientId}";
             var patient = new PatientResponse();
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
@@ -153,7 +153,7 @@ namespace Thandizo.WebPortal.Controllers
         public async Task<IActionResult> Edit([Bind]PatientResponseViewModel patientResponseViewModel)
         {
             PatientDTO patient = patientResponseViewModel.PatientResponse;
-            string url = $"{PatientsApiUrl}Patients/Update";
+            string url = $"{PatientsApiUrl}Update";
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
             var response = await _httpRequestHandler.Put(accessToken, url,  patient);
@@ -189,7 +189,7 @@ namespace Thandizo.WebPortal.Controllers
 
         private async Task<PatientResponse> GetPatient(long patientId)
         {
-            string url = $"{PatientsApiUrl}Patients/GetById?patientId={patientId}";
+            string url = $"{PatientsApiUrl}GetById?patientId={patientId}";
             var Patient = new PatientResponse();
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");

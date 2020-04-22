@@ -39,7 +39,7 @@ namespace Thandizo.WebPortal.Controllers
         }
 
         [HandleExceptionFilter]
-        public async Task<IActionResult> Index(int regionId=0)
+        public async Task<IActionResult> Index(int regionId=0, string regionName="")
         {
             if (regionId == 0 && _regionId == 0)
             {
@@ -49,6 +49,7 @@ namespace Thandizo.WebPortal.Controllers
             if (regionId != 0)
             {
                 _regionId = regionId;
+                _regionName = regionName;
             }
 
             string url = $"{CoreApiUrl}Districts/GetByRegionId?regionId={_regionId}";
@@ -60,7 +61,6 @@ namespace Thandizo.WebPortal.Controllers
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 districts = response.ContentAsType<IEnumerable<DistrictResponse>>();
-                _regionName = districts.FirstOrDefault().RegionName;
             }
             else
             {
