@@ -33,6 +33,7 @@
                                         <th>Phone Number</th>
                                         <th>Status</th>
                                         <th></th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -54,6 +55,11 @@
                                                 <td>@Html.DisplayFor(modelItem => item.Age)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.PatientStatusName)</td>
+                                                <td>
+                                                    <a asp-action="Edit" asp-route-patientId="@item.PatientId">
+                                                        <i class="fa fa-edit"></i><span class="with-icon">Edit</span>
+                                                    </a>
+                                                </td>
                                                 <td>
                                                     <a asp-action="ConfirmPatient" asp-route-patientId="@item.PatientId" data-toggle="tooltip" title="Confirm Patient">
                                                         <i class="fa fa-check-circle"></i><span class="with-icon">Confirm</span>

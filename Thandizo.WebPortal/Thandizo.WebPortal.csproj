@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="wwwroot\vendors\bower_components\awesome-bootstrap-checkbox\awesome-bootstrap-checkbox.css" />
     <Content Include="wwwroot\vendors\bower_components\bootstrap\dist\css\bootstrap-theme.css" />
     <Content Include="wwwroot\vendors\bower_components\bootstrap\dist\css\bootstrap-theme.min.css" />
     <Content Include="wwwroot\vendors\bower_components\bootstrap\dist\css\bootstrap.css" />
@@ -40,6 +41,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\vendors\bower_components\awesome-bootstrap-checkbox\awesome-bootstrap-checkbox.less" />
+    <None Include="wwwroot\vendors\bower_components\awesome-bootstrap-checkbox\awesome-bootstrap-checkbox.scss" />
     <None Include="wwwroot\vendors\bower_components\bootstrap\dist\css\bootstrap-theme.css.map" />
     <None Include="wwwroot\vendors\bower_components\bootstrap\dist\css\bootstrap-theme.min.css.map" />
     <None Include="wwwroot\vendors\bower_components\bootstrap\dist\css\bootstrap.css.map" />
@@ -165,7 +168,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
     <PackageReference Include="NETCore.Encrypt" Version="2.0.8" />
     <PackageReference Include="Thandizo.ApiExtensions" Version="1.0.0.5" />
-    <PackageReference Include="Thandizo.DataModels" Version="1.0.2.6" />
+    <PackageReference Include="Thandizo.DataModels" Version="1.0.3.6" />
   </ItemGroup>
 
 

@@ -4,7 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Thandizo.DataModels.Core;
+using Thandizo.DataModels.Patients;
 using Thandizo.DataModels.Patients.Responses;
+using Thandizo.DataModels.ViewModels.Patients;
 using Thandizo.WebPortal.Filters;
 using Thandizo.WebPortal.Helpers;
 using Thandizo.WebPortal.Helpers.General;
@@ -30,6 +33,13 @@ namespace Thandizo.WebPortal.Controllers
             get
             {
                 return _configuration["PatientsApiUrl"];
+            }
+        }
+        public string CoreApiUrl
+        {
+            get
+            {
+                return _configuration["CoreApiUrl"];
             }
         }
 
@@ -102,6 +112,151 @@ namespace Thandizo.WebPortal.Controllers
                 TempData["ModelError"] = HttpResponseHandler.Process(response);
             }
             return RedirectToAction(nameof(ConfirmPatient), new { patientId });
+        }
+
+        [HandleExceptionFilter]
+        public IActionResult Create()
+        {
+            return View(new PatientResponse
+            {
+                CreatedBy = _cookieService.Get("UserName")
+            });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [HandleExceptionFilter]
+        public async Task<IActionResult> Create([Bind] PatientResponse patient)
+        {
+            return View(patient);
+        }
+
+        [HandleExceptionFilter]
+        public async Task<IActionResult> Edit([FromQuery] long patientId)
+        {
+            return View(new PatientResponseViewModel
+            {
+                PatientResponse = await GetPatient(patientId),
+                PatientStatuses = await GetPatientStatuses(),
+                IdentificationTypes = await GetIdentificationTypes(),
+                TransmissionClassifications = await GetClassifications()
+            });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [HandleExceptionFilter]
+        public async Task<IActionResult> Edit([Bind]PatientResponseViewModel patientResponseViewModel)
+        {
+            PatientDTO patient = patientResponseViewModel.PatientResponse;
+            string url = $"{PatientsApiUrl}Patients/Update";
+
+            var response = await _httpRequestHandler.Put(url, patient);
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                AppContextHelper.SetToastMessage("Patient has been successfully updated", MessageType.Success, 1, Response);
+                return RedirectToAction(nameof(ConfirmPatients));
+            }
+            else
+            {
+                AppContextHelper.SetToastMessage("Failed to update patient", MessageType.Danger, 1, Response);
+                ModelState.AddModelError("", HttpResponseHandler.Process(response));
+            }
+
+            patientResponseViewModel.PatientStatuses = await GetPatientStatuses();
+            patientResponseViewModel.IdentificationTypes = await GetIdentificationTypes();
+            patientResponseViewModel.TransmissionClassifications = await GetClassifications();
+            return View(patientResponseViewModel);
+        }
+
+        [HandleExceptionFilter]
+        public async Task<IActionResult> Details([FromQuery] long patientId)
+        {
+            return View(new PatientResponseViewModel
+            {
+               PatientResponse = await GetPatient(patientId),
+               PatientStatuses = await GetPatientStatuses(),
+               IdentificationTypes = await GetIdentificationTypes(),
+               TransmissionClassifications = await GetClassifications()
+            });
+        }
+
+        private async Task<PatientResponse> GetPatient(long patientId)
+        {
+            string url = $"{PatientsApiUrl}Patients/GetById?patientId={patientId}";
+            var Patient = new PatientResponse();
+
+            var response = await _httpRequestHandler.Get(url);
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                Patient = response.ContentAsType<PatientResponse>();
+            }
+            else
+            {
+                ModelState.AddModelError("", HttpResponseHandler.Process(response));
+            }
+            if (TempData["ModelError"] != null)
+            {
+                ModelState.AddModelError("", TempData["ModelError"].ToString());
+                TempData["ModelError"] = null;
+            }
+            return Patient;
+        }
+
+        public async Task<IEnumerable<PatientStatusDTO>> GetPatientStatuses()
+        {
+            string url = $"{PatientsApiUrl}PatientStatuses/GetAll";
+            var patientStatuses = Enumerable.Empty<PatientStatusDTO>();
+
+            var response = await _httpRequestHandler.Get(url);
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                patientStatuses = response.ContentAsType<IEnumerable<PatientStatusDTO>>();
+            }
+            else
+            {
+                ModelState.AddModelError("", HttpResponseHandler.Process(response));
+            }
+            return (patientStatuses);
+        }
+
+        public async Task<IEnumerable<IdentificationTypeDTO>> GetIdentificationTypes()
+        {
+            string url = $"{CoreApiUrl}IdentificationTypes/GetAll";
+            var identificationTypes = Enumerable.Empty<IdentificationTypeDTO>();
+
+            var response = await _httpRequestHandler.Get(url);
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                identificationTypes = response.ContentAsType<IEnumerable<IdentificationTypeDTO>>();
+            }
+            else
+            {
+                ModelState.AddModelError("", HttpResponseHandler.Process(response));
+            }
+            return (identificationTypes);
+        }
+
+        public async Task<IEnumerable<TransmissionClassificationDTO>> GetClassifications()
+        {
+            string url = $"{PatientsApiUrl}TransmissionClassifications/GetAll";
+            var transmissionClassifications = Enumerable.Empty<TransmissionClassificationDTO>();
+
+            var response = await _httpRequestHandler.Get(url);
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                transmissionClassifications = response.ContentAsType<IEnumerable<TransmissionClassificationDTO>>();
+            }
+            else
+            {
+                ModelState.AddModelError("", HttpResponseHandler.Process(response));
+            }
+            return (transmissionClassifications);
         }
     }
 }

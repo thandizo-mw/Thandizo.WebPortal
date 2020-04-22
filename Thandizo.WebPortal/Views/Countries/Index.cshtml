@@ -1,15 +1,15 @@
-﻿@model IEnumerable<Thandizo.DataModels.Core.RegionDTO>
+﻿@model IEnumerable<Thandizo.DataModels.Core.CountryDTO>
 
 <div class="row heading-bg  bg-th-grey">
     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-        <h5 class="txt-dark">Regions</h5>
+        <h5 class="txt-dark">Countries</h5>
     </div>
     <!-- Breadcrumb -->
     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
         <ol class="breadcrumb">
             <li><a asp-action="Dashboard" asp-controller="Home">Dashboard</a></li>
             <li><a href="#"><span>Static Maintenance</span></a></li>
-            <li><a class="active"><span>Regions</span></a></li>
+            <li><a class="active"><span>Countries</span></a></li>
         </ol>
     </div>
     <!-- /Breadcrumb -->
@@ -19,10 +19,10 @@
 
     <div class="col-md-5 text-right col-lg-offset-7">
         <div class="btn-group" role="group" aria-label="...">
-            <button class="btn btn-primary btn-sm" type="button" onclick="location.href='@Url.Action("Create", "Regions")'">
+            <button class="btn btn-primary btn-sm" type="button" onclick="location.href='@Url.Action("Create", "Countries")'">
                 <i class="fa fa-plus"></i><span class="with-icon">Create  New</span>
             </button>
-            <button class="btn btn-default btn-sm" onclick="location.href='@Url.Action("Index", "Regions")'">
+            <button class="btn btn-default btn-sm" onclick="location.href='@Url.Action("Index", "Countries")'">
                 <i class="fa fa-refresh"></i><span class="with-icon">Refresh</span>
             </button>
         </div>
@@ -43,9 +43,8 @@
                                 <thead>
                                     <tr>
                                         <th>Name</th>
-                                        <th>Latitude</th>
-                                        <th>Longitude</th>
-                                        <th></th>
+                                        <th>Code</th>
+                                        <th>External Reference Number</th>
                                         <th></th>
                                         <th></th>
                                         <th></th>
@@ -65,27 +64,22 @@
                                         @foreach (var item in Model)
                                         {
                                             <tr>
-                                                <td>@Html.DisplayFor(modelItem => item.RegionName)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.Latitude)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.Longitude)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.CountryName)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.CountryCode)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.ExternalReferenceNumber)</td>
                                                 <td>
-                                                    <a asp-action="Details" asp-route-regionId="@item.RegionId">
+                                                    <a asp-action="Details" asp-route-countryCode="@item.CountryCode">
                                                         <i class="fa fa-search"></i><span class="with-icon">View</span>
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <a asp-action="Edit" asp-route-regionId="@item.RegionId">
+                                                    <a asp-action="Edit" asp-route-countryCode="@item.CountryCode">
                                                         <i class="fa fa-edit"></i><span class="with-icon">Edit</span>
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <a asp-action="Delete" asp-route-regionId="@item.RegionId">
+                                                    <a asp-action="Delete" asp-route-countryCode="@item.CountryCode">
                                                         <i class="fa fa-trash"></i><span class="with-icon">Delete</span>
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <a asp-action="Index" asp-Controller="Districts" asp-route-regionId="@item.RegionId" >
-                                                        <i class="fa fa-building"></i><span class="with-icon">Districts</span>
                                                     </a>
                                                 </td>
                                             </tr>

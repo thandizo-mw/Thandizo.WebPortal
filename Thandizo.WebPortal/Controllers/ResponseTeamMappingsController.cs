@@ -73,7 +73,7 @@ namespace Thandizo.WebPortal.Controllers
             }
             return View(new TeamMappingResponse
             {
-                MappingId = _teamMemberId,
+                TeamMemberId = _teamMemberId,
                 CreatedBy = "SYS"
             });
         }
@@ -104,8 +104,8 @@ namespace Thandizo.WebPortal.Controllers
                 AppContextHelper.SetToastMessage("Failed to map response team member", MessageType.Danger, 1, Response);
                 ModelState.AddModelError("", HttpResponseHandler.Process(response));
             }
-
-            return View(responseTeamMember);
+            ViewBag.TeamMemberName = _teamMemberName;
+            return View(teamMappingResponse);
         }
 
         [HandleExceptionFilter]

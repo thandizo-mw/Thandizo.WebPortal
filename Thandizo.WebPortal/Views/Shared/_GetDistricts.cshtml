@@ -23,7 +23,7 @@
                 {
                     <tr>
                         <td>@Html.DisplayFor(modelItem => item.DistrictName)</td>
-                        <td>
+                        <td class="table-action-button-100">
                             <label class="district-code" hidden>@Html.DisplayFor(modelItem => item.DistrictCode)</label>
                             <a href='#' class="select-district btn btn-primary btn-sm">
                                 <i class="fa fa-check"></i><span class="with-icon">Select</span>
@@ -42,7 +42,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#dtDistrictsDataTable').DataTable({
-            scrollY: '350px',
+            scrollY: '200px',
             scrollCollapse: true,
             paging: false
         });
@@ -50,7 +50,7 @@
         $("#dtDistrictsDataTable").on("click", ".select-district", function () {
             var districtName = $(this).parents('tr').find("td:eq(0)").text();
             var districtCode = $(this).parents('tr').find(".district-code").text();
-            console.log("loantype" + districtName)
+            
             $("#txtDistrictName").val(districtName);
             $("#txtDistrictCode").val(districtCode);
             $('#searchDistrictsModal').modal('hide');

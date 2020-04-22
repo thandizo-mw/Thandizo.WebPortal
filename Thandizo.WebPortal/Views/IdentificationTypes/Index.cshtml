@@ -43,6 +43,7 @@
                                 <thead>
                                     <tr>
                                         <th>Description</th>
+                                        <th>External Reference Number</th>
                                         <th></th>
                                         <th></th>
                                         <th></th>
@@ -63,6 +64,7 @@
                                         {
                                             <tr>
                                                 <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.ExternalReferenceNumber)</td>
                                                 <td>
                                                     <a asp-action="Details" asp-route-identificationTypeId="@item.IdentificationTypeId">
                                                         <i class="fa fa-search"></i><span class="with-icon">View</span>

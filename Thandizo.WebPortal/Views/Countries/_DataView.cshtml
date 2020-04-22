@@ -1,0 +1,23 @@
+﻿@model Thandizo.DataModels.Core.CountryDTO
+
+<div class="row">
+    <div class="col-md-2 text-right">
+        <label class="bold-text-600 txt-dark">Country Name</label>
+    </div><div class="col-md-10">
+        @Html.DisplayFor(model => model.CountryName)
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 text-right">
+        <label class="bold-text-600 txt-dark">Code</label>
+    </div><div class="col-md-10">
+        @Html.DisplayFor(model => model.CountryCode)
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 text-right">
+        <label class="bold-text-600 txt-dark">External Reference Number</label>
+    </div><div class="col-md-10">
+        @Html.DisplayFor(model => model.ExternalReferenceNumber)
+    </div>
+</div>

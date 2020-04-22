@@ -1,0 +1,36 @@
+﻿@model Thandizo.DataModels.DataCenters.Responses.DataCenterResponse
+
+<div class="row">
+    <div class="col-md-2 text-right">
+        <label class="bold-text-600 txt-dark">Center Name</label>
+    </div><div class="col-md-10">
+        @Html.DisplayFor(model => model.CenterName)
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 text-right">
+        <label class="bold-text-600 txt-dark">District</label>
+    </div><div class="col-md-10">
+        @Html.DisplayFor(model => model.DistrictName)
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 text-right">
+        <label class="bold-text-600 txt-dark">Facility Type</label>
+    </div><div class="col-md-10">
+        @Html.DisplayFor(model => model.FacilityTypeName)
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 text-right">
+        <label class="bold-text-600 txt-dark">Is Health Facility</label>
+    </div>
+    @if (Model.IsHealthFacility == true)
+    {
+        <div class="col-md-10">Yes</div>
+    }
+    else
+    {
+        <div class="col-md-10">No</div>
+    }
+</div>

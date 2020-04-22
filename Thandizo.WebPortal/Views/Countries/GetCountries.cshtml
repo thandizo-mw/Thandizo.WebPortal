@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Thandizo.DataModels.Core.CountryDTO>
+
+<div class="table-responsive table-extended">
+    <table id="dtCountriesDataTable" class="table countries-table table-hover display  pb-30 dt-dataTable">
+        <thead>
+            <tr>
+                <th>Country Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model is null)
+            {
+                <tr>
+                    <td colspan="5">
+                        <div class="text-center">No Data Found</div>
+                    </td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.CountryName)</td>
+                        <td class="table-action-button-100">
+                            <label class="country-code" hidden>@Html.DisplayFor(modelItem => item.CountryCode)</label>
+                            <a href='#' class="select-country btn btn-primary btn-sm">
+                                <i class="fa fa-check"></i><span class="with-icon">Select</span>
+                            </a>
+                        </td>
+
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#dtCountrysDataTable').DataTable({
+            scrollY: '200px',
+            scrollCollapse: true,
+            paging: false
+        });
+
+        $("#dtCountriesDataTable").on("click", ".select-country", function () {
+            var countryName = $(this).parents('tr').find("td:eq(0)").text();
+            var countryCode = $(this).parents('tr').find(".country-code").text();
+            
+            $("#txtCountryName").val(countryName);
+            $("#txtCountryCode").val(countryCode);
+            $('#searchCountriesModal').modal('hide');
+        });
+    });
+</script>

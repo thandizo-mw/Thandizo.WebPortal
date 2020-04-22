@@ -1,26 +1,25 @@
-﻿@model Thandizo.DataModels.Core.IdentificationTypeDTO
+﻿@model Thandizo.DataModels.Core.NationalityDTO
 
 
 <div class="form-group row">
-    <label class="bold-text-600 col-md-3 control-label">Description</label>
+    <label class="bold-text-600 col-md-3 control-label">Nationality Name</label>
 
     <div class="col-md-6">
         <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
             <input type="text" class="form-control input" placeholder="Enter name"
-                   asp-for="Description" required>
+                   asp-for="NationalityName" required>
         </div>
     </div>
 </div>
-
 <div class="form-group row">
-    <label class="bold-text-600 col-md-3 control-label">External Reference Number</label>
+    <label class="bold-text-600 col-md-3 control-label">Code</label>
 
     <div class="col-md-6">
         <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
-            <input type="text" class="form-control input" placeholder="Enter number"
-                   asp-for="ExternalReferenceNumber" required>
+            <input type="text" class="form-control input" placeholder="Enter code"
+                   asp-for="NationalityCode" required>
         </div>
     </div>
 </div>

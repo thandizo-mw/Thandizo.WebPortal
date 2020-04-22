@@ -95,7 +95,22 @@
 </div>
 @section scripts {
     <script>
-    $(document).ready(function () {
+        $(document).ready(function () {
+        $('#dtDistrictsDataTable').DataTable({
+                scrollY: '200px',
+                scrollCollapse: true,
+                paging: false
+        });
+
+        $("#dtDistrictsDataTable").on("click", ".select-district", function () {
+            var districtName = $(this).parents('tr').find("td:eq(0)").text();
+            var districtCode = $(this).parents('tr').find(".district-code").text();
+
+            $("#txtDistrictName").val(districtName);
+            $("#txtDistrictCode").val(districtCode);
+            $('#searchDistrictsModal').modal('hide');
+        });
+
         $('#btnSelectDistrict').click(function () {
 
             getDistricts();

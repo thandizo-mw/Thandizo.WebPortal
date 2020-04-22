@@ -1,0 +1,132 @@
+﻿@model Thandizo.DataModels.ViewModels.Patients.PatientResponseViewModel
+
+<div class="row heading-bg  bg-th-grey">
+    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+        <h5 class="txt-dark">Edit</h5>
+    </div>
+    <!-- Breadcrumb -->
+    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+        <ol class="breadcrumb">
+            <li><a asp-action="Dashboard" asp-controller="Home">Dashboard</a></li>
+            <li><a asp-action="ConfirmPatients"><span>Patient</span></a></li>
+            <li><a class="active"><span>Edit</span></a></li>
+        </ol>
+    </div>
+    <!-- /Breadcrumb -->
+</div>
+<!-- /Title -->
+
+<div class="row">
+    <div class="col-md-5 text-right col-lg-offset-7">
+        <div class="btn-group" role="group" aria-label="...">
+            <button class="btn btn-default btn-sm" onclick="location.href='@Url.Action("ConfirmPatients", "Patients")'">
+                <i class="fa fa-arrow-left"></i><span class="with-icon">Back</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Row -->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-default card-view">
+            <div class="panel-heading">
+
+                <div class="clearfix"></div>
+            </div>
+            <div class="panel-wrapper collapse in">
+                <form asp-action="Edit" class="form-horizontal">
+                    <input type="hidden" asp-for="PatientResponse.PatientId" />
+                    <input type="hidden" asp-for="PatientResponse.CreatedBy" />
+                    <input type="hidden" asp-for="PatientResponse.SourceId" />
+                    <input type="hidden" asp-for="PatientResponse.DataCenterId" />
+                    <div class="panel-body">
+                        @{
+                            Html.RenderPartial("../Shared/_MessageOutput");
+                        }
+
+                        @{
+                            await Html.RenderPartialAsync("_DataEntry");
+                        }
+
+                    </div>
+                    <div class="panel-footer panel-default">
+                        <div class="text-right">
+                            <div class="btn-group" role="group" aria-label="...">
+                                <button class="btn btn-primary btn-sm" type="submit">
+                                    <i class="fa fa-save"></i><span class="with-icon">Save</span>
+                                </button>
+                                <button class="btn btn-default btn-sm" type="button" onclick="location.href='@Url.Action("ConfirmPatients", "Patients")'">
+                                    <i class="fa fa-times"></i><span class="with-icon">Cancel</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Row -->
+@section scripts {
+    <script>
+    $(document).ready(function () {
+        $('#btnSelectDistrict').click(function () {
+
+            getDistricts();
+        });
+        $('#btnRefreshDistricts').click(function () {
+
+            getDistricts();
+        });
+
+         $('#btnSelectCountry').click(function () {
+
+            getCountries();
+        });
+        $('#btnRefreshCountries').click(function () {
+
+            getCountries();
+        });
+
+         $('#btnSelectNationality').click(function () {
+
+            getNationalities();
+        });
+        $('#btnRefreshNationalities').click(function () {
+
+            getNationalities();
+        });
+
+        function getDistricts() {
+            $('#searchDistrictsModal').modal('show');
+            $('#divSearchDistrictError').html("");
+            $("#divProcessDistricts").show();
+
+            $('#divRetrievedDistricts').load('@Url.Content("/Districts/GetDistricts")', function (data) {
+                $("#divProcessDistricts").hide();
+            });
+        }
+
+        function getCountries() {
+            $('#searchCountriesModal').modal('show');
+            $('#divSearchCountryError').html("");
+            $("#divProcessCountries").show();
+
+            $('#divRetrievedCountries').load('@Url.Content("/Countries/GetCountries")', function (data) {
+                $("#divProcessCountries").hide();
+            });
+        }
+
+        function getNationalities() {
+            $('#searchNationalitiesModal').modal('show');
+            $('#divSearchNationalityError').html("");
+            $("#divProcessNationalities").show();
+
+            $('#divRetrievedNationalities').load('@Url.Content("/Nationalities/GetNationalities")', function (data) {
+                $("#divProcessNationalities").hide();
+            });
+        }
+    });
+    </script>
+}
