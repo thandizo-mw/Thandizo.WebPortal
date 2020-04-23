@@ -2632,6 +2632,10 @@ a.toggle-left-nav-btn {
         padding: 0 9px;
     }
 
+    .breadcrumb > li > a.active > span {
+        font-weight: 600 !important;
+    }
+
 footer {
     padding-bottom: 13px;
     padding-top: 13px;
@@ -7051,6 +7055,26 @@ footer .brand-logo-footer {
 .dt-dataTable > thead > tr > th {
     color: #2f2c2c;
     font-weight: 600;
+}
+
+.dt-dataTableSelect > tbody > tr > td {
+    padding: 6px !important;
+}
+
+.table-th-action {
+    width: 80px !important;
+}
+
+.table-th-200 {
+    width: 200px !important;
+}
+
+.table-th-150 {
+    width: 150px !important;
+}
+
+.table-th-100 {
+    width: 100px !important;
 }
 /*span*/
 span.with-icon {
