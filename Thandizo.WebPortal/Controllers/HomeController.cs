@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using IdentityModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
+using Thandizo.WebPortal.Helpers;
 using Thandizo.WebPortal.Models;
 using Thandizo.WebPortal.Services;
 
@@ -19,6 +21,8 @@ namespace Thandizo.WebPortal.Controllers
         [Authorize]
         public IActionResult Dashboard()
         {
+            var user = HttpContext.User;
+            var fullname = AppContextHelper.GetStringValueClaim(HttpContext, JwtClaimTypes.PreferredUserName);
             //_cookieService.Add("UserName", "vvinkhumbo");
             // _cookieService.Add("UserId", "vvin");
             //_cookieService.Add("PhoneNumber", "0884776533");
