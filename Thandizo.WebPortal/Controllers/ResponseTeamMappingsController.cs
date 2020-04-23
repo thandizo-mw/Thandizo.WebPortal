@@ -38,7 +38,7 @@ namespace Thandizo.WebPortal.Controllers
             }
         }
         [HandleExceptionFilter]
-        public async Task<IActionResult> Index(int teamMemberId, string teamMemberName)
+        public async Task<IActionResult> Index(int teamMemberId = 0, string teamMemberName="")
         {
             if (teamMemberId == 0 && (teamMemberName.Equals("") || teamMemberName.Equals(null)))
             {
