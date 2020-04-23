@@ -26,6 +26,13 @@ namespace Thandizo.WebPortal.Controllers
             _configuration = configuration;
         }
 
+        public string IdentityServerAuthority
+        {
+            get
+            {
+                return _configuration["IdentityServerAuthority"];
+            }
+        }
         public string CoreApiUrl
         {
             get

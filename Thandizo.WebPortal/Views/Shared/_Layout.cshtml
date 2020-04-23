@@ -12,8 +12,8 @@
     <meta name="author" content="angledimension" />
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="favicon.ico">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="~/favicon.ico">
+    <link rel="icon" href="~/favicon.ico" type="image/x-icon">
 
     <!-- Toastr Alerts CSS-->
     <link href="~/vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css" rel="stylesheet" type="text/css">
@@ -35,7 +35,7 @@
         <!-- Top Menu Items -->
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <a id="toggle_nav_btn" class="toggle-left-nav-btn inline-block mr-20 pull-left" href="javascript:void(0);"><i class="fa fa-bars"></i></a>
-            <a href="index.html"><img class="brand-img-logo pull-left thandizo-logo-top" src="~/img/logo.png" alt="brand" /></a>
+            <a asp-action="dashboard" asp-controller="Home"><img class="brand-img-logo pull-left thandizo-logo-top" src="~/img/logo.png" alt="brand" /></a>
             <ul class="nav navbar-right top-nav pull-right">
                 <li>
                     <a href="javascript:void(0);" data-toggle="collapse" data-target="#site_navbar_search">
@@ -52,7 +52,7 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                            <a asp-controller="Home" asp-action="Logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                         </li>
                     </ul>
                 </li>
@@ -84,6 +84,9 @@
                 </li>
                 <li>
                     <a asp-controller="Patients" asp-action="ConfirmPatients"><i class="fa fa-wheelchair mr-10"></i>Confirm Patients</a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-wheelchair mr-10"></i>Patient Daily statuses</a>
                 </li>
                 <li>
                     <a href="javascript:void(0);" data-toggle="collapse" data-target="#sm_dr"><i class="fa fa-list-alt mr-10"></i>Static Maintenance<span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
@@ -134,6 +137,23 @@
                         </li>
                     </ul>
                 </li>
+                <li>
+                    <a href="javascript:void(0);" data-toggle="collapse" data-target="#notifications_dr"><i class="fa fa-comment-o mr-10"></i>Notifications <span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
+                    <ul id="notifications_dr" class="collapse collapse-level-1">
+                        <li>
+                            <a href="#">WhatsApp</a>
+                        </li>
+                        <li>
+                            <a href="#">SMS</a>
+                        </li>
+                        <li>
+                            <a href="#">USSD</a>
+                        </li>
+                        <li>
+                            <a href="#">Email</a>
+                        </li>
+                    </ul>
+                </li>
                 
             </ul>
         </div>
@@ -145,14 +165,8 @@
                 <!-- Footer -->
                 <footer class="footer container-fluid pl-30 pr-30">
                     <div class="row">
-                        <div class="col-sm-5">
-                            <a href="index.html" class="brand-logo-footer mr-10"><img class="thandizo-logo-footer" src="~/img/logo_03.png" alt="logo" /></a>
-                            <ul class="footer-link nav navbar-nav">
-                                <li class="logo-footer"><a href="#">help</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-sm-7 text-right">
-                            <p>2020 &copy; <a href="http://angledimension.com/">Angle Dimesion</a></p>
+                        <div class="col-sm-12 text-right">
+                            <p>2020 &copy; <a href="http://angledimension.com/" target="_blank">Angle Dimension</a> | <a href="https://thandizo.mw/" target="_blank">Thandizo</a></p>
                         </div>
                     </div>
                 </footer>

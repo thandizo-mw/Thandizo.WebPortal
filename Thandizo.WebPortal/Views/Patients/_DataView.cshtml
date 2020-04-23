@@ -4,90 +4,152 @@
     <span class="fa fa-exclamation"></span>
     <span class="bold-text-600">Alert: </span>Are you sure you want to confirm this record?
 </div>
-<div class="row">
-    <div class="col-md-2 text-right">
-        <label class="bold-text-600 txt-dark">Name</label>
-    </div><div class="col-md-10">
-        @Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.OtherNames) @Html.DisplayFor(model => model.LastName)
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-2 text-right">
-        <label class="bold-text-600 txt-dark">Status</label>
-    </div><div class="col-md-10">
-        @Html.DisplayFor(model => model.PatientStatusName)
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-2 text-right">
-        <label class="bold-text-600 txt-dark">Date of Birth</label>
-    </div><div class="col-md-10">
-        @Model.DateOfBirth.ToString("dd-MMM-yyyy")
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-2 text-right">
-        <label class="bold-text-600 txt-dark">Gender</label>
-    </div>
-    <div class="col-md-10">
-        @Html.DisplayFor(model => model.GenderName)
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-2 text-right">
-        <label class="bold-text-600 txt-dark">Phone Number</label>
-    </div><div class="col-md-10">
-        @Html.DisplayFor(model => model.PhoneNumber)
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-2 text-right">
-        <label class="bold-text-600 txt-dark">Identification Type</label>
-    </div><div class="col-md-10">
-        @Html.DisplayFor(model => model.IdentitificationTypeName)
-    </div>
-</div>
+<div class="col-md-6">
 
-<div class="row">
-    <div class="col-md-2 text-right">
-        <label class="bold-text-600 txt-dark">Indentification Number</label>
-    </div><div class="col-md-10">
-        @Html.DisplayFor(model => model.IdentificationNumber)
+    <div class="row">
+        <div class="col-md-5 text-right">
+            <label class="bold-text-600 txt-dark">Name</label>
+        </div><div class="col-md-7 txt-dark">
+            @Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.OtherNames) @Html.DisplayFor(model => model.LastName)
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-2 text-right">
-        <label class="bold-text-600 txt-dark">Physical Address</label>
-    </div><div class="col-md-10">
-        @Html.DisplayFor(model => model.PhysicalAddress)
+    <div class="row">
+        <div class="col-md-5 text-right">
+            <label class="bold-text-600 txt-dark">Status</label>
+        </div><div class="col-md-7 txt-dark">
+            @Html.DisplayFor(model => model.PatientStatusName)
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-2 text-right">
-        <label class="bold-text-600 txt-dark">Residing District</label>
-    </div><div class="col-md-10">
-        @Html.DisplayFor(model => model.DistrictName)
+    <div class="row">
+        <div class="col-md-5 text-right">
+            <label class="bold-text-600 txt-dark">Date of Birth</label>
+        </div><div class="col-md-7 txt-dark">
+            @Model.DateOfBirth.ToString("dd-MMM-yyyy")
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-2 text-right">
-        <label class="bold-text-600 txt-dark">Home Address</label>
-    </div><div class="col-md-10">
-        @Html.DisplayFor(model => model.HomeAddress)
+    <div class="row">
+        <div class="col-md-5 text-right">
+            <label class="bold-text-600 txt-dark">Gender</label>
+        </div>
+        <div class="col-md-7 txt-dark">
+            @Html.DisplayFor(model => model.GenderName)
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-2 text-right">
-        <label class="bold-text-600 txt-dark">Nationality</label>
-    </div><div class="col-md-10">
-        @Html.DisplayFor(model => model.NationalityName)
+    <div class="row">
+        <div class="col-md-5 text-right">
+            <label class="bold-text-600 txt-dark">Phone Number</label>
+        </div><div class="col-md-7 txt-dark">
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </div>
     </div>
-</div>
+    <div class="row">
+        <div class="col-md-5 text-right">
+            <label class="bold-text-600 txt-dark">Identification Type</label>
+        </div><div class="col-md-7 txt-dark">
+            @Html.DisplayFor(model => model.IdentitificationTypeName)
+        </div>
+    </div>
 
-<div class="row">
-    <div class="col-md-2 text-right">
-        <label class="bold-text-600 txt-dark">Source</label>
-    </div><div class="col-md-10">
-        @Html.DisplayFor(model => model.SourceName)
+    <div class="row">
+        <div class="col-md-5 text-right">
+            <label class="bold-text-600 txt-dark">Indentification Number</label>
+        </div><div class="col-md-7 txt-dark">
+            @Html.DisplayFor(model => model.IdentificationNumber)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5 text-right">
+            <label class="bold-text-600 txt-dark">Physical Address</label>
+        </div><div class="col-md-7 txt-dark">
+            @Html.DisplayFor(model => model.PhysicalAddress)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5 text-right">
+            <label class="bold-text-600 txt-dark">Residing District</label>
+        </div><div class="col-md-7 txt-dark">
+            @Html.DisplayFor(model => model.DistrictName)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5 text-right">
+            <label class="bold-text-600 txt-dark">Home Address</label>
+        </div><div class="col-md-7 txt-dark">
+            @Html.DisplayFor(model => model.HomeAddress)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5 text-right">
+            <label class="bold-text-600 txt-dark">Home Country</label>
+        </div><div class="col-md-7 txt-dark">
+            @Html.DisplayFor(model => model.CountryName)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5 text-right">
+            <label class="bold-text-600 txt-dark">Nationality</label>
+        </div><div class="col-md-7 txt-dark">
+            @Html.DisplayFor(model => model.NationalityName)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5 text-right">
+            <label class="bold-text-600 txt-dark">Next of Kin First Name</label>
+        </div><div class="col-md-7 txt-dark">
+            @Html.DisplayFor(model => model.NextOfKinFirstName)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5 text-right">
+            <label class="bold-text-600 txt-dark">Next of Kin Last Name</label>
+        </div><div class="col-md-7 txt-dark">
+            @Html.DisplayFor(model => model.NextOfKinLastName)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5 text-right">
+            <label class="bold-text-600 txt-dark">Next of Kin Phone Number</label>
+        </div><div class="col-md-7 txt-dark">
+            @Html.DisplayFor(model => model.NextOfKinPhoneNumber)
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-5 text-right">
+            <label class="bold-text-600 txt-dark">Source</label>
+        </div><div class="col-md-7 txt-dark">
+            @Html.DisplayFor(model => model.SourceName)
+        </div>
+    </div>
+</div>
+<div class="col-md-6">
+
+    <div class="form-group row">
+        <label class="bold-text-600 col-md-5 control-label">Program</label>
+
+        <div class="col-md-6">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-arrow-down"></i></span>
+                <Select class="form-control input" required>
+                    <option>COVID-19 Point of Entry</option>
+                    <option>COVID-19 Case-Based Surveillance</option>
+                    <option>COVID-19 Rumour</option>
+                </Select>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="bold-text-600 col-md-5 control-label">Facility</label>
+
+        <div class="col-md-6">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-arrow-down"></i></span>
+                <Select class="form-control input" required>
+                    <option>District Hospital</option>
+                    <option>Medical Center Facility</option>
+                </Select>
+            </div>
+        </div>
     </div>
 </div>

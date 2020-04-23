@@ -38,16 +38,15 @@
                     }
                     <div class="table-wrap">
                         <div class="table-responsive">
-                            <table id="dtDataTable" class="table table-hover display  pb-30 dt-dataTable">
+                            <table id="dtDataTable" class="table table-hover display  dt-dataTable">
                                 <thead>
                                     <tr>
                                         <th>Name</th>
                                         <th>Phone Number</th>
-                                        <th>Email</th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
+                                        <th class="table-th-action"></th>
+                                        <th class="table-th-action"></th>
+                                        <th class="table-th-action"></th>
+                                        <th class="table-th-action"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -66,7 +65,6 @@
                                             <tr>
                                                 <td>@Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.OtherNames) @Html.DisplayFor(modelItem => item.Surname) </td>
                                                 <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.EmailAddress)</td>
                                                 <td>
                                                     <a asp-action="Details" asp-route-teamMemberId="@item.TeamMemberId">
                                                         <i class="fa fa-search"></i><span class="with-icon">View</span>
@@ -78,13 +76,13 @@
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <a asp-action="Delete" asp-route-teamMemberId="@item.TeamMemberId">
+                                                    <a asp-action="Delete" class="text-danger" asp-route-teamMemberId="@item.TeamMemberId">
                                                         <i class="fa fa-trash"></i><span class="with-icon">Delete</span>
                                                     </a>
                                                 </td>
                                                 <td>
                                                     <a asp-action="Index" asp-controller="ResponseTeamMappings" asp-route-teamMemberId="@item.TeamMemberId" asp-route-teamMemberName="@item.FirstName @item.OtherNames @item.Surname">
-                                                        <i class="fa fa-map-marker"></i><span class="with-icon">Map Member</span>
+                                                        <i class="fa fa-map-marker"></i><span class="with-icon">Map</span>
                                                     </a>
                                                 </td>
                                             </tr>

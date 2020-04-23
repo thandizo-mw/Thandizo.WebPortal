@@ -33,6 +33,10 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="panel panel-default card-view">
+            <div class="panel-heading">
+                <h6 class="panel-title txt-dark">Region: @ViewBag.RegionName</h6>
+                <div class="clearfix"></div>
+            </div>
             <div class="panel-wrapper collapse in">
                 <div class="panel-body">
                     @{
@@ -43,12 +47,11 @@
                             <table id="dtDataTable" class="table table-hover display  pb-30 dt-dataTable">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Latitude</th>
-                                        <th>Logitude</th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
+                                        <th class="table-th-150">District Code</th>
+                                        <th>District Name</th>
+                                        <th class="table-th-action"></th>
+                                        <th class="table-th-action"></th>
+                                        <th class="table-th-action"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -65,9 +68,8 @@
                                         @foreach (var item in Model)
                                         {
                                             <tr>
+                                                <td>@Html.DisplayFor(modelItem => item.DistrictCode)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.DistrictName)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.Latitude)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.Longitude)</td>
                                                 <td>
                                                     <a asp-action="Details" asp-route-districtCode="@item.DistrictCode">
                                                         <i class="fa fa-search"></i><span class="with-icon">View</span>
@@ -79,7 +81,7 @@
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <a asp-action="Delete" asp-route-districtCode="@item.DistrictCode">
+                                                    <a asp-action="Delete" class="text-danger" asp-route-districtCode="@item.DistrictCode">
                                                         <i class="fa fa-trash"></i><span class="with-icon">Delete</span>
                                                     </a>
                                                 </td>

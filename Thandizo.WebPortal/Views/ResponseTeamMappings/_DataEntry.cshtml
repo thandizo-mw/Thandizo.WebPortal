@@ -1,13 +1,55 @@
 ﻿@model Thandizo.DataModels.Core.Responses.TeamMappingResponse
 
-<div class="col-md-8 col-lg-offset-2">
-    <div class="input-group">
-        <input type="text" class="form-control" id="txtDistrictName" asp-for="DistrictName" required
-               placeholder="District" readonly />
-        <div class="input-group-btn">
-            <button type="button" class="btn btn-default" id="btnSelectDistrict">
-                <i class="fa fa-search"></i><span>Select</span>
-            </button>
+<div class="col-md-10">
+    <label class="bold-text-600 col-md-3 control-label">Select District</label>
+    <div class="col-md-9">
+        <div class="input-group">
+
+            <input type="text" class="form-control" id="txtDistrictName" asp-for="DistrictName" required
+                   placeholder="District" readonly />
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default" id="btnSelectDistrict">
+                    <i class="fa fa-search"></i><span>Select</span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="searchDistrictsModal" class="modal fade" role="dialog"
+     aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Select District</h4>
+            </div>
+            <div class="modal-body">
+                <div id="divsearchDictrictError"></div>
+                <div id="divRetrievedDistricts"></div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div id="divProcessDistricts">
+                            <div class="processing-horizontal text-info text-left">
+                                <i class="fa fa-spin fa-circle-o-notch"></i><span class="with-icon">Processing</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="button" class="btn btn-warning btn-sm" id="btnRefreshDistricts">
+                                <i class="fa fa-refresh"></i><span class="with-icon">Refresh</span>
+                            </button>
+                            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" id="Cancel">
+                                <i class="fa fa-times"></i><span class="with-icon">Cancel</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

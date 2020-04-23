@@ -3,21 +3,21 @@
 <div class="row">
     <div class="col-md-2 text-right">
         <label class="bold-text-600 txt-dark">Center Name</label>
-    </div><div class="col-md-10">
+    </div><div class="col-md-10 txt-dark">
         @Html.DisplayFor(model => model.CenterName)
     </div>
 </div>
 <div class="row">
     <div class="col-md-2 text-right">
         <label class="bold-text-600 txt-dark">District</label>
-    </div><div class="col-md-10">
+    </div><div class="col-md-10 txt-dark">
         @Html.DisplayFor(model => model.DistrictName)
     </div>
 </div>
 <div class="row">
     <div class="col-md-2 text-right">
         <label class="bold-text-600 txt-dark">Facility Type</label>
-    </div><div class="col-md-10">
+    </div><div class="col-md-10 txt-dark">
         @Html.DisplayFor(model => model.FacilityTypeName)
     </div>
 </div>
@@ -27,10 +27,10 @@
     </div>
     @if (Model.IsHealthFacility == true)
     {
-        <div class="col-md-10">Yes</div>
+        <div class="col-md-10 txt-dark">Yes</div>
     }
     else
     {
-        <div class="col-md-10">No</div>
+        <div class="col-md-10 txt-dark">No</div>
     }
 </div>

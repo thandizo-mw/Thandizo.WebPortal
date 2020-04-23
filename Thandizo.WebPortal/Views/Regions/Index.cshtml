@@ -43,12 +43,10 @@
                                 <thead>
                                     <tr>
                                         <th>Name</th>
-                                        <th>Latitude</th>
-                                        <th>Longitude</th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
+                                        <th class="table-th-action"></th>
+                                        <th class="table-th-action"></th>
+                                        <th class="table-th-action"></th>
+                                        <th class="table-th-action"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -66,8 +64,6 @@
                                         {
                                             <tr>
                                                 <td>@Html.DisplayFor(modelItem => item.RegionName)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.Latitude)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.Longitude)</td>
                                                 <td>
                                                     <a asp-action="Details" asp-route-regionId="@item.RegionId">
                                                         <i class="fa fa-search"></i><span class="with-icon">View</span>
@@ -79,7 +75,7 @@
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <a asp-action="Delete" asp-route-regionId="@item.RegionId">
+                                                    <a asp-action="Delete" class="text-danger" asp-route-regionId="@item.RegionId">
                                                         <i class="fa fa-trash"></i><span class="with-icon">Delete</span>
                                                     </a>
                                                 </td>

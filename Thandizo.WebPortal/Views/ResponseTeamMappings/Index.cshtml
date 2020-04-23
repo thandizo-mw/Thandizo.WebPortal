@@ -2,14 +2,14 @@
 
 <div class="row heading-bg  bg-th-grey">
     <div class="col-lg-5 col-md-4 col-sm-4 col-xs-12">
-        <h5 class="txt-dark">Member Mapping (@ViewBag.TeamMemberName )</h5>
+        <h5 class="txt-dark">District Mapping</h5>
     </div>
     <!-- Breadcrumb -->
     <div class="col-lg-7 col-sm-8 col-md-8 col-xs-12">
         <ol class="breadcrumb">
             <li><a asp-action="Dashboard" asp-controller="Home">Dashboard</a></li>
             <li><a asp-action="Index" asp-controller="ResponseTeamMembers"><span>Response Team Members</span></a></li>
-            <li><a class="active"><span>Member Mapping</span></a></li>
+            <li><a class="active"><span>District Mapping</span></a></li>
         </ol>
     </div>
     <!-- /Breadcrumb -->
@@ -32,6 +32,10 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="panel panel-default card-view">
+            <div class="panel-heading">
+                <h6 class="panel-title txt-dark">Member Name: @ViewBag.TeamMemberName</h6>
+                <div class="clearfix"></div>
+            </div>
             <div class="panel-wrapper collapse in">
                 <div class="panel-body">
                     @{
@@ -39,12 +43,12 @@
                     }
                     <div class="table-wrap">
                         <div class="table-responsive">
-                            <table id="dtDataTable" class="table table-hover display  pb-30 dt-dataTable">
+                            <table id="dtDataTable" class="table table-hover display   dt-dataTable">
                                 <thead>
                                     <tr>
                                         <th>District</th>
-                                        <th></th>
-                                        <th></th>
+                                        <th class="table-th-action"></th>
+                                        <th class="table-th-action"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -68,7 +72,7 @@
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <a asp-action="Delete" asp-route-mappingId="@item.MappingId">
+                                                    <a asp-action="Delete" class="text-danger" asp-route-mappingId="@item.MappingId">
                                                         <i class="fa fa-trash"></i><span class="with-icon">Delete</span>
                                                     </a>
                                                 </td>
