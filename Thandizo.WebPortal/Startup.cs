@@ -1,18 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Threading.Tasks;
 using IdentityModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Threading.Tasks;
 
 namespace Thandizo.WebPortal
 {
@@ -31,7 +28,6 @@ namespace Thandizo.WebPortal
             services.AddControllersWithViews()
                 .AddRazorRuntimeCompilation();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddDomainServices();
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -70,6 +66,7 @@ namespace Thandizo.WebPortal
                 options.Scope.Add("profile");
                 options.Scope.Add("offline_access");
                 options.ClaimActions.MapUniqueJsonKey(JwtClaimTypes.PreferredUserName, JwtClaimTypes.PreferredUserName);
+                options.ClaimActions.MapUniqueJsonKey("admin", "admin");
 
                 options.Events.OnRemoteFailure = context =>
                 {

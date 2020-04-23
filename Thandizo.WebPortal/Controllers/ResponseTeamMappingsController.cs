@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using AngleDimension.Standard.Http.HttpServices;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -18,16 +19,16 @@ namespace Thandizo.WebPortal.Controllers
     public class ResponseTeamMappingsController : Controller
     {
         private readonly IConfiguration _configuration;
-        private readonly ICookieService _cookieService;
-        IHttpRequestHandler _httpRequestHandler;
+        
+        
         static int _teamMemberId;
         static string _teamMemberName;
 
-        public ResponseTeamMappingsController(IConfiguration configuration, ICookieService cookieService, IHttpRequestHandler httpRequestHandler)
+        public ResponseTeamMappingsController(IConfiguration configuration)
         {
             _configuration = configuration;
-            _httpRequestHandler = httpRequestHandler;
-            _cookieService = cookieService;
+            
+            
         }
 
         public string CoreApiUrl
@@ -52,7 +53,7 @@ namespace Thandizo.WebPortal.Controllers
             var ResponseTeamMembers = Enumerable.Empty<TeamMappingResponse>();
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await _httpRequestHandler.Get(accessToken, url);
+            var response = await HttpRequestFactory.Get(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -96,7 +97,7 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{CoreApiUrl}ResponseTeamMappings/Add";
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await _httpRequestHandler.Post(accessToken, url, responseTeamMember);
+            var response = await HttpRequestFactory.Post(accessToken, url, responseTeamMember);
 
             if (response.StatusCode == HttpStatusCode.Created)
             {
@@ -136,7 +137,7 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{CoreApiUrl}ResponseTeamMappings/Update";
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await _httpRequestHandler.Put(accessToken, url,  responseTeamMember);
+            var response = await HttpRequestFactory.Put(accessToken, url,  responseTeamMember);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -176,7 +177,7 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{CoreApiUrl}ResponseTeamMappings/Delete?mappingId={mappingId}";
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await _httpRequestHandler.Delete(accessToken, url); 
+            var response = await HttpRequestFactory.Delete(accessToken, url); 
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -197,7 +198,7 @@ namespace Thandizo.WebPortal.Controllers
             var responseTeamMember = new TeamMappingResponse();
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await _httpRequestHandler.Get(accessToken, url);
+            var response = await HttpRequestFactory.Get(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
