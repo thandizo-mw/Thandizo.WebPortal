@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using AngleDimension.Standard.Http.HttpServices;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -19,14 +20,10 @@ namespace Thandizo.WebPortal.Controllers
     public class ResponseTeamMembersController : Controller
     {
         private readonly IConfiguration _configuration;
-        private readonly ICookieService _cookieService;
-        IHttpRequestHandler _httpRequestHandler;
 
-        public ResponseTeamMembersController(IConfiguration configuration,ICookieService cookieService, IHttpRequestHandler httpRequestHandler)
+        public ResponseTeamMembersController(IConfiguration configuration)
         {
             _configuration = configuration;
-            _httpRequestHandler = httpRequestHandler;
-            _cookieService = cookieService;
         }
 
         public string CoreApiUrl
@@ -44,7 +41,7 @@ namespace Thandizo.WebPortal.Controllers
             var ResponseTeamMembers = Enumerable.Empty<ResponseTeamMemberDTO>();
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await _httpRequestHandler.Get(accessToken, url);
+            var response = await HttpRequestFactory.Get(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -62,7 +59,7 @@ namespace Thandizo.WebPortal.Controllers
         {
             return View(new ResponseTeamMemberDTO
             {
-                CreatedBy = "SYS"
+                CreatedBy = HttpContext.User.Identity.Name
             });
         }
 
@@ -74,11 +71,11 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{CoreApiUrl}ResponseTeamMembers/Add";
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await _httpRequestHandler.Post(accessToken, url, responseTeamMember);
+            var response = await HttpRequestFactory.Post(accessToken, url, responseTeamMember);
 
             if (response.StatusCode == HttpStatusCode.Created)
             {
-                var identityResponse =  await _httpRequestHandler.Post("", new UserDTO { PhoneNumber = responseTeamMember.PhoneNumber});
+                var identityResponse =  await HttpRequestFactory.Post("", new UserDTO { PhoneNumber = responseTeamMember.PhoneNumber});
                 if (identityResponse.StatusCode == HttpStatusCode.Created)
                 {
                     AppContextHelper.SetToastMessage("User account has been successfully created", MessageType.Danger, 1, Response);
@@ -110,7 +107,7 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{CoreApiUrl}ResponseTeamMembers/Update";
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await _httpRequestHandler.Put(accessToken, url,  responseTeamMember);
+            var response = await HttpRequestFactory.Put(accessToken, url,  responseTeamMember);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -147,7 +144,7 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{CoreApiUrl}ResponseTeamMembers/Delete?teamMemberId={teamMemberId}";
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await _httpRequestHandler.Delete(accessToken, url); 
+            var response = await HttpRequestFactory.Delete(accessToken, url); 
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -168,7 +165,7 @@ namespace Thandizo.WebPortal.Controllers
             var responseTeamMember = new ResponseTeamMemberDTO();
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await _httpRequestHandler.Get(accessToken, url);
+            var response = await HttpRequestFactory.Get(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -192,7 +189,7 @@ namespace Thandizo.WebPortal.Controllers
             var responseTeamMember = Enumerable.Empty<ResponseTeamMemberDTO>();
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await _httpRequestHandler.Get(accessToken, url);
+            var response = await HttpRequestFactory.Get(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {

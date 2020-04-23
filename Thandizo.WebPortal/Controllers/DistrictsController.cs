@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using AngleDimension.Standard.Http.HttpServices;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
@@ -17,17 +18,14 @@ namespace Thandizo.WebPortal.Controllers
     public class DistrictsController : Controller
     {
         private readonly IConfiguration _configuration;
-        private readonly ICookieService _cookieService;
-        IHttpRequestHandler _httpRequestHandler;
-
         static int _regionId;
         static string _regionName;
 
-        public DistrictsController(IConfiguration configuration,ICookieService cookieService, IHttpRequestHandler httpRequestHandler)
+        public DistrictsController(IConfiguration configuration)
         {
             _configuration = configuration;
-            _httpRequestHandler = httpRequestHandler;
-            _cookieService = cookieService;
+
+
         }
 
         public string CoreApiUrl
@@ -39,7 +37,7 @@ namespace Thandizo.WebPortal.Controllers
         }
 
         [HandleExceptionFilter]
-        public async Task<IActionResult> Index(int regionId=0, string regionName="")
+        public async Task<IActionResult> Index(int regionId = 0, string regionName = "")
         {
             if (regionId == 0 && _regionId == 0)
             {
@@ -56,7 +54,7 @@ namespace Thandizo.WebPortal.Controllers
             var districts = Enumerable.Empty<DistrictResponse>();
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await _httpRequestHandler.Get(accessToken, url);
+            var response = await HttpRequestFactory.Get(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -74,7 +72,7 @@ namespace Thandizo.WebPortal.Controllers
         {
             return View(new DistrictResponse
             {
-                CreatedBy = _cookieService.Get("UserName"),
+                CreatedBy = HttpContext.User.Identity.Name,
                 RegionId = _regionId,
                 RegionName = _regionName
             });
@@ -89,7 +87,7 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{CoreApiUrl}Districts/Add";
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await _httpRequestHandler.Post(accessToken, url, district);
+            var response = await HttpRequestFactory.Post(accessToken, url, district);
 
             if (response.StatusCode == HttpStatusCode.Created)
             {
@@ -121,7 +119,7 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{CoreApiUrl}Districts/Update";
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await _httpRequestHandler.Put(accessToken, url,  district);
+            var response = await HttpRequestFactory.Put(accessToken, url, district);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -158,7 +156,7 @@ namespace Thandizo.WebPortal.Controllers
             var District = new DistrictDTO();
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await _httpRequestHandler.Delete(accessToken, url); 
+            var response = await HttpRequestFactory.Delete(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -179,7 +177,7 @@ namespace Thandizo.WebPortal.Controllers
             var district = new DistrictResponse();
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await _httpRequestHandler.Get(accessToken, url);
+            var response = await HttpRequestFactory.Get(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -205,7 +203,7 @@ namespace Thandizo.WebPortal.Controllers
             var districts = Enumerable.Empty<DistrictDTO>();
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await _httpRequestHandler.Get(accessToken, url);
+            var response = await HttpRequestFactory.Get(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {

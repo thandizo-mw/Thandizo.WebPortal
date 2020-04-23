@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using AngleDimension.Standard.Http.HttpServices;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
@@ -19,14 +20,10 @@ namespace Thandizo.WebPortal.Controllers
     public class DataCentersController : Controller
     {
         private readonly IConfiguration _configuration;
-        private readonly ICookieService _cookieService;
-        IHttpRequestHandler _httpRequestHandler;
 
-        public DataCentersController(IConfiguration configuration, ICookieService cookieService, IHttpRequestHandler httpRequestHandler)
+        public DataCentersController(IConfiguration configuration)
         {
             _configuration = configuration;
-            _httpRequestHandler = httpRequestHandler;
-            _cookieService = cookieService;
         }
 
         public string CoreApiUrl
@@ -44,7 +41,7 @@ namespace Thandizo.WebPortal.Controllers
             var DataCenters = Enumerable.Empty<DataCenterResponse>();
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await _httpRequestHandler.Get(accessToken, url);
+            var response = await HttpRequestFactory.Get(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -64,7 +61,7 @@ namespace Thandizo.WebPortal.Controllers
             {
                 DataCenterResponse = new DataCenterResponse
                 {
-                    CreatedBy = _cookieService.Get("UserName"),
+                    CreatedBy = HttpContext.User.Identity.Name,
                     IsHealthFacility = false
                 },
                 Districts = await GetDistricts(),
@@ -81,7 +78,7 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{CoreApiUrl}DataCenters/Add";
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await _httpRequestHandler.Post(accessToken, url, dataCenter);
+            var response = await HttpRequestFactory.Post(accessToken, url, dataCenter);
 
             if (response.StatusCode == HttpStatusCode.Created)
             {
@@ -119,7 +116,7 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{CoreApiUrl}DataCenters/Update";
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await _httpRequestHandler.Put(accessToken, url,  dataCenter);
+            var response = await HttpRequestFactory.Put(accessToken, url,  dataCenter);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -158,7 +155,7 @@ namespace Thandizo.WebPortal.Controllers
             var DataCenter = new DataCenterDTO();
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await _httpRequestHandler.Delete(accessToken, url); 
+            var response = await HttpRequestFactory.Delete(accessToken, url); 
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -179,7 +176,7 @@ namespace Thandizo.WebPortal.Controllers
             var dataCenter = new DataCenterResponse();
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await _httpRequestHandler.Get(accessToken, url);
+            var response = await HttpRequestFactory.Get(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -205,7 +202,7 @@ namespace Thandizo.WebPortal.Controllers
             var DataCenters = Enumerable.Empty<DataCenterDTO>();
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await _httpRequestHandler.Get(accessToken, url);
+            var response = await HttpRequestFactory.Get(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -224,7 +221,7 @@ namespace Thandizo.WebPortal.Controllers
             var districts = Enumerable.Empty<DistrictDTO>();
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await _httpRequestHandler.Get(accessToken, url);
+            var response = await HttpRequestFactory.Get(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -243,7 +240,7 @@ namespace Thandizo.WebPortal.Controllers
             var facilityTypes = Enumerable.Empty<FacilityTypeDTO>();
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await _httpRequestHandler.Get(accessToken, url);
+            var response = await HttpRequestFactory.Get(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {

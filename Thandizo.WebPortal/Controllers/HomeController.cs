@@ -10,19 +10,18 @@ namespace Thandizo.WebPortal.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ICookieService _cookieService;
-
-        public HomeController(ILogger<HomeController> logger, ICookieService cookieService)
+        
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            _cookieService = cookieService;
         }
+
         [Authorize]
         public IActionResult Dashboard()
         {
-            _cookieService.Add("UserName", "vvinkhumbo");
+            //_cookieService.Add("UserName", "vvinkhumbo");
             // _cookieService.Add("UserId", "vvin");
-            _cookieService.Add("PhoneNumber", "0884776533");
+            //_cookieService.Add("PhoneNumber", "0884776533");
             //var accessToken = await HttpContext.GetTokenAsync("access_token");
             return View();
         }

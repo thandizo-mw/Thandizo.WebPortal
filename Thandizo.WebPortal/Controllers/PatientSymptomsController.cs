@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using AngleDimension.Standard.Http.HttpServices;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Thandizo.DataModels.Core;
 using Thandizo.DataModels.Patients;
 using Thandizo.WebPortal.Filters;
 using Thandizo.WebPortal.Helpers;
@@ -17,14 +17,11 @@ namespace Thandizo.WebPortal.Controllers
     public class PatientSymptomsController : Controller
     {
         private readonly IConfiguration _configuration;
-        private readonly ICookieService _cookieService;
-        IHttpRequestHandler _httpRequestHandler;
+        
 
-        public PatientSymptomsController(IConfiguration configuration,ICookieService cookieService, IHttpRequestHandler httpRequestHandler)
+        public PatientSymptomsController(IConfiguration configuration)
         {
-            _configuration = configuration;
-            _httpRequestHandler = httpRequestHandler;
-            _cookieService = cookieService;
+            _configuration = configuration;          
         }
 
         public string PatientsApiUrl
@@ -42,7 +39,7 @@ namespace Thandizo.WebPortal.Controllers
             var PatientSymptoms = Enumerable.Empty<PatientSymptomDTO>();
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await _httpRequestHandler.Get(accessToken, url);
+            var response = await HttpRequestFactory.Get(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -60,7 +57,7 @@ namespace Thandizo.WebPortal.Controllers
         {
             return View(new PatientSymptomDTO
             {
-                CreatedBy = _cookieService.Get("UserName")
+                CreatedBy = HttpContext.User.Identity.Name
             });
         }
 
@@ -72,7 +69,7 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{PatientsApiUrl}Symptoms/Add";
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await _httpRequestHandler.Post(accessToken, url, patientSymptom);
+            var response = await HttpRequestFactory.Post(accessToken, url, patientSymptom);
 
             if (response.StatusCode == HttpStatusCode.Created)
             {
@@ -103,7 +100,7 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{PatientsApiUrl}Symptoms/Update";
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await _httpRequestHandler.Put(accessToken, url,  patientSymptom);
+            var response = await HttpRequestFactory.Put(accessToken, url,  patientSymptom);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -140,7 +137,7 @@ namespace Thandizo.WebPortal.Controllers
             var PatientSymptom = new PatientSymptomDTO();
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await _httpRequestHandler.Delete(accessToken, url); 
+            var response = await HttpRequestFactory.Delete(accessToken, url); 
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -161,7 +158,7 @@ namespace Thandizo.WebPortal.Controllers
             var PatientSymptom = new PatientSymptomDTO();
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await _httpRequestHandler.Get(accessToken, url);
+            var response = await HttpRequestFactory.Get(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -187,7 +184,7 @@ namespace Thandizo.WebPortal.Controllers
             var PatientSymptoms = Enumerable.Empty<PatientSymptomDTO>();
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await _httpRequestHandler.Get(accessToken, url);
+            var response = await HttpRequestFactory.Get(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
