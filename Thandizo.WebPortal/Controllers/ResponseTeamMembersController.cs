@@ -70,12 +70,17 @@ namespace Thandizo.WebPortal.Controllers
         {
             string url = $"{CoreApiUrl}ResponseTeamMembers/Add";
 
+            //Clean up phoner number
+            var sanitizedNumber = PhoneNumberSanitizer.Sanitize(responseTeamMember.PhoneNumber, "+265");
+            responseTeamMember.PhoneNumber = sanitizedNumber;
+            var fullName = $"{responseTeamMember.FirstName} {responseTeamMember.Surname}";
+
             var accessToken = await HttpContext.GetTokenAsync("access_token");
             var response = await HttpRequestFactory.Post(accessToken, url, responseTeamMember);
 
             if (response.StatusCode == HttpStatusCode.Created)
             {
-                var identityResponse =  await HttpRequestFactory.Post("", new UserDTO { PhoneNumber = responseTeamMember.PhoneNumber});
+                var identityResponse =  await HttpRequestFactory.Post("", new UserDTO { PhoneNumber = responseTeamMember.PhoneNumber, FullName = fullName });
                 if (identityResponse.StatusCode == HttpStatusCode.Created)
                 {
                     AppContextHelper.SetToastMessage("User account has been successfully created", MessageType.Danger, 1, Response);
