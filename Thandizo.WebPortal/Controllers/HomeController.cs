@@ -22,6 +22,7 @@ namespace Thandizo.WebPortal.Controllers
         public IActionResult Dashboard()
         {
             var user = HttpContext.User;
+            var name = AppContextHelper.GetStringValueClaim(HttpContext, JwtClaimTypes.Name);
             var fullname = AppContextHelper.GetStringValueClaim(HttpContext, JwtClaimTypes.PreferredUserName);
             //_cookieService.Add("UserName", "vvinkhumbo");
             // _cookieService.Add("UserId", "vvin");

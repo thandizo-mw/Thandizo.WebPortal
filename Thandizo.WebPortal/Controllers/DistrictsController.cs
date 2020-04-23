@@ -1,5 +1,6 @@
 ﻿using AngleDimension.Standard.Http.HttpServices;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using Thandizo.WebPortal.Filters;
 using Thandizo.WebPortal.Helpers;
 using Thandizo.WebPortal.Helpers.General;
 using Thandizo.WebPortal.Services;
+using IdentityModel;
 
 namespace Thandizo.WebPortal.Controllers
 {
@@ -72,7 +74,7 @@ namespace Thandizo.WebPortal.Controllers
         {
             return View(new DistrictResponse
             {
-                CreatedBy = HttpContext.User.Identity.Name,
+                CreatedBy = AppContextHelper.GetStringValueClaim(HttpContext, JwtClaimTypes.Name),
                 RegionId = _regionId,
                 RegionName = _regionName
             });
