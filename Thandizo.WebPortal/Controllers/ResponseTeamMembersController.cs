@@ -29,6 +29,13 @@ namespace Thandizo.WebPortal.Controllers
             _cookieService = cookieService;
         }
 
+        public string IdentityServerAuthority
+        {
+            get
+            {
+                return _configuration["IdentityServerAuthority"];
+            }
+        }
         public string CoreApiUrl
         {
             get
@@ -78,7 +85,7 @@ namespace Thandizo.WebPortal.Controllers
 
             if (response.StatusCode == HttpStatusCode.Created)
             {
-                var identityResponse =  await _httpRequestHandler.Post("", new UserDTO { PhoneNumber = responseTeamMember.PhoneNumber});
+                var identityResponse =  await _httpRequestHandler.Post($"{IdentityServerAuthority}/api/Users/RegisterUser", new UserDTO { PhoneNumber = responseTeamMember.PhoneNumber});
                 if (identityResponse.StatusCode == HttpStatusCode.Created)
                 {
                     AppContextHelper.SetToastMessage("User account has been successfully created", MessageType.Danger, 1, Response);
