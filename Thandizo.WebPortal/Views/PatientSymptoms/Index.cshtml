@@ -43,9 +43,9 @@
                                 <thead>
                                     <tr>
                                         <th>Symptom Name</th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
+                                        <th class="table-th-action"></th>
+                                        <th class="table-th-action"></th>
+                                        <th class="table-th-action"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -74,7 +74,7 @@
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <a asp-action="Delete" asp-route-SymptomId="@item.SymptomId">
+                                                    <a asp-action="Delete" class="text-danger" asp-route-SymptomId="@item.SymptomId">
                                                         <i class="fa fa-trash"></i><span class="with-icon">Delete</span>
                                                     </a>
                                                 </td>

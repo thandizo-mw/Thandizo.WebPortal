@@ -44,9 +44,9 @@
                                     <tr>
                                         <th>Name</th>
                                         <th>Code</th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
+                                        <th class="table-th-action"></th>
+                                        <th class="table-th-action"></th>
+                                        <th class="table-th-action"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -76,7 +76,7 @@
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <a asp-action="Delete" asp-route-nationalityCode="@item.NationalityCode">
+                                                    <a asp-action="Delete" class="text-danger" asp-route-nationalityCode="@item.NationalityCode">
                                                         <i class="fa fa-trash"></i><span class="with-icon">Delete</span>
                                                     </a>
                                                 </td>

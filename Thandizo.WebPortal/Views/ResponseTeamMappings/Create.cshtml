@@ -2,15 +2,15 @@
 
 <div class="row heading-bg  bg-th-grey">
     <div class="col-lg-5 col-md-4 col-sm-4 col-xs-12">
-        <h5 class="txt-dark">Create Mapping (@ViewBag.TeamMemberName )</h5>
+        <h5 class="txt-dark">Create District Mapping</h5>
     </div>
     <!-- Breadcrumb -->
     <div class="col-lg-7 col-sm-8 col-md-8 col-xs-12">
         <ol class="breadcrumb">
             <li><a asp-action="Dashboard" asp-controller="Home">Dashboard</a></li>
             <li><a asp-action="Index" asp-controller="ResponseTeamMembers"><span>Response Team Members</span></a></li>
-            <li><a asp-action="Index"><span>Member Mapping</span></a></li>
-            <li><a class="active"><span>Create Member Mapping</span></a></li>
+            <li><a asp-action="Index"><span>District Mapping</span></a></li>
+            <li><a class="active"><span>Create</span></a></li>
         </ol>
     </div>
     <!-- /Breadcrumb -->
@@ -21,7 +21,7 @@
     <div class="col-sm-12">
         <div class="panel panel-default card-view">
             <div class="panel-heading">
-
+                <h6 class="panel-title txt-dark">Member Name: @ViewBag.TeamMemberName</h6>
                 <div class="clearfix"></div>
             </div>
             <div class="panel-wrapper collapse in">
@@ -55,42 +55,6 @@
     </div>
 </div>
 <!-- /Row -->
-<div id="searchDistrictsModal" class="modal fade" role="dialog"
-     aria-hidden="true" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Select District</h4>
-            </div>
-            <div class="modal-body">
-                <div id="divsearchDictrictError"></div>
-                <div id="divRetrievedDistricts"></div>
-            </div>
-            <div class="modal-footer">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div id="divProcessDistricts">
-                            <div class="processing-horizontal text-info text-left">
-                                <i class="fa fa-spin fa-circle-o-notch"></i><span class="with-icon">Processing</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="btn-group" role="group" aria-label="...">
-                            <button type="button" class="btn btn-warning btn-sm" id="btnRefreshDistricts">
-                                <i class="fa fa-refresh"></i><span class="with-icon">Refresh</span>
-                            </button>
-                            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" id="Cancel">
-                                <i class="fa fa-times"></i><span class="with-icon">Cancel</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 @section scripts {
     <script>
         $(document).ready(function () {

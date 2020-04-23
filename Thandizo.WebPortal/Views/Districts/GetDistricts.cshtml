@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<Thandizo.DataModels.Core.DistrictDTO>
 
-<div class="table-responsive table-extended">
-    <table id="dtDistrictsDataTable" class="table team-members-table table-hover display  pb-30 dt-dataTable">
+<div class="table-responsive">
+    <table id="dtDistrictsDataTable" class="tabled dt-dataTableSelect get-district-table table-hover display  pb-10 dt-dataTable">
         <thead>
             <tr>
                 <th>District Name</th>
-                <th></th>
+                <th class="table-th-action"></th>
             </tr>
         </thead>
         <tbody>
@@ -44,7 +44,8 @@
         $('#dtDistrictsDataTable').DataTable({
             scrollY: '350px',
             scrollCollapse: true,
-            paging: false
+            paging: false,
+            "ordering": false,
         });
 
         $("#dtDistrictsDataTable").on("click", ".select-district", function () {

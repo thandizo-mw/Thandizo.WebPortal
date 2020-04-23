@@ -43,10 +43,9 @@
                                 <thead>
                                     <tr>
                                         <th>Description</th>
-                                        <th>External Reference Number</th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
+                                        <th class="table-th-action"></th>
+                                        <th class="table-th-action"></th>
+                                        <th class="table-th-action"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -64,7 +63,6 @@
                                         {
                                             <tr>
                                                 <td>@Html.DisplayFor(modelItem => item.Description)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.ExternalReferenceNumber)</td>
                                                 <td>
                                                     <a asp-action="Details" asp-route-identificationTypeId="@item.IdentificationTypeId">
                                                         <i class="fa fa-search"></i><span class="with-icon">View</span>
@@ -76,7 +74,7 @@
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <a asp-action="Delete" asp-route-identificationTypeId="@item.IdentificationTypeId">
+                                                    <a asp-action="Delete" class="text-danger" asp-route-identificationTypeId="@item.IdentificationTypeId">
                                                         <i class="fa fa-trash"></i><span class="with-icon">Delete</span>
                                                     </a>
                                                 </td>
