@@ -1,4 +1,5 @@
 ﻿using AngleDimension.Standard.Http.HttpServices;
+using IdentityModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -66,7 +67,7 @@ namespace Thandizo.WebPortal.Controllers
         {
             return View(new ResponseTeamMemberDTO
             {
-                CreatedBy = HttpContext.User.Identity.Name
+                CreatedBy = AppContextHelper.GetStringValueClaim(HttpContext, JwtClaimTypes.Name)
             });
         }
 
@@ -87,7 +88,7 @@ namespace Thandizo.WebPortal.Controllers
 
             if (response.StatusCode == HttpStatusCode.Created)
             {
-                var identityResponse =  await HttpRequestFactory.Post("", new UserDTO { PhoneNumber = responseTeamMember.PhoneNumber, FullName = fullName });
+                var identityResponse =  await HttpRequestFactory.Post($"{IdentityServerAuthority}/api/Users/RegisterUser", new UserDTO { PhoneNumber = responseTeamMember.PhoneNumber, FullName = fullName });
                 if (identityResponse.StatusCode == HttpStatusCode.Created)
                 {
                     AppContextHelper.SetToastMessage("User account has been successfully created", MessageType.Danger, 1, Response);

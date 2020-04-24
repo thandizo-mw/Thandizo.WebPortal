@@ -1,5 +1,6 @@
 ﻿@using Thandizo.WebPortal.Helpers;
 @using Thandizo.WebPortal.Helpers.General;
+@using IdentityModel; 
 
 <!DOCTYPE html>
 <html lang="en">
@@ -37,20 +38,10 @@
             <a id="toggle_nav_btn" class="toggle-left-nav-btn inline-block mr-20 pull-left" href="javascript:void(0);"><i class="fa fa-bars"></i></a>
             <a asp-action="dashboard" asp-controller="Home"><img class="brand-img-logo pull-left thandizo-logo-top" src="~/img/logo.png" alt="brand" /></a>
             <ul class="nav navbar-right top-nav pull-right">
-                <li>
-                    <a href="javascript:void(0);" data-toggle="collapse" data-target="#site_navbar_search">
-                        <i class="fa fa-search top-nav-icon"></i>
-                    </a>
-                </li>
-
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle pr-0" data-toggle="dropdown"><img src="~/img/user1.png" alt="user_auth" class="user-auth-img img-circle" /><span class="user-online-status"></span></a>
+                    <a href="#" class="dropdown-toggle pr-0" data-toggle="dropdown"><span>@AppContextHelper.GetStringValueClaim(Context, JwtClaimTypes.PreferredUserName)</span></a>
                     <ul class="dropdown-menu user-auth-dropdown" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
 
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
-                        </li>
-                        <li class="divider"></li>
                         <li>
                             <a asp-controller="Home" asp-action="Logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                         </li>

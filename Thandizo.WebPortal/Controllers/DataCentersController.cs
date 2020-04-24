@@ -1,4 +1,5 @@
 ﻿using AngleDimension.Standard.Http.HttpServices;
+using IdentityModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -61,7 +62,7 @@ namespace Thandizo.WebPortal.Controllers
             {
                 DataCenterResponse = new DataCenterResponse
                 {
-                    CreatedBy = HttpContext.User.Identity.Name,
+                    CreatedBy = AppContextHelper.GetStringValueClaim(HttpContext, JwtClaimTypes.Name),
                     IsHealthFacility = false
                 },
                 Districts = await GetDistricts(),

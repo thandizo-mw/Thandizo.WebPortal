@@ -14,6 +14,7 @@ using Thandizo.WebPortal.Filters;
 using Thandizo.WebPortal.Helpers;
 using Thandizo.WebPortal.Helpers.General;
 using Thandizo.WebPortal.Services;
+using IdentityModel;
 
 namespace Thandizo.WebPortal.Controllers
 {
@@ -45,8 +46,9 @@ namespace Thandizo.WebPortal.Controllers
         public async Task<IActionResult> ConfirmPatients()
         {
             string valuesFilter = "false";
-            string phoneNumber = HttpContext.User.Identity.Name;
-            string url = $"{PatientsApiUrl}GetByResponseTeamMember?phoneNumber={phoneNumber}&valuesFilter={valuesFilter}";
+            string phoneNumber = AppContextHelper.GetStringValueClaim(HttpContext, JwtClaimTypes.Name);;
+            
+            string url = $"{PatientsApiUrl}GetByResponseTeamMember?phoneNumber={System.Web.HttpUtility.UrlEncode(phoneNumber)}&valuesFilter={valuesFilter}";
             var patients = Enumerable.Empty<PatientResponse>();
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
@@ -120,7 +122,7 @@ namespace Thandizo.WebPortal.Controllers
         {
             return View(new PatientResponse
             {
-                CreatedBy = HttpContext.User.Identity.Name
+              CreatedBy = AppContextHelper.GetStringValueClaim(HttpContext, JwtClaimTypes.Name)
             });
         }
 

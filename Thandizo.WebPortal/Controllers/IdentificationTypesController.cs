@@ -11,6 +11,7 @@ using Thandizo.WebPortal.Filters;
 using Thandizo.WebPortal.Helpers;
 using Thandizo.WebPortal.Helpers.General;
 using Thandizo.WebPortal.Services;
+using IdentityModel;
 
 namespace Thandizo.WebPortal.Controllers
 {
@@ -56,7 +57,7 @@ namespace Thandizo.WebPortal.Controllers
         {
             return View(new IdentificationTypeDTO
             {
-                CreatedBy = HttpContext.User.Identity.Name
+               CreatedBy = AppContextHelper.GetStringValueClaim(HttpContext, JwtClaimTypes.Name)
             });
         }
 
