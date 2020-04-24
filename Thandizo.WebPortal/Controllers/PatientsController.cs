@@ -47,7 +47,8 @@ namespace Thandizo.WebPortal.Controllers
         {
             string valuesFilter = "false";
             string phoneNumber = AppContextHelper.GetStringValueClaim(HttpContext, JwtClaimTypes.Name);;
-            string url = $"{PatientsApiUrl}GetByResponseTeamMember?phoneNumber={phoneNumber}&valuesFilter={valuesFilter}";
+            
+            string url = $"{PatientsApiUrl}GetByResponseTeamMember?phoneNumber={System.Web.HttpUtility.UrlEncode(phoneNumber)}&valuesFilter={valuesFilter}";
             var patients = Enumerable.Empty<PatientResponse>();
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");

@@ -18,7 +18,7 @@ namespace Thandizo.WebPortal.Filters
             var displayName = descriptor.DisplayName;
 
             var displayNameArray = displayName.Split(new char[] { '.', ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            int lastElement = displayNameArray.Length - 2;
+            int lastElement = displayNameArray.Length - 3;
 
             var viewName = displayNameArray[lastElement];
 
