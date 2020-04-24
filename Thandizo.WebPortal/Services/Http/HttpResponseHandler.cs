@@ -2,7 +2,7 @@
 using System;
 using System.Net;
 using System.Net.Http;
-using Thandizo.WebPortal.Helpers;
+using Thandizo.DataModels.General;
 
 namespace Thandizo.WebPortal.Services
 {
@@ -11,36 +11,36 @@ namespace Thandizo.WebPortal.Services
         public static string Process(HttpResponseMessage httpResponse)
         {
             string friendlyMessage = "ResponceSystemError";
-            var outputHandler = new OutputHandler();
+            var outputResponse = new OutputResponse();
 
             try
             {
                 //try to convert the returned object to see it an output handler
-                outputHandler = httpResponse.ContentAsType<OutputHandler>();
+                outputResponse = httpResponse.ContentAsType<OutputResponse>();
             }
             catch (Exception)
             {
-                //it means it failed to convert to OutputHandler object, set to NULL
-                outputHandler = null;
+                //it means it failed to convert to OutputResponse object, set to NULL
+                outputResponse = null;
             }
 
-            if (outputHandler != null)
+            if (outputResponse != null)
             {
-                if (!string.IsNullOrEmpty(outputHandler.Message))
+                if (!string.IsNullOrEmpty(outputResponse.Message))
                 {
-                    friendlyMessage = httpResponse.ContentAsType<OutputHandler>().Message;
+                    friendlyMessage = httpResponse.ContentAsType<OutputResponse>().Message;
                 }
             }
-            else //return type not OutputHandler
+            else //return type not OutputResponse
             {
-                var parsedJsonData = JsonConvertor.ConvertObjectToMessages(httpResponse.Content.ReadAsStringAsync().Result).ToString();
-
-                if (!parsedJsonData.Equals("ERROR"))//the json data was parsed and read successfully
+                try
                 {
-                    friendlyMessage = parsedJsonData;
+                    var response = httpResponse.Content.ReadAsStringAsync().Result.ToString();
+                    friendlyMessage = response.Replace("\"", "");
                 }
-                else //provide generic and friendly responses to the client
+                catch (Exception)               
                 {
+                    //provide generic and friendly responses to the client
                     switch (httpResponse.StatusCode)
                     {
                         case HttpStatusCode.BadGateway:
