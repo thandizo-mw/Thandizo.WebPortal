@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -91,9 +92,30 @@ namespace Thandizo.WebPortal
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
+                app.UseForwardedHeaders(new ForwardedHeadersOptions
+                {
+                    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+                });
+
+                app.UseHttpsRedirection();
+                app.UseXXssProtection(options => options.EnabledWithBlockMode());
+                app.UseXContentTypeOptions();
+
+                app.UseHsts(options =>
+                {
+                    options.MaxAge(days: 365);
+                    options.IncludeSubdomains();
+                });
+
+                app.UseCsp(options => options.BlockAllMixedContent());
+                app.UseReferrerPolicy(options => options.NoReferrer());
+                app.Use(async (context, next) =>
+                {
+                    context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
+                    await next();
+                });
             }
-            //app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseRouting();
