@@ -44,8 +44,8 @@
                                     <tr>
                                         <th>Center Name</th>
                                         <th>District Name</th>
-                                        <th>Facility Name</th>
                                         <th>Is Health Facility</th>
+                                        <th class="table-th-action"></th>
                                         <th class="table-th-action"></th>
                                         <th class="table-th-action"></th>
                                         <th class="table-th-action"></th>
@@ -67,7 +67,6 @@
                                             <tr>
                                                 <td>@Html.DisplayFor(modelItem => item.CenterName)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.DistrictName)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.FacilityTypeName)</td>
                                                 @if (item.IsHealthFacility == true)
                                                 { 
                                                     <td>Yes</td>
@@ -89,6 +88,11 @@
                                                 <td>
                                                     <a asp-action="Delete" class="text-danger" asp-route-centerId="@item.CenterId">
                                                         <i class="fa fa-trash"></i><span class="with-icon">Delete</span>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a asp-action="Index" asp-controller="HealthCareWorkers" asp-route-centerId="@item.CenterId">
+                                                        <i class="fa fa-users"></i><span class="with-icon">Workers</span>
                                                     </a>
                                                 </td>
                                             </tr>
