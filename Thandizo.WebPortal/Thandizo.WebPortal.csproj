@@ -36,6 +36,9 @@
     <Content Include="wwwroot\vendors\bower_components\datatables\media\images\sort_both.png" />
     <Content Include="wwwroot\vendors\bower_components\datatables\media\images\sort_desc.png" />
     <Content Include="wwwroot\vendors\bower_components\datatables\media\images\sort_desc_disabled.png" />
+    <Content Include="wwwroot\vendors\bower_components\eonasdan-bootstrap-datetimepicker\build\css\bootstrap-datetimepicker-standalone.css" />
+    <Content Include="wwwroot\vendors\bower_components\eonasdan-bootstrap-datetimepicker\build\css\bootstrap-datetimepicker.css" />
+    <Content Include="wwwroot\vendors\bower_components\eonasdan-bootstrap-datetimepicker\build\css\bootstrap-datetimepicker.min.css" />
     <Content Include="wwwroot\vendors\bower_components\jquery-toast-plugin\dist\jquery.toast.min.css" />
     <Content Include="wwwroot\vendors\bower_components\jquery-toast-plugin\src\jquery.toast.css" />
   </ItemGroup>
@@ -70,6 +73,13 @@
     <None Include="wwwroot\vendors\bower_components\datatables\media\js\jquery.dataTables.js" />
     <None Include="wwwroot\vendors\bower_components\datatables\media\js\jquery.dataTables.min.js" />
     <None Include="wwwroot\vendors\bower_components\datatables\media\js\jquery.js" />
+    <None Include="wwwroot\vendors\bower_components\eonasdan-bootstrap-datetimepicker\build\js\bootstrap-datetimepicker.min.js" />
+    <None Include="wwwroot\vendors\bower_components\eonasdan-bootstrap-datetimepicker\src\js\bootstrap-datetimepicker.js" />
+    <None Include="wwwroot\vendors\bower_components\eonasdan-bootstrap-datetimepicker\src\less\bootstrap-datetimepicker-build.less" />
+    <None Include="wwwroot\vendors\bower_components\eonasdan-bootstrap-datetimepicker\src\less\_bootstrap-datetimepicker.less" />
+    <None Include="wwwroot\vendors\bower_components\eonasdan-bootstrap-datetimepicker\src\sass\bootstrap-datetimepicker-build.scss" />
+    <None Include="wwwroot\vendors\bower_components\eonasdan-bootstrap-datetimepicker\src\sass\_bootstrap-datetimepicker.scss" />
+    <None Include="wwwroot\vendors\bower_components\eonasdan-bootstrap-datetimepicker\tasks\bump_version.js" />
     <None Include="wwwroot\vendors\bower_components\jquery-toast-plugin\dist\jquery.toast.min.js" />
     <None Include="wwwroot\vendors\bower_components\jquery-toast-plugin\src\jquery.toast.js" />
     <None Include="wwwroot\vendors\bower_components\jquery\dist\jquery.js" />
@@ -159,6 +169,14 @@
     <None Include="wwwroot\vendors\bower_components\jquery\src\var\support.js" />
     <None Include="wwwroot\vendors\bower_components\jquery\src\var\toString.js" />
     <None Include="wwwroot\vendors\bower_components\jquery\src\wrap.js" />
+    <None Include="wwwroot\vendors\bower_components\moment\locale\en-au.js" />
+    <None Include="wwwroot\vendors\bower_components\moment\locale\en-ca.js" />
+    <None Include="wwwroot\vendors\bower_components\moment\locale\en-gb.js" />
+    <None Include="wwwroot\vendors\bower_components\moment\min\locales.js" />
+    <None Include="wwwroot\vendors\bower_components\moment\min\locales.min.js" />
+    <None Include="wwwroot\vendors\bower_components\moment\min\moment-with-locales.js" />
+    <None Include="wwwroot\vendors\bower_components\moment\min\moment-with-locales.min.js" />
+    <None Include="wwwroot\vendors\bower_components\moment\min\moment.min.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -170,7 +188,7 @@
     <PackageReference Include="NETCore.Encrypt" Version="2.0.8" />
     <PackageReference Include="Polly" Version="6.0.1" />
     <PackageReference Include="Thandizo.ApiExtensions" Version="1.0.0.5" />
-    <PackageReference Include="Thandizo.DataModels" Version="1.0.4.2" />
+    <PackageReference Include="Thandizo.DataModels" Version="1.0.5.1" />
   </ItemGroup>
 
   <ItemGroup>
