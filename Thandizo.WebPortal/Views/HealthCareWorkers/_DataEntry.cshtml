@@ -1,0 +1,97 @@
+﻿@model Thandizo.DataModels.ViewModels.DataCenters.HealthCareWorkerResponseViewModel
+
+<div class="form-group row">
+    <label class="bold-text-600 col-md-3 control-label">First Name</label>
+    <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+            <input type="text" class="form-control input" placeholder="Enter name"
+                   asp-for="HealthCareWorkerResponse.FirstName" required>
+        </div>
+    </div>
+</div>
+<div class="form-group row">
+    <label class="bold-text-600 col-md-3 control-label">Other Names</label>
+    <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+            <input type="text" class="form-control input" placeholder="Enter name"
+                   asp-for="HealthCareWorkerResponse.OtherNames" required>
+        </div>
+    </div>
+</div>
+<div class="form-group row">
+    <label class="bold-text-600 col-md-3 control-label">Last Name</label>
+    <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+            <input type="text" class="form-control input" placeholder="Enter name"
+                   asp-for="HealthCareWorkerResponse.LastName" required>
+        </div>
+    </div>
+</div>
+<div class="form-group row">
+    <label class="bold-text-600 col-md-3 control-label">Date of Birth</label>
+    <div class="col-md-6">
+        <div class='input-group date' id='dateOfBirthPicker'>
+            <input type='text' asp-for="HealthCareWorkerResponse.DateOfBirth" value="@Model.HealthCareWorkerResponse.DateOfBirth.ToString("DD-MMM-yyyy")" class="form-control" />
+            <span class="input-group-addon">
+                <span class="fa fa-calendar"></span>
+            </span>
+        </div>
+
+    </div>
+</div>
+<div class="form-group row">
+    <label class="bold-text-600 col-md-3 control-label">Gender</label>
+    <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-arrow-down"></i></span>
+            <Select class="form-control input" asp-for="HealthCareWorkerResponse.Gender" required>
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+            </Select>
+        </div>
+    </div>
+</div>
+<div class="form-group row">
+    <label class="bold-text-600 col-md-3 control-label">Phone Number</label>
+    <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+            <input type="text" class="form-control input" placeholder="Enter number"
+                   asp-for="HealthCareWorkerResponse.PhoneNumber" required>
+        </div>
+    </div>
+</div>
+<div class="form-group row">
+    <label class="bold-text-600 col-md-3 control-label">Email Address</label>
+    <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-at"></i></span>
+            <input type="text" class="form-control input" placeholder="Enter email"
+                   asp-for="HealthCareWorkerResponse.EmailAddress" required>
+        </div>
+    </div>
+</div>
+<div class="form-group row">
+    <label class="bold-text-600 col-md-3 control-label">Identification Type</label>
+    <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-arrow-down"></i></span>
+            <Select class="form-control input" asp-for="HealthCareWorkerResponse.IdentificationTypeId"
+                    asp-items="@(new SelectList(Model.IdentificationTypes, "IdentificationTypeId", "Description"))" required>
+            </Select>
+        </div>
+    </div>
+</div>
+<div class="form-group row">
+    <label class="bold-text-600 col-md-3 control-label">Identification Number</label>
+    <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+            <input type="text" class="form-control input" placeholder="Enter number"
+                   asp-for="HealthCareWorkerResponse.IdentificationNumber" required>
+        </div>
+    </div>
+</div>
