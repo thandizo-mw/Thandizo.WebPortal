@@ -119,15 +119,13 @@ namespace Thandizo.WebPortal.Controllers
         [HandleExceptionFilter]
         public async Task<IActionResult> Details([FromQuery] int classificationId)
         {
-            var TransmissionClassification = await GetTransmissionClassification(classificationId);
-            return View(TransmissionClassification);
+            return View(await GetTransmissionClassification(classificationId));
         }
 
         [HandleExceptionFilter]
         public async Task<IActionResult> Delete([FromQuery] int classificationId)
         {
-            var TransmissionClassification = await GetTransmissionClassification(classificationId);
-            return View(TransmissionClassification);
+            return View(await GetTransmissionClassification(classificationId));
         }
 
         [HttpPost, ActionName("Delete")]
@@ -148,9 +146,9 @@ namespace Thandizo.WebPortal.Controllers
             else
             {
                 AppContextHelper.SetToastMessage("Failed to delete classification", MessageType.Danger, 1, Response);
-                TempData["ModelError"] = HttpResponseHandler.Process(response);
+                ModelState.AddModelError("", HttpResponseHandler.Process(response));
             }
-            return RedirectToAction(nameof(Delete), new { classificationId });
+            return View(GetTransmissionClassification(classificationId));
         }
 
         private async Task<TransmissionClassificationDTO> GetTransmissionClassification(int classificationId)
@@ -168,11 +166,6 @@ namespace Thandizo.WebPortal.Controllers
             else
             {
                 ModelState.AddModelError("", HttpResponseHandler.Process(response));
-            }
-            if (TempData["ModelError"] != null)
-            {
-                ModelState.AddModelError("", TempData["ModelError"].ToString());
-                TempData["ModelError"] = null;
             }
             return TransmissionClassification;
         }

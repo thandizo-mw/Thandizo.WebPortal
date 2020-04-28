@@ -137,15 +137,13 @@ namespace Thandizo.WebPortal.Controllers
         [HandleExceptionFilter]
         public async Task<IActionResult> Details([FromQuery] int centerId)
         {
-            var DataCenter = await GetDataCenter(centerId);
-            return View(DataCenter);
+            return View(await GetDataCenter(centerId));
         }
 
         [HandleExceptionFilter]
         public async Task<IActionResult> Delete([FromQuery] int centerId)
         {
-            var DataCenter = await GetDataCenter(centerId);
-            return View(DataCenter);
+            return View(await GetDataCenter(centerId));
         }
 
         [HttpPost, ActionName("Delete")]
@@ -166,9 +164,9 @@ namespace Thandizo.WebPortal.Controllers
             else
             {
                 AppContextHelper.SetToastMessage("Failed to delete identification Type", MessageType.Danger, 1, Response);
-                TempData["ModelError"] = HttpResponseHandler.Process(response);
+                ModelState.AddModelError("", HttpResponseHandler.Process(response));
             }
-            return RedirectToAction(nameof(Delete), new { centerId });
+            return View(await GetDataCenter(centerId) );
         }
 
         private async Task<DataCenterResponse> GetDataCenter(int centerId)
@@ -187,34 +185,9 @@ namespace Thandizo.WebPortal.Controllers
             {
                 ModelState.AddModelError("", HttpResponseHandler.Process(response));
             }
-            if (TempData["ModelError"] != null)
-            {
-                ModelState.AddModelError("", TempData["ModelError"].ToString());
-                TempData["ModelError"] = null;
-            }
             return dataCenter;
         }
 
-
-        [HandleExceptionFilter]
-        public async Task<IActionResult> GetDataCenters()
-        {
-            string url = $"{CoreApiUrl}DataCenters/GetAll";
-            var DataCenters = Enumerable.Empty<DataCenterDTO>();
-
-            var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await HttpRequestFactory.Get(accessToken, url);
-
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                DataCenters = response.ContentAsType<IEnumerable<DataCenterDTO>>();
-            }
-            else
-            {
-                ModelState.AddModelError("", HttpResponseHandler.Process(response));
-            }
-            return PartialView(DataCenters);
-        }
 
         public async Task<IEnumerable<DistrictDTO>> GetDistricts()
         {

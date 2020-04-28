@@ -39,7 +39,7 @@ namespace Thandizo.WebPortal.Controllers
         }
 
         [HandleExceptionFilter]
-        public async Task<IActionResult> Index(int regionId = 0, string regionName = "")
+        public async Task<IActionResult> Index(int regionId)
         {
             if (regionId == 0 && _regionId == 0)
             {
@@ -49,8 +49,10 @@ namespace Thandizo.WebPortal.Controllers
             if (regionId != 0)
             {
                 _regionId = regionId;
-                _regionName = regionName;
+                var region = await GetRegion(regionId);
+                _regionName = region.RegionName;
             }
+            ViewBag.CenterName = _regionName;
 
             string url = $"{CoreApiUrl}Districts/GetByRegionId?regionId={_regionId}";
             var districts = Enumerable.Empty<DistrictResponse>();
@@ -139,15 +141,13 @@ namespace Thandizo.WebPortal.Controllers
         [HandleExceptionFilter]
         public async Task<IActionResult> Details([FromQuery] string districtCode)
         {
-            var district = await GetDistrict(districtCode);
-            return View(district);
+            return View(await GetDistrict(districtCode));
         }
 
         [HandleExceptionFilter]
         public async Task<IActionResult> Delete([FromQuery] string districtCode)
         {
-            var district = await GetDistrict(districtCode);
-            return View(district);
+            return View(await GetDistrict(districtCode));
         }
 
         [HttpPost, ActionName("Delete")]
@@ -168,9 +168,9 @@ namespace Thandizo.WebPortal.Controllers
             else
             {
                 AppContextHelper.SetToastMessage("Failed to delete district", MessageType.Danger, 1, Response);
-                TempData["ModelError"] = HttpResponseHandler.Process(response);
+                ModelState.AddModelError("", HttpResponseHandler.Process(response));
             }
-            return RedirectToAction(nameof(Delete), new { districtCode });
+            return View(await GetDistrict(districtCode));
         }
 
         private async Task<DistrictResponse> GetDistrict(string districtCode)
@@ -189,14 +189,27 @@ namespace Thandizo.WebPortal.Controllers
             {
                 ModelState.AddModelError("", HttpResponseHandler.Process(response));
             }
-            if (TempData["ModelError"] != null)
-            {
-                ModelState.AddModelError("", TempData["ModelError"].ToString());
-                TempData["ModelError"] = null;
-            }
             return district;
         }
 
+        private async Task<RegionDTO> GetRegion(int regionId)
+        {
+            string url = $"{CoreApiUrl}Regions/GetById?regionId={regionId}";
+            var Region = new RegionDTO();
+
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await HttpRequestFactory.Get(accessToken, url);
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                Region = response.ContentAsType<RegionDTO>();
+            }
+            else
+            {
+                ModelState.AddModelError("", HttpResponseHandler.Process(response));
+            }
+            return Region;
+        }
 
         [HandleExceptionFilter]
         public async Task<IActionResult> GetDistricts()

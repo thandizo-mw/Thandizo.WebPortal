@@ -119,15 +119,13 @@ namespace Thandizo.WebPortal.Controllers
         [HandleExceptionFilter]
         public async Task<IActionResult> Details([FromQuery] int regionId)
         {
-            var Region = await GetRegion(regionId);
-            return View(Region);
+            return View(await GetRegion(regionId));
         }
 
         [HandleExceptionFilter]
         public async Task<IActionResult> Delete([FromQuery] int regionId)
         {
-            var Region = await GetRegion(regionId);
-            return View(Region);
+            return View(await GetRegion(regionId));
         }
 
         [HttpPost, ActionName("Delete")]
@@ -148,9 +146,9 @@ namespace Thandizo.WebPortal.Controllers
             else
             {
                 AppContextHelper.SetToastMessage("Failed to delete region", MessageType.Danger, 1, Response);
-                TempData["ModelError"] = HttpResponseHandler.Process(response);
+                ModelState.AddModelError("", HttpResponseHandler.Process(response));
             }
-            return RedirectToAction(nameof(Delete), new { regionId });
+            return View(await GetRegion(regionId));
         }
 
         private async Task<RegionDTO> GetRegion(int regionId)
@@ -168,11 +166,6 @@ namespace Thandizo.WebPortal.Controllers
             else
             {
                 ModelState.AddModelError("", HttpResponseHandler.Process(response));
-            }
-            if (TempData["ModelError"] != null)
-            {
-                ModelState.AddModelError("", TempData["ModelError"].ToString());
-                TempData["ModelError"] = null;
             }
             return Region;
         }

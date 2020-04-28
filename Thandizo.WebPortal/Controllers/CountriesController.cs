@@ -90,8 +90,7 @@ namespace Thandizo.WebPortal.Controllers
         [HandleExceptionFilter]
         public async Task<IActionResult> Edit([FromQuery] string countryCode)
         {
-            var Country = await GetCountry(countryCode);
-            return View(Country);
+            return View(await GetCountry(countryCode));
         }
 
         [HttpPost]
@@ -120,8 +119,7 @@ namespace Thandizo.WebPortal.Controllers
         [HandleExceptionFilter]
         public async Task<IActionResult> Details([FromQuery] string countryCode)
         {
-            var Country = await GetCountry(countryCode);
-            return View(Country);
+            return View(await GetCountry(countryCode));
         }
 
         [HandleExceptionFilter]
@@ -149,9 +147,9 @@ namespace Thandizo.WebPortal.Controllers
             else
             {
                 AppContextHelper.SetToastMessage("Failed to delete country", MessageType.Danger, 1, Response);
-                TempData["ModelError"] = HttpResponseHandler.Process(response);
+                ModelState.AddModelError("", HttpResponseHandler.Process(response));
             }
-            return RedirectToAction(nameof(Delete), new { countryCode });
+            return View(await GetCountry(countryCode));
         }
 
         private async Task<CountryDTO> GetCountry(string countryCode)

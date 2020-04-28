@@ -138,15 +138,13 @@ namespace Thandizo.WebPortal.Controllers
         [HandleExceptionFilter]
         public async Task<IActionResult> Details([FromQuery] int teamMemberId)
         {
-            var responseTeamMember = await GetResponseTeamMember(teamMemberId);
-            return View(responseTeamMember);
+            return View(await GetResponseTeamMember(teamMemberId));
         }
 
         [HandleExceptionFilter]
         public async Task<IActionResult> Delete([FromQuery] int teamMemberId)
         {
-            var responseTeamMember = await GetResponseTeamMember(teamMemberId);
-            return View(responseTeamMember);
+            return View(await GetResponseTeamMember(teamMemberId));
         }
 
         [HttpPost, ActionName("Delete")]
@@ -167,9 +165,9 @@ namespace Thandizo.WebPortal.Controllers
             else
             {
                 AppContextHelper.SetToastMessage("Failed to delete response team member", MessageType.Danger, 1, Response);
-                TempData["ModelError"] = HttpResponseHandler.Process(response);
+                ModelState.AddModelError("", HttpResponseHandler.Process(response));
             }
-            return RedirectToAction(nameof(Delete), new { teamMemberId });
+            return View(await GetResponseTeamMember(teamMemberId));
         }
 
         private async Task<ResponseTeamMemberDTO> GetResponseTeamMember(int teamMemberId)
@@ -187,11 +185,6 @@ namespace Thandizo.WebPortal.Controllers
             else
             {
                 ModelState.AddModelError("", HttpResponseHandler.Process(response));
-            }
-            if (TempData["ModelError"] != null)
-            {
-                ModelState.AddModelError("", TempData["ModelError"].ToString());
-                TempData["ModelError"] = null;
             }
             return responseTeamMember;
         }

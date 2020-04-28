@@ -118,15 +118,13 @@ namespace Thandizo.WebPortal.Controllers
         [HandleExceptionFilter]
         public async Task<IActionResult> Details([FromQuery] string nationalityCode)
         {
-            var Nationality = await GetNationality(nationalityCode);
-            return View(Nationality);
+            return View(await GetNationality(nationalityCode));
         }
 
         [HandleExceptionFilter]
         public async Task<IActionResult> Delete([FromQuery] string nationalityCode)
         {
-            var Nationality = await GetNationality(nationalityCode);
-            return View(Nationality);
+            return View(await GetNationality(nationalityCode));
         }
 
         [HttpPost, ActionName("Delete")]
@@ -147,9 +145,9 @@ namespace Thandizo.WebPortal.Controllers
             else
             {
                 AppContextHelper.SetToastMessage("Failed to delete nationality", MessageType.Danger, 1, Response);
-                TempData["ModelError"] = HttpResponseHandler.Process(response);
+                ModelState.AddModelError("", HttpResponseHandler.Process(response));
             }
-            return RedirectToAction(nameof(Delete), new { nationalityCode });
+            return View(await GetNationality(nationalityCode) );
         }
 
         private async Task<NationalityDTO> GetNationality(string nationalityCode)
@@ -167,11 +165,6 @@ namespace Thandizo.WebPortal.Controllers
             else
             {
                 ModelState.AddModelError("", HttpResponseHandler.Process(response));
-            }
-            if (TempData["ModelError"] != null)
-            {
-                ModelState.AddModelError("", TempData["ModelError"].ToString());
-                TempData["ModelError"] = null;
             }
             return Nationality;
         }

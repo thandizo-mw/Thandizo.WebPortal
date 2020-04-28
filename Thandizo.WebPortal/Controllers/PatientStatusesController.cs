@@ -89,8 +89,7 @@ namespace Thandizo.WebPortal.Controllers
         [HandleExceptionFilter]
         public async Task<IActionResult> Edit([FromQuery] int statusId)
         {
-            var patientStatus = await GetPatientStatus(statusId);
-            return View(patientStatus);
+            return View(await GetPatientStatus(statusId));
         }
 
         [HttpPost]
@@ -126,8 +125,7 @@ namespace Thandizo.WebPortal.Controllers
         [HandleExceptionFilter]
         public async Task<IActionResult> Delete([FromQuery] int statusId)
         {
-            var PatientStatuse = await GetPatientStatus(statusId);
-            return View(PatientStatuse);
+            return View(await GetPatientStatus(statusId));
         }
 
         [HttpPost, ActionName("Delete")]
@@ -148,9 +146,9 @@ namespace Thandizo.WebPortal.Controllers
             else
             {
                 AppContextHelper.SetToastMessage("Failed to delete patient status", MessageType.Danger, 1, Response);
-                TempData["ModelError"] = HttpResponseHandler.Process(response);
+                ModelState.AddModelError("", HttpResponseHandler.Process(response));
             }
-            return RedirectToAction(nameof(Delete), new { statusId });
+            return View(await GetPatientStatus(statusId) );
         }
 
         private async Task<PatientStatusDTO> GetPatientStatus(int statusId)
@@ -168,11 +166,6 @@ namespace Thandizo.WebPortal.Controllers
             else
             {
                 ModelState.AddModelError("", HttpResponseHandler.Process(response));
-            }
-            if (TempData["ModelError"] != null)
-            {
-                ModelState.AddModelError("", TempData["ModelError"].ToString());
-                TempData["ModelError"] = null;
             }
             return PatientStatuse;
         }

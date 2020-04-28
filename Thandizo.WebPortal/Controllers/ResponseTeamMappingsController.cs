@@ -1,4 +1,5 @@
 ﻿using AngleDimension.Standard.Http.HttpServices;
+using IdentityModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -39,17 +40,21 @@ namespace Thandizo.WebPortal.Controllers
             }
         }
         [HandleExceptionFilter]
-        public async Task<IActionResult> Index(int teamMemberId = 0, string teamMemberName="")
+        public async Task<IActionResult> Index(int teamMemberId)
         {
-            if (teamMemberId == 0 && (teamMemberName.Equals("") || teamMemberName.Equals(null)))
+            if (teamMemberId == 0 && _teamMemberId == 0)
             {
                 return RedirectToAction("Index", "ResponseTeamMembers");
             }
-
-            ViewBag.TeamMemberName = teamMemberName;
-            _teamMemberName = teamMemberName;
-            _teamMemberId = teamMemberId;
-            string url = $"{CoreApiUrl}ResponseTeamMappings/GetByMember?teamMemberId={teamMemberId}";
+            if(teamMemberId != 0)
+            {
+                _teamMemberId = teamMemberId;
+                var teamMember = await GetResponseTeamMember(teamMemberId);
+                _teamMemberName = $"{teamMember.FirstName} {teamMember.OtherNames} {teamMember.Surname}";
+            }
+            ViewBag.TeamMemberName = _teamMemberName;
+           
+            string url = $"{CoreApiUrl}ResponseTeamMappings/GetByMember?teamMemberId={_teamMemberId}";
             var ResponseTeamMembers = Enumerable.Empty<TeamMappingResponse>();
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
@@ -77,7 +82,8 @@ namespace Thandizo.WebPortal.Controllers
             return View(new TeamMappingResponse
             {
                 TeamMemberId = _teamMemberId,
-                CreatedBy = "SYS"
+                CreatedBy = AppContextHelper.GetStringValueClaim(HttpContext, JwtClaimTypes.Name),
+
             });
         }
 
@@ -117,8 +123,7 @@ namespace Thandizo.WebPortal.Controllers
         public async Task<IActionResult> Edit([FromQuery] int mappingId)
         {
             ViewBag.TeamMemberName = _teamMemberName;
-            var responseTeamMember = await getResponseTeamMapping(mappingId);
-            return View(responseTeamMember);
+            return View(await getResponseTeamMapping(mappingId));
         }
 
         [HttpPost]
@@ -187,7 +192,7 @@ namespace Thandizo.WebPortal.Controllers
             else
             {
                 AppContextHelper.SetToastMessage("Failed to delete response team member mapping", MessageType.Danger, 1, Response);
-                TempData["ModelError"] = HttpResponseHandler.Process(response);
+                ModelState.AddModelError("", HttpResponseHandler.Process(response));
             }
             return RedirectToAction(nameof(Delete), new { mappingId });
         }
@@ -208,10 +213,24 @@ namespace Thandizo.WebPortal.Controllers
             {
                 ModelState.AddModelError("", HttpResponseHandler.Process(response));
             }
-            if (TempData["ModelError"] != null)
+            return responseTeamMember;
+        }
+
+        private async Task<ResponseTeamMemberDTO> GetResponseTeamMember(int teamMemberId)
+        {
+            string url = $"{CoreApiUrl}ResponseTeamMembers/GetById?teamMemberId={teamMemberId}";
+            var responseTeamMember = new ResponseTeamMemberDTO();
+
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await HttpRequestFactory.Get(accessToken, url);
+
+            if (response.StatusCode == HttpStatusCode.OK)
             {
-                ModelState.AddModelError("", TempData["ModelError"].ToString());
-                TempData["ModelError"] = null;
+                responseTeamMember = response.ContentAsType<ResponseTeamMemberDTO>();
+            }
+            else
+            {
+                ModelState.AddModelError("", HttpResponseHandler.Process(response));
             }
             return responseTeamMember;
         }

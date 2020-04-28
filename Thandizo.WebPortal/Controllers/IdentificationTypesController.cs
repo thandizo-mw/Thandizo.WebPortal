@@ -88,8 +88,7 @@ namespace Thandizo.WebPortal.Controllers
         [HandleExceptionFilter]
         public async Task<IActionResult> Edit([FromQuery] int identificationTypeId)
         {
-            var IdentificationType = await GetIdentificationType(identificationTypeId);
-            return View(IdentificationType);
+            return View(await GetIdentificationType(identificationTypeId));
         }
 
         [HttpPost]
@@ -147,9 +146,9 @@ namespace Thandizo.WebPortal.Controllers
             else
             {
                 AppContextHelper.SetToastMessage("Failed to delete identification Type", MessageType.Danger, 1, Response);
-                TempData["ModelError"] = HttpResponseHandler.Process(response);
+                ModelState.AddModelError("", HttpResponseHandler.Process(response));
             }
-            return RedirectToAction(nameof(Delete), new { identificationTypeId });
+            return View(await GetIdentificationType(identificationTypeId));
         }
 
         private async Task<IdentificationTypeDTO> GetIdentificationType(int identificationTypeId)
@@ -167,11 +166,6 @@ namespace Thandizo.WebPortal.Controllers
             else
             {
                 ModelState.AddModelError("", HttpResponseHandler.Process(response));
-            }
-            if (TempData["ModelError"] != null)
-            {
-                ModelState.AddModelError("", TempData["ModelError"].ToString());
-                TempData["ModelError"] = null;
             }
             return IdentificationType;
         }

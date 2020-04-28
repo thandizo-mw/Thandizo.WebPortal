@@ -88,8 +88,7 @@ namespace Thandizo.WebPortal.Controllers
         [HandleExceptionFilter]
         public async Task<IActionResult> Edit([FromQuery] int facilityTypeId)
         {
-            var FacilityType = await GetFacilityType(facilityTypeId);
-            return View(FacilityType);
+            return View(await GetFacilityType(facilityTypeId));
         }
 
         [HttpPost]
@@ -117,9 +116,8 @@ namespace Thandizo.WebPortal.Controllers
 
         [HandleExceptionFilter]
         public async Task<IActionResult> Details([FromQuery] int facilityTypeId)
-        {
-            var FacilityType = await GetFacilityType(facilityTypeId);
-            return View(FacilityType);
+        {;
+            return View(await GetFacilityType(facilityTypeId));
         }
 
         [HandleExceptionFilter]
@@ -147,9 +145,9 @@ namespace Thandizo.WebPortal.Controllers
             else
             {
                 AppContextHelper.SetToastMessage("Failed to delete identification Type", MessageType.Danger, 1, Response);
-                TempData["ModelError"] = HttpResponseHandler.Process(response);
+                ModelState.AddModelError("", HttpResponseHandler.Process(response));
             }
-            return RedirectToAction(nameof(Delete), new { facilityTypeId });
+            return View(await GetFacilityType(facilityTypeId));
         }
 
         private async Task<FacilityTypeDTO> GetFacilityType(int facilityTypeId)
@@ -167,11 +165,6 @@ namespace Thandizo.WebPortal.Controllers
             else
             {
                 ModelState.AddModelError("", HttpResponseHandler.Process(response));
-            }
-            if (TempData["ModelError"] != null)
-            {
-                ModelState.AddModelError("", TempData["ModelError"].ToString());
-                TempData["ModelError"] = null;
             }
             return FacilityType;
         }
