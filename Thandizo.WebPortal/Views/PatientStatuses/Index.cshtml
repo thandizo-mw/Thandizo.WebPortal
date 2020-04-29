@@ -47,6 +47,7 @@
                                         <th class="table-th-action"></th>
                                         <th class="table-th-action"></th>
                                         <th class="table-th-action"></th>
+                                        <th class="table-th-100"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -78,6 +79,11 @@
                                                 <td>
                                                     <a asp-action="Delete" class="text-danger" asp-route-statusId="@item.PatientStatusId">
                                                         <i class="fa fa-trash"></i><span class="with-icon">Delete</span>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a asp-action="Index" asp-controller="ResourcesAllocation" asp-route-statusId="@item.PatientStatusId">
+                                                        <i class="fa fa-braille"></i><span class="with-icon">Resources</span>
                                                     </a>
                                                 </td>
                                             </tr>
