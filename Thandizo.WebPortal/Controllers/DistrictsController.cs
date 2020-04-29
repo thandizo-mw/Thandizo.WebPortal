@@ -52,7 +52,7 @@ namespace Thandizo.WebPortal.Controllers
                 var region = await GetRegion(regionId);
                 _regionName = region.RegionName;
             }
-            ViewBag.CenterName = _regionName;
+            ViewBag.RegionName = _regionName;
 
             string url = $"{CoreApiUrl}Districts/GetByRegionId?regionId={_regionId}";
             var districts = Enumerable.Empty<DistrictResponse>();
