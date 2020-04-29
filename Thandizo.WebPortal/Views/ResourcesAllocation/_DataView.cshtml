@@ -1,0 +1,16 @@
+﻿@model Thandizo.DataModels.Resources.Responses.ResourceAllocationResponse
+
+<div class="row">
+    <div class="col-md-2 text-right">
+        <label class="bold-text-600 txt-dark">Resource Name</label>
+    </div><div class="col-md-10 txt-dark">
+        @Html.DisplayFor(model => model.ResourceName)
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 text-right">
+        <label class="bold-text-600 txt-dark">Required Quantity</label>
+    </div><div class="col-md-10 txt-dark">
+        @Html.DisplayFor(model => model.RequiredQuantity)
+    </div>
+</div>
