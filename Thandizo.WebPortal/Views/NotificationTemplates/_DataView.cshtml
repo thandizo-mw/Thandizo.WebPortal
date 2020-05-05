@@ -1,0 +1,41 @@
+﻿@model Thandizo.DataModels.Notifications.NotificationTemplateDTO
+
+<div class="row">
+    <div class="col-md-2 text-right">
+        @Html.LabelFor(model => model.TemplateName, new { @class = "bold-text-600 txt-dark" })
+    </div><div class="col-md-10 txt-dark">
+        @Html.DisplayFor(model => model.TemplateName)
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 text-right">
+        @Html.LabelFor(model => model.Interval, new { @class = "bold-text-600 txt-dark" })
+    </div><div class="col-md-10 txt-dark">
+        @Html.DisplayFor(model => model.Interval)
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 text-right">
+        @Html.LabelFor(model => model.IntervalUnit, new { @class = "bold-text-600 txt-dark" })
+    </div>
+    @if (Model.IntervalUnit.Equals("M"))
+    {
+        <div class="col-md-10 txt-dark">
+            Minutes
+        </div>
+    }
+    else
+    {
+        <div class="col-md-10 txt-dark">
+            Hours
+        </div>
+    }
+
+</div>
+<div class="row">
+    <div class="col-md-2 text-right">
+        @Html.LabelFor(model => model.RepeatCount, new { @class = "bold-text-600 txt-dark" })
+    </div><div class="col-md-10 txt-dark">
+        @Html.DisplayFor(model => model.RepeatCount)
+    </div>
+</div>
