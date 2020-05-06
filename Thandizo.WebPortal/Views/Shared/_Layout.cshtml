@@ -25,6 +25,9 @@
     <!-- Bootstrap Datetimepicker CSS -->
     <link href="~/vendors/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
 
+    <!-- Tags Input Css-->
+    <link rel="stylesheet" href="~/vendors/bower_components/tagsinput/bootstrap-tagsinput.css">
+
     <!-- Custom CSS -->
     <link href="~/css/style.css" rel="stylesheet" type="text/css">
 
@@ -119,40 +122,43 @@
                     </ul>
                 </li>
                 @*<li>
-                    <a href="javascript:void(0);" data-toggle="collapse" data-target="#resources_dr"><i class="fa fa-archive mr-10"></i>Resources <span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
-                    <ul id="resources_dr" class="collapse collapse-level-1">
-                        <li>
-                            <a asp-action="Index" asp-controller="Resources">Resources</a>
-                        </li>
-                        <li>
-                            <a href="#">Resource Allocation</a>
-                        </li>
-                        <li>
-                            <a href="#">Health Facility Resources</a>
-                        </li>
-                    </ul>
-                </li>*@
+                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#resources_dr"><i class="fa fa-archive mr-10"></i>Resources <span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
+                        <ul id="resources_dr" class="collapse collapse-level-1">
+                            <li>
+                                <a asp-action="Index" asp-controller="Resources">Resources</a>
+                            </li>
+                            <li>
+                                <a href="#">Resource Allocation</a>
+                            </li>
+                            <li>
+                                <a href="#">Health Facility Resources</a>
+                            </li>
+                        </ul>
+                    </li>*@
                 <li>
                     <a href="javascript:void(0);" data-toggle="collapse" data-target="#notifications_dr"><i class="fa fa-comment-o mr-10"></i>Notifications <span class="pull-right"><i class="fa fa-fw fa-angle-down"></i></span></a>
                     <ul id="notifications_dr" class="collapse collapse-level-1">
                         <li>
                             <a asp-action="Index" asp-controller="NotificationTemplates">Templates</a>
                         </li>
+                        <li>
+                            <a asp-action="Index" asp-controller="ScheduledNotificationEscalationRules">Escalation Rules</a>
+                        </li>
                         @*<li>
-                            <a href="#">WhatsApp</a>
-                        </li>
-                        <li>
-                            <a href="#">SMS</a>
-                        </li>
-                        <li>
-                            <a href="#">USSD</a>
-                        </li>
-                        <li>
-                            <a href="#">Email</a>
-                        </li>*@
+                                <a href="#">WhatsApp</a>
+                            </li>
+                            <li>
+                                <a href="#">SMS</a>
+                            </li>
+                            <li>
+                                <a href="#">USSD</a>
+                            </li>
+                            <li>
+                                <a href="#">Email</a>
+                            </li>*@
                     </ul>
                 </li>
-                
+
             </ul>
         </div>
         <!-- /Left Sidebar Menu -->
@@ -197,6 +203,11 @@
 
     <!-- Fancy Dropdown JS -->
     <script src="~/js/dropdown-bootstrap-extended.js"></script>
+
+    <!-- Tgas Input JS-->
+    <script src="~/vendors/bower_components/tagsinput/bootstrap-tagsinput.min.js"></script>
+    <script src="~/vendors/bower_components/tagsinput/bootstrap-tagsinput/bootstrap-tagsinput-angular.min.js"></script>
+
     <!-- Init JavaScript -->
     <script src="~/js/init.js"></script>
 
