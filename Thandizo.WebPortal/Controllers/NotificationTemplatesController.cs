@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Thandizo.DataModels.Core;
 using Thandizo.DataModels.Notifications;
 using Thandizo.WebPortal.Filters;
 using Thandizo.WebPortal.Helpers;
