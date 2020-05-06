@@ -1,0 +1,37 @@
+﻿@model Thandizo.DataModels.Notifications.ScheduledNotificationEscalationRuleDTO
+
+
+<div class="form-group row">
+    @Html.LabelFor(model => model.Name, new { @class = "bold-text-600 txt-dark control-label col-md-3" })
+
+    <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+            <input type="text" class="form-control input" placeholder="Enter name"
+                   asp-for="Name" required>
+        </div>
+    </div>
+</div>
+
+<div class="form-group row">
+    @Html.LabelFor(model => model.EscalateTo, new { @class = "bold-text-600 txt-dark control-label col-md-3" })
+
+    <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-at"></i></span>
+            <input type="text" class="form-control input" placeholder="Enter email addresses"
+                   asp-for="EscalateTo" data-role="tagsinput" required>
+        </div>
+    </div>
+</div>
+
+<div class="form-group row">
+    @Html.LabelFor(model => model.Message, new { @class = "bold-text-600 txt-dark control-label col-md-3" })
+
+    <div class="col-md-6">
+
+        <textarea class="form-control" placeholder="Enter Message"
+                  asp-for="Message" required ></textarea>
+
+    </div>
+</div>
