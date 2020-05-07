@@ -82,12 +82,6 @@ namespace Thandizo.WebPortal.Controllers
             else
             {
                 ModelState.AddModelError("", HttpResponseHandler.Process(response));
-
-            }
-
-            if (TempData["ModelError"] != null)
-            {
-                ModelState.AddModelError("", TempData["ModelError"].ToString());
             }
 
             return View(patient);
@@ -112,7 +106,7 @@ namespace Thandizo.WebPortal.Controllers
             else
             {
                 AppContextHelper.SetToastMessage("Failed to confirm patient", MessageType.Danger, 1, Response);
-                TempData["ModelError"] = HttpResponseHandler.Process(response);
+                ModelState.AddModelError("", HttpResponseHandler.Process(response));
             }
             return RedirectToAction(nameof(ConfirmPatient), new { patientId });
         }

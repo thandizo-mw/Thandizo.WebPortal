@@ -168,11 +168,6 @@ namespace Thandizo.WebPortal.Controllers
             {
                 ModelState.AddModelError("", HttpResponseHandler.Process(response));
             }
-            if (TempData["ModelError"] != null)
-            {
-                ModelState.AddModelError("", TempData["ModelError"].ToString());
-                TempData["ModelError"] = null;
-            }
             return Country;
         }
 
