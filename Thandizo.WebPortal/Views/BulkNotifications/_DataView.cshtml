@@ -1,0 +1,24 @@
+﻿@model Thandizo.DataModels.Notifications.Responses.BulkNotificationResponse
+
+<div class="row">
+    <div class="col-md-2 text-right">
+        @Html.LabelFor(model => model.ChannelId, new { @class = "bold-text-600 txt-dark" })
+    </div><div class="col-md-10 txt-dark">
+        @Html.DisplayFor(model => model.ChanneldName)
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 text-right">
+        @Html.LabelFor(model => model.Message, new { @class = "bold-text-600 txt-dark" })
+    </div><div class="col-md-10 txt-dark">
+        @Html.DisplayFor(model => model.Message)
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 text-right">
+        @Html.LabelFor(model => model.SendDate, new { @class = "bold-text-600 txt-dark" })
+    </div>
+    <div class="col-md-10 txt-dark">
+        @Html.DisplayFor(model => model.SendDate)
+    </div>
+</div>
