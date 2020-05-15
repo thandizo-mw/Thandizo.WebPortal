@@ -19,6 +19,6 @@
         @Html.LabelFor(model => model.SendDate, new { @class = "bold-text-600 txt-dark" })
     </div>
     <div class="col-md-10 txt-dark">
-        @Html.DisplayFor(model => model.SendDate)
+        @Model.SendDate.ToString("dd-MMM-yyyy")
     </div>
 </div>

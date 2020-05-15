@@ -1,15 +1,15 @@
-﻿@model Thandizo.DataModels.ViewModels.Notifications.BulkNotificationViewModel
+﻿@model Thandizo.DataModels.ViewModels.Notifications.BulkNotificationRequestViewModel
 
 <div class="row heading-bg  bg-th-grey">
     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-        <h5 class="txt-dark">Create Bulk Notification</h5>
+        <h5 class="txt-dark">Create Opt In Notification</h5>
     </div>
     <!-- Breadcrumb -->
     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
         <ol class="breadcrumb">
             <li><a asp-action="Dashboard" asp-controller="Home">Dashboard</a></li>
             <li><a href="#"><span>Notifications</span></a></li>
-            <li><a asp-action="Index"><span>Bulk Notifications</span></a></li>
+            <li><a asp-action="Index"><span>Opt In Notifications</span></a></li>
             <li><a class="active"><span>Create</span></a></li>
         </ol>
     </div>
@@ -34,7 +34,7 @@
 
             <div class="panel-wrapper collapse in">
                 <form asp-action="Create" class="form-horizontal">
-                    <input type="hidden" asp-for="BulkNotification.CreatedBy" value="SYS" />
+                    <input type="hidden" asp-for="BulkNotificationRequest.CreatedBy" value="SYS" />
                     <div class="panel-body">
                         @{
                             Html.RenderPartial("../Shared/_MessageOutput");
@@ -49,7 +49,7 @@
                         <div class="text-right">
                             <div class="btn-group" role="group" aria-label="...">
                                 <button class="btn btn-primary btn-sm" type="submit">
-                                    <i class="fa fa-save"></i><span class="with-icon">Save</span>
+                                    <i class="fa fa-send"></i><span class="with-icon">Send</span>
                                 </button>
                                 <button class="btn btn-default btn-sm" type="button" onclick="location.href='@Url.Action("Index", "BulkNotifications")'">
                                     <i class="fa fa-times"></i><span class="with-icon">Cancel</span>
@@ -68,6 +68,8 @@
     <script type="text/javascript" src="~/vendors/bower_components/moment/min/moment-with-locales.min.js"></script>
     <!-- Bootstrap Datetimepicker JavaScript -->
     <script type="text/javascript" src="~/vendors/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <!-- Boostrap js-->
+    <script src="~/vendors/bower_components/jasny-bootstrap/dist/js/jasny-bootstrap.min.js"></script>
 
     <script>
         $(document).ready(function () {
@@ -99,6 +101,126 @@
                 } else {
                     $("#txtSendNow").val("False")
                     $("#txtSendDatePicker").attr("disabled", false);
+                }
+            });
+
+            var ToPatient = $("#txtToPatients").val();
+            if (ToPatient === "True") {
+                $("#chckToPatients").prop("checked", true)
+            }
+
+            $("#chckToPatients").on('change', function () {
+                if ($("#chckToPatients").is(":checked")) {
+                    $("#txtToPatients").val("True")
+                } else {
+                    $("#txtToPatients").val("False")
+
+                }
+            });
+
+            var ToTeamMember = $("#txtToTeamMembers").val();
+            if (ToTeamMember === "True") {
+                $("#chckToTeamMembers").prop("checked", true)
+            }
+
+            $("#chckToTeamMembers").on('change', function () {
+                if ($("#chckToTeamMembers").is(":checked")) {
+                    $("#txtToTeamMembers").val("True")
+                } else {
+                    $("#txtToTeamMembers").val("False")
+
+                }
+            });
+
+            var ToHealthCareWorker = $("#txtToHealthCareWorkers").val();
+            if (ToHealthCareWorker === "True") {
+                $("#chckToHealthCareWorkers").prop("checked", true)
+            }
+
+            $("#chckToHealthCareWorkers").on('change', function () {
+                if ($("#chckToHealthCareWorkers").is(":checked")) {
+                    $("#txtToHealthCareWorkers").val("True")
+                } else {
+                    $("#txtToHealthCareWorkers").val("False")
+
+                }
+            });
+
+            var ToChannels = $("#txtToChannels").val();
+            if (ToChannels === "True") {
+                $("#chckToChannels").prop("checked", true)
+            }
+
+            $("#chckToChannels").on('change', function () {
+                if ($("#chckToChannels").is(":checked")) {
+                    $("#txtToChannels").val("True")
+                } else {
+                    $("#txtToChannels").val("False")
+
+                }
+            });
+
+            var HasFleUpload = $("#txtHasFleUpload").val();
+            if (HasFleUpload === "True") {
+                $("#chckHasFleUpload").prop("checked", true)
+                $("#divFileUpload").show()
+            } else {
+                $("#divFileUpload").hide()
+            }
+
+            $("#chckHasFileUpload").on('change', function () {
+                if ($("#chckHasFileUpload").is(":checked")) {
+                    $("#txtHasFileUpload").val("True")
+                    $("#divFileUpload").show()
+                } else {
+                    $("#txtHasFileUpload").val("False")
+                    $("#divFileUpload").hide()
+                }
+            });
+
+            /*initial setup*/
+            $("#txtToPatient").val("False");
+            $("#txtHasFleUpload").val("False");
+            $("#txtToChannels").val("False");
+            $("#txtToHealthCareWorker").val("False");
+            $("#txtToTeamMember").val("False");
+            $("#txtSendNow").val("False")
+            $("#divSelChannel").show();
+            $("#divSendNow").show();
+            $("#divSendDate").show();
+            $(".div-on-demand").hide();
+            
+
+            //change listener
+            $("#selNotificaitonOpt").change(function () {
+                if ($("#selNotificaitonOpt option:selected").val() === "D") {
+                    $("#txtSendNow").val("True");
+                    $("#divSelChannel").hide();
+                    $("#divSendNow").hide();
+                    $("#divSendDate").hide();
+                    $(".div-on-demand").show();
+                    $("#divFileUpload").hide();
+                } else {
+                    $("#txtToPatients").val("False");
+                    $("#txtHasFleUpload").val("False");
+                    $("#txtToChannels").val("False");
+                    $("#txtToHealthCareWorkers").val("False");
+                    $("#txtToTeamMembers").val("False");
+                    $("#txtSendNow").val("False");
+
+                    $("#chckHasFileUpload").prop("checked", false);
+                    $("#chckToPatients").prop("checked", false);
+                    $("#chckHasFleUpload").prop("checked", false);
+                    $("#chckToChannels").prop("checked", false);
+                    $("#chckToHealthCareWorkers").prop("checked", false);
+                    $("#chckToTeamMembers").prop("checked", false);
+                    $("#chckSendNow").prop("checked", false);
+
+                    $("#divSelChannel").show();
+                    $("#divSendNow").show();
+                    $("#divSendDate").show();
+                    $("#divFileUpload").hide();
+                    $(".div-on-demand").hide();
                 }
             });
         });

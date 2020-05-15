@@ -1,28 +1,138 @@
-﻿@model Thandizo.DataModels.ViewModels.Notifications.BulkNotificationViewModel
+﻿@model Thandizo.DataModels.ViewModels.Notifications.BulkNotificationRequestViewModel
 
 
 <div class="form-group row">
-    @Html.LabelFor(model => model.BulkNotification.Message, new { @class = "bold-text-600 txt-dark control-label col-md-3" })
-
-    <div class="col-md-6">
-        <textarea class="form-control" placeholder="Enter Message"
-                  asp-for="BulkNotification.Message" required></textarea>
-    </div>
-</div>
-
-<div class="form-group row">
-    @Html.LabelFor(model => model.BulkNotification.ChannelId, new { @class = "bold-text-600 txt-dark control-label col-md-3" })
-
+    <label class="bold-text-600 txt-dark control-label col-md-3">Message Type</label>
     <div class="col-md-6">
         <div class="input-group">
-            <span class="input-group-addon"><i class="fa fa-arrow-down"></i></span>
-            <select type="text" class="form-control input" asp-for="BulkNotification.ChannelId"
-                    asp-items="@(new SelectList(Model.Channels, "ChannelId", "ChannelName"))"></select>
+            <select class="form-control input" id="selNotificaitonOpt" asp-for="BulkNotificationRequest.MessageType" required>
+                <option value="P">Opt in</option>
+                <option value="D">On Deman</option>
+            </select>
         </div>
     </div>
 </div>
 
 <div class="form-group row">
+    @Html.LabelFor(model => model.BulkNotificationRequest.Message, new { @class = "bold-text-600 txt-dark control-label col-md-3" })
+
+    <div class="col-md-6">
+        <textarea class="form-control" placeholder="Enter Message"
+                  asp-for="BulkNotificationRequest.Message" required></textarea>
+    </div>
+</div>
+
+<div class="form-group row ">
+    <label class="bold-text-600 col-md-3 control-label"></label>
+    <div class="col-md-6">
+        <h5 class="txt-dark">
+            Send To
+        </h5>
+    </div>
+</div>
+
+<div class="form-group row div-on-demand">
+    <label class="bold-text-600 col-md-3 control-label"></label>
+    <div class="col-md-6">
+        <div class="input-group">
+            <div class="checkbox checkbox-primary">
+                <input type="checkbox" id="chckToChannels">
+                <label for="chckToChannels" class="txt-dark">
+                    All Subscribers
+                </label>
+                <input type="hidden" asp-for="BulkNotificationRequest.ToChannels" id="txtToChannels" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="form-group row div-on-demand">
+    <label class="bold-text-600 col-md-3 control-label"></label>
+    <div class="col-md-6">
+        <div class="input-group">
+            <div class="checkbox checkbox-primary">
+                <input type="checkbox" id="chckToPatients">
+                <label for="chckToPatients" class="txt-dark">
+                    Patients
+                </label>
+                <input type="hidden" asp-for="BulkNotificationRequest.ToPatients" id="txtToPatients" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="form-group row div-on-demand">
+    <label class="bold-text-600 col-md-3 control-label"></label>
+    <div class="col-md-6">
+        <div class="input-group">
+            <div class="checkbox checkbox-primary">
+                <input type="checkbox" id="chckToTeamMembers">
+                <label for="chckToTeamMembers" class="txt-dark">
+                    Team Members
+                </label>
+                <input type="hidden" asp-for="BulkNotificationRequest.ToTeamMembers" id="txtToTeamMembers" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="form-group row div-on-demand">
+    <label class="bold-text-600 col-md-3 control-label"></label>
+    <div class="col-md-6">
+        <div class="input-group">
+            <div class="checkbox checkbox-primary">
+                <input type="checkbox" id="chckToHealthCareWorkers">
+                <label for="chckToHealthCareWorkers" class="txt-dark">
+                    Health Workers
+                </label>
+                <input type="hidden" asp-for="BulkNotificationRequest.ToHealthCareWorkers" id="txtToHealthCareWorkers" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="form-group row div-on-demand">
+    <label class="bold-text-600 col-md-3 control-label"></label>
+    <div class="col-md-6">
+        <div class="input-group">
+            <div class="checkbox checkbox-primary">
+                <input type="checkbox" id="chckHasFileUpload">
+                <label for="chckHasFileUpload" class="txt-dark">
+                    Upload Custom Number
+                </label>
+                <input type="hidden" asp-for="BulkNotificationRequest.HasFileUpload" id="txtHasFileUpload" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="form-group row div-on-demand" id="divFileUpload">
+    @*@Html.LabelFor(model => model.BulkNotification.ChannelId, new { @class = "bold-text-600 txt-dark control-label col-md-3" })*@
+    <label class="bold-text-600 col-md-3 control-label">Upload List of Numbers (CSV File)</label>
+    <div class="col-md-6">
+        <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+            <div class="form-control" data-trigger="fileinput"> <i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+            <span class="input-group-addon fileupload btn btn-info btn-anim btn-file">
+                <i class="fa fa-upload"></i> <span class="fileinput-new btn-text">Select file</span> <span class="fileinput-exists btn-text">Change</span>
+                <input type="file" name="...">
+            </span> <a href="#" class="input-group-addon btn btn-danger btn-anim fileinput-exists" data-dismiss="fileinput"><i class="fa fa-trash"></i><span class="btn-text"> Remove</span></a>
+        </div>
+    </div>
+</div>
+
+<div class="form-group row" id="divSelChannel">
+    @Html.LabelFor(model => model.BulkNotificationRequest.ChannelId, new { @class = "bold-text-600 txt-dark control-label col-md-3" })
+
+    <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-arrow-down"></i></span>
+            <select type="text" class="form-control input" id="selChannel" asp-for="BulkNotificationRequest.ChannelId"
+                    asp-items="@(new SelectList(Model.Channels, "ChannelId", "ChannelName"))"></select>
+        </div>
+    </div>
+</div>
+
+<div class="form-group row" id="divSendNow">
     <label class="bold-text-600 col-md-3 control-label"></label>
     <div class="col-md-6">
         <div class="input-group">
@@ -31,19 +141,19 @@
                 <label for="chckSendNow">
                     Send Immediatly
                 </label>
-                <input type="hidden" asp-for="SendNow" id="txtSendNow" />
+                <input type="hidden" asp-for="BulkNotificationRequest.SendNow" id="txtSendNow" />
             </div>
         </div>
     </div>
 </div>
 
-<div class="form-group row">
-    @Html.LabelFor(model => model.BulkNotification.SendDate, new { @class = "bold-text-600 txt-dark control-label col-md-3" })
+<div class="form-group row" id="divSendDate">
+    @Html.LabelFor(model => model.BulkNotificationRequest.SendDate, new { @class = "bold-text-600 txt-dark control-label col-md-3" })
 
     <div class="col-md-6">
         <div class='input-group date' id='sendDatePicker'>
-            <input type='text' id="txtSendDatePicker" asp-for="BulkNotification.SendDate" 
-                   value="@Model.BulkNotification.SendDate.ToString("dd-MMM-yyyy h:mm A")" class="form-control" />
+            <input type='text' id="txtSendDatePicker" asp-for="BulkNotificationRequest.SendDate"
+                   value="@Model.BulkNotificationRequest.SendDate.ToString("dd-MMM-yyyy h:mm tt")" class="form-control" />
             <span class="input-group-addon">
                 <span class="fa fa-calendar"></span>
             </span>
