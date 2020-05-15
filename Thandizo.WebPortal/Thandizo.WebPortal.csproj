@@ -39,6 +39,8 @@
     <Content Include="wwwroot\vendors\bower_components\eonasdan-bootstrap-datetimepicker\build\css\bootstrap-datetimepicker-standalone.css" />
     <Content Include="wwwroot\vendors\bower_components\eonasdan-bootstrap-datetimepicker\build\css\bootstrap-datetimepicker.css" />
     <Content Include="wwwroot\vendors\bower_components\eonasdan-bootstrap-datetimepicker\build\css\bootstrap-datetimepicker.min.css" />
+    <Content Include="wwwroot\vendors\bower_components\jasny-bootstrap\dist\css\jasny-bootstrap.css" />
+    <Content Include="wwwroot\vendors\bower_components\jasny-bootstrap\dist\css\jasny-bootstrap.min.css" />
     <Content Include="wwwroot\vendors\bower_components\jquery-toast-plugin\dist\jquery.toast.min.css" />
     <Content Include="wwwroot\vendors\bower_components\jquery-toast-plugin\src\jquery.toast.css" />
     <Content Include="wwwroot\vendors\bower_components\tagsinput\bootstrap-tagsinput.css" />
@@ -81,6 +83,9 @@
     <None Include="wwwroot\vendors\bower_components\eonasdan-bootstrap-datetimepicker\src\sass\bootstrap-datetimepicker-build.scss" />
     <None Include="wwwroot\vendors\bower_components\eonasdan-bootstrap-datetimepicker\src\sass\_bootstrap-datetimepicker.scss" />
     <None Include="wwwroot\vendors\bower_components\eonasdan-bootstrap-datetimepicker\tasks\bump_version.js" />
+    <None Include="wwwroot\vendors\bower_components\jasny-bootstrap\dist\css\jasny-bootstrap.css.map" />
+    <None Include="wwwroot\vendors\bower_components\jasny-bootstrap\dist\js\jasny-bootstrap.js" />
+    <None Include="wwwroot\vendors\bower_components\jasny-bootstrap\dist\js\jasny-bootstrap.min.js" />
     <None Include="wwwroot\vendors\bower_components\jquery-toast-plugin\dist\jquery.toast.min.js" />
     <None Include="wwwroot\vendors\bower_components\jquery-toast-plugin\src\jquery.toast.js" />
     <None Include="wwwroot\vendors\bower_components\jquery\dist\jquery.js" />
@@ -199,7 +204,7 @@
     <PackageReference Include="NWebsec.AspNetCore.Mvc.TagHelpers" Version="3.0.0" />
     <PackageReference Include="Polly" Version="6.0.1" />
     <PackageReference Include="Thandizo.ApiExtensions" Version="1.0.0.5" />
-    <PackageReference Include="Thandizo.DataModels" Version="1.0.6" />
+    <PackageReference Include="Thandizo.DataModels" Version="1.0.7.4" />
   </ItemGroup>
 
   <ItemGroup>
