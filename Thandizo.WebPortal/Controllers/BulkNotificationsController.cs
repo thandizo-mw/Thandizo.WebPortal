@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Thandizo.DataModels.Notifications;
+using Thandizo.DataModels.Notifications.Requests;
 using Thandizo.DataModels.Notifications.Responses;
 using Thandizo.DataModels.ViewModels.Notifications;
 using Thandizo.WebPortal.Filters;
@@ -60,57 +61,57 @@ namespace Thandizo.WebPortal.Controllers
         [HandleExceptionFilter]
         public async Task<IActionResult> Create()
         {
-            return View(new BulkNotificationViewModel
+            return View(new BulkNotificationRequestViewModel
             {
-                BulkNotification = new BulkNotificationDTO
+                BulkNotificationRequest = new BulkNotificationRequest
                 {
                     CreatedBy = AppContextHelper.GetStringValueClaim(HttpContext, JwtClaimTypes.Name),
-                    SendDate = DateTime.UtcNow.AddHours(2)
+                    SendDate = DateTime.UtcNow,
+                    SendNow = false
                 },
-                Channels = await GetNotificationChannels(),
-                SendNow = false
+                Channels = await GetNotificationChannels()
             });
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [HandleExceptionFilter]
-        public async Task<IActionResult> Create([Bind]BulkNotificationViewModel bulkNotificationViewModel)
+        public async Task<IActionResult> Create([Bind]BulkNotificationRequestViewModel bulkNotificationRequsestViewModel)
         {
-            BulkNotificationDTO bulkNotification = bulkNotificationViewModel.BulkNotification;
-
-            if (bulkNotificationViewModel.SendNow == true)
-            {
-                bulkNotification.SendDate = DateTime.UtcNow.AddHours(2);
-                SendBulkNotification(bulkNotification);
-            }
             string url = $"{NotificationsApiUrl}BulkNotifications/Add";
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await HttpRequestFactory.Post(accessToken, url, bulkNotification);
+            var response = await HttpRequestFactory.Post(accessToken, url, bulkNotificationRequsestViewModel.BulkNotificationRequest);
 
             if (response.StatusCode == HttpStatusCode.Created)
             {
-                AppContextHelper.SetToastMessage("Bulk notification escalation rule has been successfully created", MessageType.Success, 1, Response);
+                AppContextHelper.SetToastMessage("Bulk notification has been successfully created", MessageType.Success, 1, Response);
                 return RedirectToAction(nameof(Index));
             }
             else
             {
-                AppContextHelper.SetToastMessage("Failed to create bulk notification escalation rule", MessageType.Danger, 1, Response);
+                AppContextHelper.SetToastMessage("Failed to create bulk notification", MessageType.Danger, 1, Response);
                 ModelState.AddModelError("", HttpResponseHandler.Process(response));
             }
 
-            return View(bulkNotification);
+            bulkNotificationRequsestViewModel.Channels = await GetNotificationChannels();
+            return View(bulkNotificationRequsestViewModel);
         }
 
         [HandleExceptionFilter]
         public async Task<IActionResult> Edit([FromQuery] int notificationId)
         {
-            return View(new BulkNotificationViewModel
+            var bulkNotificationResponse = await GetBulkNotification(notificationId);
+            return View(new BulkNotificationRequestViewModel
             {
-                BulkNotification = await GetBulkNotification(notificationId),
+                BulkNotificationRequest = new BulkNotificationRequest
+                {
+                    CreatedBy = AppContextHelper.GetStringValueClaim(HttpContext, JwtClaimTypes.Name),
+                    Message = bulkNotificationResponse.Message,
+                    NotificationId =bulkNotificationResponse.NotificationId,
+                    SendDate = bulkNotificationResponse.SendDate
+                },
                 Channels = await GetNotificationChannels(),
-                SendNow = false
             });
         }
 
@@ -120,13 +121,7 @@ namespace Thandizo.WebPortal.Controllers
         public async Task<IActionResult> Edit([Bind]BulkNotificationViewModel bulkNotificationViewModel)
         {
             BulkNotificationDTO bulkNotification = bulkNotificationViewModel.BulkNotification;
-
-            if(bulkNotificationViewModel.SendNow == true)
-            {
-                bulkNotification.SendDate = DateTime.UtcNow.AddHours(2);
-                SendBulkNotification(bulkNotification);
-            }
-            
+                        
             string url = $"{NotificationsApiUrl}BulkNotifications/Update";
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
@@ -134,15 +129,17 @@ namespace Thandizo.WebPortal.Controllers
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                AppContextHelper.SetToastMessage("Bulk notification escalation rule has been successfully updated", MessageType.Success, 1, Response);
+                AppContextHelper.SetToastMessage("Bulk notification  has been successfully updated", MessageType.Success, 1, Response);
                 return RedirectToAction(nameof(Index));
             }
             else
             {
-                AppContextHelper.SetToastMessage("Failed to update bulk notification escalation rule", MessageType.Danger, 1, Response);
+                AppContextHelper.SetToastMessage("Failed to update bulk notification ", MessageType.Danger, 1, Response);
                 ModelState.AddModelError("", HttpResponseHandler.Process(response));
             }
-            return View(bulkNotification);
+
+            bulkNotificationViewModel.Channels = await GetNotificationChannels();
+            return View(bulkNotificationViewModel);
         }
 
         [HandleExceptionFilter]
@@ -170,12 +167,12 @@ namespace Thandizo.WebPortal.Controllers
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                AppContextHelper.SetToastMessage("Bulk notification escalation rule has been successfully deleted", MessageType.Success, 1, Response);
+                AppContextHelper.SetToastMessage("Bulk notification has been successfully deleted", MessageType.Success, 1, Response);
                 return RedirectToAction(nameof(Index));
             }
             else
             {
-                AppContextHelper.SetToastMessage("Failed to delete bulk notification escalation rule", MessageType.Danger, 1, Response);
+                AppContextHelper.SetToastMessage("Failed to delete bulk notification", MessageType.Danger, 1, Response);
                 ModelState.AddModelError("", HttpResponseHandler.Process(response));
             }
             return View(await GetBulkNotification(notificationId));
@@ -218,24 +215,6 @@ namespace Thandizo.WebPortal.Controllers
                 ModelState.AddModelError("", HttpResponseHandler.Process(response));
             }
             return NotificationChannels;
-        }
-
-        public async void SendBulkNotification(BulkNotificationDTO bulkNotification)
-        {
-            switch (bulkNotification.ChannelId)
-            {
-                case 2:
-                    //await SendSms();
-                    break;
-                case 4:
-                    //SendEmails();
-                    break;
-                case 5:
-                    //SendWhatsAppMessages();
-                    break;
-                default:
-                    break;
-            }
         }
     }
 }
