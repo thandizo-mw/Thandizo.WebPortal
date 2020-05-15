@@ -1,0 +1,104 @@
+﻿@model Thandizo.DataModels.ViewModels.Notifications.ScheduledNotificationViewModel
+
+
+@*<div class="form-group row">
+    @Html.LabelFor(model => model.ScheduledNotification.Recipients, new { @class = "bold-text-600 txt-dark control-label col-md-3" })
+
+    <div class="col-md-6">
+        <button type="button" class="btn btn-primary" id="btnRecipients">
+            <i class="fa fa-envelope-o mr-10"></i><span>Recipients</span>
+        </button>
+    </div>
+</div>*@
+
+<div class="form-group row">
+    @Html.LabelFor(model => model.ScheduledNotification.Message, new { @class = "bold-text-600 txt-dark control-label col-md-3" })
+
+    <div class="col-md-6">
+        <textarea class="form-control" placeholder="Enter Message"
+                  asp-for="ScheduledNotification.Message" required></textarea>
+    </div>
+</div>
+
+<div class="form-group row">
+    @Html.LabelFor(model => model.ScheduledNotification.ChannelId, new { @class = "bold-text-600 txt-dark control-label col-md-3" })
+
+    <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-arrow-down"></i></span>
+            <select type="text" class="form-control input" asp-for="ScheduledNotification.ChannelId"
+                    asp-items="@(new SelectList(Model.NotificationChannels, "ChannelId", "ChannelName"))"></select>
+        </div>
+    </div>
+</div>
+
+<div class="form-group row">
+    @Html.LabelFor(model => model.ScheduledNotification.TemplateId, new { @class = "bold-text-600 txt-dark control-label col-md-3" })
+
+    <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-arrow-down"></i></span>
+            <select type="text" class="form-control input" asp-for="ScheduledNotification.TemplateId"
+                    asp-items="@(new SelectList(Model.NotificationTemplates, "TemplateId", "TemplateName"))"></select>
+        </div>
+    </div>
+</div>
+
+<div class="form-group row">
+    @Html.LabelFor(model => model.ScheduledNotification.RuleId, new { @class = "bold-text-600 txt-dark control-label col-md-3" })
+
+    <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-arrow-down"></i></span>
+            <select type="text" class="form-control input" asp-for="ScheduledNotification.RuleId"
+                    asp-items="@(new SelectList(Model.EscalationRules, "RuleId", "Name"))"></select>
+        </div>
+    </div>
+</div>
+
+<div class="form-group row">
+    @Html.LabelFor(model => model.ScheduledNotification.Interval, new { @class = "bold-text-600 txt-dark control-label col-md-3" })
+
+    <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+            <Select type="text" class="form-control"
+                    asp-for="ScheduledNotification.Interval" required>
+                <option value="O">Once</option>
+                <option value="D">Daily</option>
+                <option value="W">Weekly</option>
+                <option value="M">Monthly</option>
+            </Select>
+        </div>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label class="bold-text-600 col-md-3 control-label"></label>
+    <div class="col-md-6">
+        <div class="input-group">
+            <div class="checkbox checkbox-primary">
+                <input type="checkbox" id="chckIsActive">
+                <label for="chckIsActive">
+                    Is Active
+                </label>
+                <input type="hidden" asp-for="ScheduledNotification.IsActive" id="txtIsActive" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="form-group row">
+    @Html.LabelFor(model => model.ScheduledNotification.StartDate, new { @class = "bold-text-600 txt-dark control-label col-md-3" })
+
+    <div class="col-md-6">
+        <div class='input-group date' id='startDatePicker'>
+            <input type='text' id="txtStartDatePicker" asp-for="ScheduledNotification.StartDate"
+                   value="@Model.ScheduledNotification.StartDate.ToString("dd-MMM-yyyy h:mm A")" class="form-control" />
+            <span class="input-group-addon">
+                <span class="fa fa-calendar"></span>
+            </span>
+        </div>
+    </div>
+</div>
+

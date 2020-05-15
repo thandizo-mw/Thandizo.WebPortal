@@ -1,0 +1,128 @@
+﻿@model Thandizo.DataModels.Notifications.Responses.ScheduledNotificationResponse
+
+<div class="row">
+    <div class="col-md-2 text-right">
+        @Html.LabelFor(model => model.Recipients, new { @class = "bold-text-600 txt-dark" })
+    </div><div class="col-md-10 text-info">
+              <a href="#" id="btnRecipients">
+                  <i class="fa fa-envelope-o mr-10"></i><span>View Recipients</span>
+              </a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 text-right">
+        @Html.LabelFor(model => model.ChannelId, new { @class = "bold-text-600 txt-dark" })
+    </div><div class="col-md-10 txt-dark">
+        @Html.DisplayFor(model => model.ChanneldName)
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 text-right">
+        @Html.LabelFor(model => model.Message, new { @class = "bold-text-600 txt-dark" })
+    </div><div class="col-md-10 txt-dark">
+        @Html.DisplayFor(model => model.Message)
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 text-right">
+        @Html.LabelFor(model => model.RuleId, new { @class = "bold-text-600 txt-dark" })
+    </div><div class="col-md-10 txt-dark">
+        @Html.DisplayFor(model => model.RuleName)
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 text-right">
+        @Html.LabelFor(model => model.TemplateId, new { @class = "bold-text-600 txt-dark" })
+    </div><div class="col-md-10 txt-dark">
+        @Html.DisplayFor(model => model.TemplateName)
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 text-right">
+        @Html.LabelFor(model => model.Interval, new { @class = "bold-text-600 txt-dark" })
+    </div><div class="col-md-10 txt-dark">
+        @Html.DisplayFor(model => model.IntervalName)
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 text-right">
+        @Html.LabelFor(model => model.IsActive, new { @class = "bold-text-600 txt-dark" })
+    </div>
+    @if (Model.IsActive)
+    {
+        <div class="col-md-10 txt-dark">
+            Yes
+        </div>
+    }
+    else
+    {
+        <div class="col-md-10 txt-dark">
+            No
+        </div>
+    }
+
+</div>
+<div class="row">
+    <div class="col-md-2 text-right">
+        @Html.LabelFor(model => model.StartDate, new { @class = "bold-text-600 txt-dark" })
+    </div>
+    <div class="col-md-10 txt-dark">
+        @Model.StartDate.ToString("dd-MMM-yyyy HH:mm tt")
+    </div>
+</div>
+
+<div id="recipientsModal" class="modal fade" role="dialog"
+     aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Recipients</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive table-extended">
+                    <table id="dtRecipientsDataTable" class="table recipients-table table-hover display  pb-10 dt-dataTable">
+                        <thead>
+                            <tr>
+                                <th class="table-th-200">Phone Number</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Recipients is null)
+                            {
+                                <tr>
+                                    <td colspan="5">
+                                        <div class="text-center">No Data Found</div>
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                @foreach (var item in Model.Recipients)
+                                {
+                                    <tr>
+                                        <td>@item</td>
+                                    </tr>
+                                }
+                            }
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-6">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="btn-group" role="group" aria-label="...">
+
+                            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" id="Cancel">
+                                <i class="fa fa-times"></i><span class="with-icon">Cancel</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
