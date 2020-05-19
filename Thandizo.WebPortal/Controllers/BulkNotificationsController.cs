@@ -157,51 +157,7 @@ namespace Thandizo.WebPortal.Controllers
             bulkNotificationRequsestViewModel.Channels = await GetNotificationChannels();
             return View(bulkNotificationRequsestViewModel);
         }
-
-        [HandleExceptionFilter]
-        public async Task<IActionResult> Edit([FromQuery] int notificationId)
-        {
-            var bulkNotificationResponse = await GetBulkNotification(notificationId);
-            return View(new BulkNotificationRequestViewModel
-            {
-                BulkNotificationRequest = new BulkNotificationRequest
-                {
-                    CreatedBy = AppContextHelper.GetStringValueClaim(HttpContext, JwtClaimTypes.Name),
-                    Message = bulkNotificationResponse.Message,
-                    NotificationId = bulkNotificationResponse.NotificationId,
-                    SendDate = bulkNotificationResponse.SendDate
-                },
-                Channels = await GetNotificationChannels(),
-            });
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [HandleExceptionFilter]
-        public async Task<IActionResult> Edit([Bind]BulkNotificationViewModel bulkNotificationViewModel)
-        {
-            BulkNotificationDTO bulkNotification = bulkNotificationViewModel.BulkNotification;
-
-            string url = $"{NotificationsApiUrl}BulkNotifications/Update";
-
-            var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await HttpRequestFactory.Put(accessToken, url, bulkNotification);
-
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                AppContextHelper.SetToastMessage("Bulk notification  has been successfully updated", MessageType.Success, 1, Response);
-                return RedirectToAction(nameof(Index));
-            }
-            else
-            {
-                AppContextHelper.SetToastMessage("Failed to update bulk notification ", MessageType.Danger, 1, Response);
-                ModelState.AddModelError("", HttpResponseHandler.Process(response));
-            }
-
-            bulkNotificationViewModel.Channels = await GetNotificationChannels();
-            return View(bulkNotificationViewModel);
-        }
-
+      
         [HandleExceptionFilter]
         public async Task<IActionResult> Details([FromQuery] int notificationId)
         {
