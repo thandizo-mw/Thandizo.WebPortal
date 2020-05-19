@@ -33,7 +33,7 @@
         <div class="panel panel-default card-view">
 
             <div class="panel-wrapper collapse in">
-                <form asp-action="Create" class="form-horizontal">
+                <form asp-action="Create" class="form-horizontal" enctype="multipart/form-data">
                     <input type="hidden" asp-for="BulkNotificationRequest.CreatedBy" value="SYS" />
                     <div class="panel-body">
                         @{
@@ -62,6 +62,7 @@
         </div>
     </div>
 </div>
+
 <!-- /Row -->
 @section scripts {
     <!-- Moment JavaScript -->
@@ -73,6 +74,12 @@
 
     <script>
         $(document).ready(function () {
+
+             $(document).on("keydown", ":input:not(textarea):not(:submit):not(text)", function (event) {
+                if (event.key == "Enter") {
+                    event.preventDefault();
+                }
+            });
 
             /* sendDatePicker Init*/
             $('#sendDatePicker').datetimepicker({
@@ -160,27 +167,34 @@
                 }
             });
 
-            var HasFleUpload = $("#txtHasFleUpload").val();
-            if (HasFleUpload === "True") {
-                $("#chckHasFleUpload").prop("checked", true)
+            var ToCustomNumbers = $("#txtToCustomNumbers").val();
+            if (ToCustomNumbers === "True") {
+                $("#chckToCustomNumbers").prop("checked", true)
                 $("#divFileUpload").show()
+                $("#divCustomNumbers").show()
             } else {
+                $("#chckToCustomNumbers").prop("checked", false)
                 $("#divFileUpload").hide()
+                $("#divCustomNumbers").hide()
             }
 
-            $("#chckHasFileUpload").on('change', function () {
-                if ($("#chckHasFileUpload").is(":checked")) {
-                    $("#txtHasFileUpload").val("True")
+            $("#chckToCustomNumbers").on('change', function () {
+                if ($("#chckToCustomNumbers").is(":checked")) {
+                    $("#txtToCustomNumbers").val("True")
                     $("#divFileUpload").show()
+                    $("#divCustomNumbers").show()
+                    console.log("true");
                 } else {
-                    $("#txtHasFileUpload").val("False")
+                    $("#txtToCustomNumbers").val("False")
                     $("#divFileUpload").hide()
+                    $("#divCustomNumbers").hide()
+                    console.log("false");
                 }
             });
 
             /*initial setup*/
             $("#txtToPatient").val("False");
-            $("#txtHasFleUpload").val("False");
+            $("#txtToCustomNumbers").val("False");
             $("#txtToChannels").val("False");
             $("#txtToHealthCareWorker").val("False");
             $("#txtToTeamMember").val("False");
@@ -189,7 +203,7 @@
             $("#divSendNow").show();
             $("#divSendDate").show();
             $(".div-on-demand").hide();
-            
+
 
             //change listener
             $("#selNotificaitonOpt").change(function () {
@@ -200,17 +214,17 @@
                     $("#divSendDate").hide();
                     $(".div-on-demand").show();
                     $("#divFileUpload").hide();
+                    $("#divCustomNumbers").hide();
                 } else {
                     $("#txtToPatients").val("False");
-                    $("#txtHasFleUpload").val("False");
+                    $("#txtToCustomNumbers").val("False");
                     $("#txtToChannels").val("False");
                     $("#txtToHealthCareWorkers").val("False");
                     $("#txtToTeamMembers").val("False");
                     $("#txtSendNow").val("False");
 
-                    $("#chckHasFileUpload").prop("checked", false);
                     $("#chckToPatients").prop("checked", false);
-                    $("#chckHasFleUpload").prop("checked", false);
+                    $("#chckToCustomNumbers").prop("checked", false);
                     $("#chckToChannels").prop("checked", false);
                     $("#chckToHealthCareWorkers").prop("checked", false);
                     $("#chckToTeamMembers").prop("checked", false);
@@ -220,6 +234,7 @@
                     $("#divSendNow").show();
                     $("#divSendDate").show();
                     $("#divFileUpload").hide();
+                    $("#divCustomNumbers").hide();
                     $(".div-on-demand").hide();
                 }
             });
