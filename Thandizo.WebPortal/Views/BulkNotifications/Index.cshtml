@@ -47,7 +47,6 @@
                                         <th>@Html.DisplayNameFor(model => model.SendDate)</th>
                                         <th class="table-th-action"></th>
                                         <th class="table-th-action"></th>
-                                        <th class="table-th-action"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -70,11 +69,6 @@
                                                 <td>
                                                     <a asp-action="Details" asp-route-notificationId="@item.NotificationId">
                                                         <i class="fa fa-search"></i><span class="with-icon">View</span>
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <a asp-action="Edit" asp-route-notificationId="@item.NotificationId">
-                                                        <i class="fa fa-edit"></i><span class="with-icon">Edit</span>
                                                     </a>
                                                 </td>
                                                 <td>
