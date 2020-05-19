@@ -1,10 +1,16 @@
 ﻿using AngleDimension.Standard.Http.HttpServices;
+using CNPD.Core.ImportationEngine;
 using IdentityModel;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using NPOI.HSSF.UserModel;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -76,8 +82,62 @@ namespace Thandizo.WebPortal.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [HandleExceptionFilter]
-        public async Task<IActionResult> Create([Bind]BulkNotificationRequestViewModel bulkNotificationRequsestViewModel)
+        public async Task<IActionResult> Create(IFormFile formfile, BulkNotificationRequestViewModel bulkNotificationRequsestViewModel)
         {
+            var numberList = new List<string>();
+            if(formfile != null)
+            {
+                var phoneNumbersUploadedFile = formfile;
+                               
+                IWorkbook book;
+
+                var filePath = Path.GetTempFileName();
+
+                //using var stream = System.IO.File.Create(filePath);
+
+                //read workbook as XLSX
+                try
+                {
+                    book = new XSSFWorkbook(phoneNumbersUploadedFile.OpenReadStream());
+
+                }
+                catch (Exception exception)
+                {
+                    var e = exception;
+                    book = null;
+                }
+
+                // If reading fails, try to read workbook as XLS:
+                if (book == null)
+                {
+                    book = new HSSFWorkbook(phoneNumbersUploadedFile.OpenReadStream());
+                }
+                
+                for (int i = 0; i < book.NumberOfSheets; i++)
+                {
+                    var currentSheet = book.GetSheetAt(i);
+                    for (int row = 0; row <= currentSheet.LastRowNum; row++)
+                    {
+                        if (currentSheet.GetRow(row) != null) //null is when the row only contains empty cells 
+                        {
+                            var number = currentSheet.GetRow(row).GetCell(0).ToString();
+                            //Clean up phone number
+                            var sanitizedNumber = PhoneNumberSanitizer.Sanitize(currentSheet.GetRow(row).GetCell(0).ToString(), "+265");
+                            numberList.Add(sanitizedNumber);
+                        }
+                    }
+                }
+            }
+
+
+            if (!String.IsNullOrEmpty(bulkNotificationRequsestViewModel.BulkNotificationRequest.CustomNumbers))
+            {
+                var customNumbers = bulkNotificationRequsestViewModel.BulkNotificationRequest.CustomNumbers.Split(",");
+                numberList.InsertRange(customNumbers.Length, customNumbers);
+            }
+            
+            bulkNotificationRequsestViewModel.BulkNotificationRequest.UploadedPhoneNumbers = numberList;
+            
             string url = $"{NotificationsApiUrl}BulkNotifications/Add";
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
@@ -108,7 +168,7 @@ namespace Thandizo.WebPortal.Controllers
                 {
                     CreatedBy = AppContextHelper.GetStringValueClaim(HttpContext, JwtClaimTypes.Name),
                     Message = bulkNotificationResponse.Message,
-                    NotificationId =bulkNotificationResponse.NotificationId,
+                    NotificationId = bulkNotificationResponse.NotificationId,
                     SendDate = bulkNotificationResponse.SendDate
                 },
                 Channels = await GetNotificationChannels(),
@@ -121,7 +181,7 @@ namespace Thandizo.WebPortal.Controllers
         public async Task<IActionResult> Edit([Bind]BulkNotificationViewModel bulkNotificationViewModel)
         {
             BulkNotificationDTO bulkNotification = bulkNotificationViewModel.BulkNotification;
-                        
+
             string url = $"{NotificationsApiUrl}BulkNotifications/Update";
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
