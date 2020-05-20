@@ -7069,6 +7069,10 @@ footer .brand-logo-footer {
     width: 200px !important;
 }
 
+.table-th-250 {
+    width: 250px !important;
+}
+
 .table-th-150 {
     width: 150px !important;
 }
@@ -7080,3 +7084,16 @@ footer .brand-logo-footer {
 span.with-icon {
     margin-left: 8px;
 }
+/* PROCESSING CONTAINERS */
+.processing {
+    text-align: center;
+    padding: 20px;
+}
+
+    .processing img {
+        border: none;
+        margin-right: 5px;
+        margin-top: -5px;
+        width: 30px;
+        height: 30px;
+    }
