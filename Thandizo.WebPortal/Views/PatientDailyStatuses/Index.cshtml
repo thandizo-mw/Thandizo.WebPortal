@@ -1,0 +1,208 @@
+﻿@model IEnumerable<Thandizo.DataModels.Patients.PatientDTO>
+
+<div class="row heading-bg  bg-th-grey">
+    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+        <h5 class="txt-dark">Reported Symptoms</h5>
+    </div>
+    <!-- Breadcrumb -->
+    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+        <ol class="breadcrumb">
+            <li><a asp-action="Dashboard" asp-controller="Home">Dashboard</a></li>
+            <li><a class="active"><span>Reported Symptoms</span></a></li>
+        </ol>
+    </div>
+    <!-- /Breadcrumb -->
+</div>
+<!-- /Title -->
+<div class="row">
+    <div class="col-md-5 text-right col-lg-offset-7">
+        <div class="btn-group" role="group" aria-label="...">
+            <button class="btn btn-default btn-sm" onclick="location.href='@Url.Action("Index", "PatientStatuses")'">
+                <i class="fa fa-refresh"></i><span class="with-icon">Refresh</span>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="panel panel-default card-view">
+    <div class="row">
+        <div class="col-lg-2 margins-paddings-off">
+            <h5>Reported Period</h5>
+        </div>
+    </div>
+    <div class="row mt-10">
+        <div class="col-lg-1 ">
+            <h6 >
+                Select:
+            </h6>
+        </div>
+        <div class="col-lg-3">
+            <select class="form-control input-sm" id="selPriodRange">
+                <option value="T">Today</option>
+                <option value="Y">Yesterday</option>
+                <option value="W">This week</option>
+                <option value="M">This Month</option>
+            </select>
+        </div>
+        <div class="col-lg-3 text-center">
+            <div class="input-group">
+                <div class="checkbox checkbox-primary">
+                    <input type="checkbox" id="chckCustomRange">
+                    <label for="chckCustomRange" class="txt-dark">
+                        Use Custom Date Range
+                    </label>
+                    <input type="hidden" id="txtCustomRange" />
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="form-group mb-0">
+                <input class="form-control input-daterange-datepicker" type="text" id="daterange" name="daterange" value="01/01/2016 - 01/31/2016" />
+            </div>
+        </div>
+    </div>
+    <div class="row text-right">
+        <div class="col-lg-12 mt-10">
+            <button class="btn btn-primary btn-sm" onclick="getPatients()">Get</button>
+        </div>
+    </div>
+</div>
+
+<!-- Row -->
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-default card-view">
+            <div class="panel panel-heading">
+
+            </div>
+            <div class="panel-wrapper collapse in">
+                <div class="panel-body">
+                    @{
+                        Html.RenderPartial("../Shared/_MessageOutput");
+                    }
+                    <div class="table-wrap">
+                        <div class="table-responsive">
+                            <table id="dtDataTable" class="table table-hover display  pb-30 dt-dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>Patient Name</th>
+                                        <th class="table-th-250">Identification Number</th>
+                                        <th class="table-th-150"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model is null)
+                                    {
+                                        <tr>
+                                            <td colspan="5">
+                                                <div class="text-center">No Data Found</div>
+                                            </td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>@Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.OtherNames) @Html.DisplayFor(modelItem => item.LastName)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.IdentificationNumber)</td>
+                                                <td>
+                                                    <a asp-action="Details" asp-route-PatientId="@item.PatientId">
+                                                        <i class="fa fa-search"></i><span class="with-icon">View Symptoms</span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Row -->
+@section scripts
+{
+    <!-- Moment JavaScript -->
+    <script type="text/javascript" src="~/vendors/bower_components/moment/min/moment-with-locales.min.js"></script>
+
+    <!-- Bootstrap Daterangepicker JavaScript -->
+    <script src="~/vendors/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.input-daterange-datepicker').daterangepicker({
+                buttonClasses: ['btn', 'btn-sm'],
+                applyClass: 'btn-info',
+                cancelClass: 'btn-default'
+            });
+
+
+            $("#daterange").attr("disabled", true);
+
+            $("#chckCustomRange").on('change', function () {
+                if ($("#chckCustomRange").is(":checked")) {
+                    $("#daterange").attr("disabled", false);
+                } else {
+                    $("#daterange").attr("disabled", true);
+                }
+            });
+        });
+
+        function getPatients() {
+            console.log('@DateTime.UtcNow.DayOfWeek')
+            if ($("#chckCustomRange").prop("checked") == true) {
+                dates = $("#daterange").val().split("-");
+                var fromDate = dates[0].trim();
+                var toDate = dates[1].trim();
+                console.log("Checked");
+            } else {
+                console.log("Not Checked");
+                switch ($("#selPriodRange option:selected").val()) {
+                    case "T":
+                        var fromDate = '@DateTime.UtcNow.Date';
+                        var toDate = '@DateTime.UtcNow';
+                        break;
+                    case "W":
+                        var fromDate = '@DateTime.UtcNow.AddDays(-Double.Parse("7"))';
+                        var toDate = '@DateTime.UtcNow';
+                        break;
+                    case "M":
+                        var fromDate = '@DateTime.UtcNow.AddDays(-DateTime.UtcNow.Day)';
+                        var toDate = '@DateTime.UtcNow';
+                        break;
+                    default:
+                        break;
+
+                }
+            }
+            
+            var getPatientsByDateUrl = 'GetPatientsByDate?fromDate=' + fromDate + '&toDate=' + toDate;
+            var patientDetailsUrl = 'Details?patientId=';
+
+            // clear the table before populating it with more data
+            var dataTable = $('#dtDataTable').DataTable();
+            dataTable.clear();
+
+            $.get(getPatientsByDateUrl, function () {
+            }).done(function (data) {
+                              
+                let patients = data;
+                for (let i = 0; i < patients.length; i++) {
+                    let patientName = patients[i].firstName + " " + patients[i].otherNames + " " + patients[i].lastName;
+                    $('#dtDataTable').dataTable().fnAddData([
+                        patientName ,
+                        patients[i].identificationNumber,
+                        "<a href="+patientDetailsUrl+patients[i].patientId+"><i class=\"fa fa-search\"></i><span class=\"with-icon\">View Symptoms</span></a>"
+                    ]);
+                }
+                //redraw datatable
+                dataTable.draw()
+            }).fail(function () {
+                console.log("failed")
+            });
+        }
+    </script>
+}
