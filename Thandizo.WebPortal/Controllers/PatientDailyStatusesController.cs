@@ -38,7 +38,7 @@ namespace Thandizo.WebPortal.Controllers
         [HandleExceptionFilter]
         public async Task<IActionResult> Index()
         {
-            string url = $"{PatientsApiUrl}PatientDailyStatuses/GetPatientsByDate?fromSubmissionDate={DateTime.UtcNow.Date}&toSubmissionDate={DateTime.UtcNow}";
+            string url = $"{PatientsApiUrl}GetPatientsByDate?fromSubmissionDate={DateTime.UtcNow.Date}&toSubmissionDate={DateTime.UtcNow}";
             var Patients = Enumerable.Empty<PatientDTO>();
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
@@ -67,7 +67,7 @@ namespace Thandizo.WebPortal.Controllers
         [HandleExceptionFilter]
         public async Task<JsonResult> GetPatientsByDate(DateTime fromDate, DateTime toDate)
         {
-            string url = $"{PatientsApiUrl}PatientDailyStatuses/GetPatientsByDate?fromSubmissionDate={fromDate}&toSubmissionDate={toDate}";
+            string url = $"{PatientsApiUrl}GetPatientsByDate?fromSubmissionDate={fromDate}&toSubmissionDate={toDate}";
             var patients = Enumerable.Empty<PatientDTO>();
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
@@ -95,7 +95,7 @@ namespace Thandizo.WebPortal.Controllers
         [HandleExceptionFilter]
         public async Task<IEnumerable<PatientDailyStatusResponse>> GetPatientDailyStatuses(long patientId)
         {
-            string url = $"{PatientsApiUrl}PatientDailyStatuses/GetByPatientByDate?patientId={patientId}&fromSubmissionDate={DateTime.UtcNow.Date}&toSubmissionDate={DateTime.UtcNow}";
+            string url = $"{PatientsApiUrl}PatientDailyStatuses/GetByPatient?patientId={patientId}";
             var PatientDailyStatuses = Enumerable.Empty<PatientDailyStatusResponse>();
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
