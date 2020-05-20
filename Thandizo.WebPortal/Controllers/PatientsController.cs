@@ -43,7 +43,7 @@ namespace Thandizo.WebPortal.Controllers
         }
 
         [HandleExceptionFilter]
-        public async Task<IActionResult> ConfirmPatients()
+        public async Task<IActionResult> Index()
         {
             string valuesFilter = "false";
             string phoneNumber = AppContextHelper.GetStringValueClaim(HttpContext, JwtClaimTypes.Name);;
@@ -101,7 +101,7 @@ namespace Thandizo.WebPortal.Controllers
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 AppContextHelper.SetToastMessage("Patient has been successfully confirmed", MessageType.Success, 1, Response);
-                return RedirectToAction(nameof(ConfirmPatients));
+                return RedirectToAction(nameof(Index));
             }
             else
             {
@@ -154,7 +154,7 @@ namespace Thandizo.WebPortal.Controllers
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 AppContextHelper.SetToastMessage("Patient has been successfully updated", MessageType.Success, 1, Response);
-                return RedirectToAction(nameof(ConfirmPatients));
+                return RedirectToAction(nameof(Index));
             }
             else
             {
