@@ -34,7 +34,7 @@
 
             <div class="panel-wrapper collapse in">
                 <form asp-action="Create" class="form-horizontal" enctype="multipart/form-data">
-                    <input type="hidden" asp-for="BulkNotificationRequest.CreatedBy" value="SYS" />
+                    <input type="hidden" asp-for="BulkNotificationRequest.CreatedBy"  />
                     <div class="panel-body">
                         @{
                             Html.RenderPartial("../Shared/_MessageOutput");
