@@ -209,7 +209,7 @@
     <PackageReference Include="NWebsec.AspNetCore.Mvc.TagHelpers" Version="3.0.0" />
     <PackageReference Include="Polly" Version="6.0.1" />
     <PackageReference Include="Thandizo.ApiExtensions" Version="1.0.0.5" />
-    <PackageReference Include="Thandizo.DataModels" Version="1.0.8.5" />
+    <PackageReference Include="Thandizo.DataModels" Version="1.0.8.6" />
   </ItemGroup>
 
   <ItemGroup>
