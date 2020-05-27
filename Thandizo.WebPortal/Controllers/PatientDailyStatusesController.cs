@@ -115,7 +115,7 @@ namespace Thandizo.WebPortal.Controllers
         [HandleExceptionFilter]
         public async Task<JsonResult> GetSymptomStatisticsByDate(DateTime fromDate, DateTime toDate)
         {
-            string url = $"http://localhost:7600/api/PatientDailystatuses/GetSymptomStatisticsByDate?fromSubmissionDate={fromDate}&toSubmissionDate={toDate}";
+            string url = $"{PatientsApiUrl}PatientDailyStatuses/GetSymptomStatisticsByDate?fromSubmissionDate={fromDate}&toSubmissionDate={toDate}";
             var symptoms = Enumerable.Empty<SymptomStatisticsDTO>();
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
@@ -142,7 +142,7 @@ namespace Thandizo.WebPortal.Controllers
         [HandleExceptionFilter]
         public async Task<JsonResult> GetPatientSymptomStatsByDate(DateTime fromDate, DateTime toDate)
         {
-            string url = $"{PatientsApiUrl}GetPatientSymptomStatsByDate?fromSubmissionDate={fromDate}&toSubmissionDate={toDate}";
+            string url = $"{PatientsApiUrl}PatientDailyStatuses/GetPatientSymptomStatsByDate?fromSubmissionDate={fromDate}&toSubmissionDate={toDate}";
             var patientSymptoms = Enumerable.Empty<PatientDTO>();
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
