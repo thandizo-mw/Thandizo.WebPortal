@@ -42,11 +42,14 @@ namespace Thandizo.WebPortal.Controllers
         [HandleExceptionFilter]
         public async Task<IActionResult> Index(int teamMemberId)
         {
-            if (teamMemberId == 0 && _teamMemberId == 0)
+            if (teamMemberId == 0)
             {
-                return RedirectToAction("Index", "ResponseTeamMembers");
+                if(_teamMemberId == 0)
+                {
+                    return RedirectToAction("Index", "ResponseTeamMembers");
+                }
             }
-            if(teamMemberId != 0)
+            else
             {
                 _teamMemberId = teamMemberId;
                 var teamMember = await GetResponseTeamMember(teamMemberId);

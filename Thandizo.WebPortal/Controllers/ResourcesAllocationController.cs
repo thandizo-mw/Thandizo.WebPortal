@@ -51,12 +51,15 @@ namespace Thandizo.WebPortal.Controllers
         [HandleExceptionFilter]
         public async Task<IActionResult> Index(int statusId)
         {
-            if (statusId == 0 && _statusId == 0)
+            if (statusId == 0)
             {
-                return RedirectToAction("Index", "PatientStatuses");
+                if(_statusId == 0)
+                {
+                    return RedirectToAction("Index", "PatientStatuses");
+                }
+                
             }
-
-            if (statusId != 0)
+            else
             {
                 _statusId = statusId;
                 var patientStatus = await GetPatientStatus(statusId);

@@ -41,17 +41,22 @@ namespace Thandizo.WebPortal.Controllers
         [HandleExceptionFilter]
         public async Task<IActionResult> Index(int regionId)
         {
-            if (regionId == 0 && _regionId == 0)
+            if (regionId == 0)
             {
-                return RedirectToAction("Index", "Regions");
+                if(_regionId == 0)
+                {
+                    return RedirectToAction("Index", "Regions");
+                }
             }
-
-            if (regionId != 0)
+            else
             {
                 _regionId = regionId;
                 var region = await GetRegion(regionId);
                 _regionName = region.RegionName;
             }
+
+           
+
             ViewBag.RegionName = _regionName;
 
             string url = $"{CoreApiUrl}Districts/GetByRegionId?regionId={_regionId}";

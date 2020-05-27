@@ -23,7 +23,7 @@ namespace Thandizo.WebPortal.Controllers
         private readonly IConfiguration _configuration;
         private static int _centerId;
         private static string _centerName;
-        
+
         public HealthCareWorkersController(IConfiguration configuration)
         {
             _configuration = configuration;
@@ -40,11 +40,15 @@ namespace Thandizo.WebPortal.Controllers
         [HandleExceptionFilter]
         public async Task<IActionResult> Index(int centerId)
         {
-            if(centerId == 0 && _centerId == 0)
+            if (centerId == 0)
             {
-                return RedirectToAction("Index", "DataCenters");
+                if (_centerId == 0)
+                {
+                    return RedirectToAction("Index", "DataCenters");
+                }
+
             }
-            if(centerId != 0)
+            else
             {
                 _centerId = centerId;
                 var dataCenter = await GetDataCenter(centerId);
@@ -71,11 +75,11 @@ namespace Thandizo.WebPortal.Controllers
         [HandleExceptionFilter]
         public async Task<IActionResult> Create()
         {
-            if(_centerId == 0)
+            if (_centerId == 0)
             {
                 return RedirectToAction("Index", "DataCenters");
             }
-           
+
             return View(new HealthCareWorkerResponseViewModel
             {
                 HealthCareWorkerResponse = new HealthCareWorkerResponse
@@ -133,7 +137,7 @@ namespace Thandizo.WebPortal.Controllers
             string url = $"{CoreApiUrl}HealthCareWorkers/Update";
 
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await HttpRequestFactory.Put(accessToken, url,  healthCareWorker);
+            var response = await HttpRequestFactory.Put(accessToken, url, healthCareWorker);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -168,9 +172,9 @@ namespace Thandizo.WebPortal.Controllers
         public async Task<IActionResult> VerifyDelete(int workerId)
         {
             string url = $"{CoreApiUrl}HealthCareWorkers/Delete?workerId={workerId}";
-            
+
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var response = await HttpRequestFactory.Delete(accessToken, url); 
+            var response = await HttpRequestFactory.Delete(accessToken, url);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
