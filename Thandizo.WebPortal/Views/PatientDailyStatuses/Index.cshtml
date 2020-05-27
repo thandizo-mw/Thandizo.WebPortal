@@ -17,8 +17,11 @@
 <div class="row">
     <div class="col-md-5 text-right col-lg-offset-7">
         <div class="btn-group" role="group" aria-label="...">
-            <button class="btn btn-default btn-sm" onclick="location.href='@Url.Action("Index", "PatientStatuses")'">
+            <button class="btn btn-default btn-sm" onclick="location.href='@Url.Action("Index", "PatientDailyStatuses")'">
                 <i class="fa fa-refresh"></i><span class="with-icon">Refresh</span>
+            </button>
+            <button class="btn btn-info btn-sm" onclick="location.href='@Url.Action("PendingStatusSubmission", "PatientDailyStatuses")'">
+                <i class="fa fa-clock-o"></i><span class="with-icon">Pending Daily Submittion</span>
             </button>
         </div>
     </div>
@@ -31,7 +34,7 @@
     </div>
     <div class="row mt-10">
         <div class="col-lg-1 ">
-            <h6 >
+            <h6>
                 Select:
             </h6>
         </div>
@@ -61,7 +64,7 @@
     </div>
     <div class="row text-right">
         <div class="col-lg-12 mt-10">
-            <button class="btn btn-primary btn-sm" onclick="getPatients()">Get</button>
+            <button class="btn btn-primary btn-sm" onclick="getSymptomStatistics()">Get</button>
         </div>
     </div>
 </div>
@@ -70,47 +73,50 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="panel panel-default card-view">
+            <div class="panel-heading">
+                <h5>
+                    Reported Symtpoms Statistics
+                </h5>
+            </div>
             <div class="panel-wrapper collapse in">
                 <div class="panel-body">
                     @{
                         Html.RenderPartial("../Shared/_MessageOutput");
                     }
-                    <div class="table-wrap">
-                        <div class="table-responsive">
-                            <table id="dtDataTable" class="table table-hover display  pb-30 dt-dataTable">
-                                <thead>
-                                    <tr>
-                                        <th>Patient Name</th>
-                                        <th class="table-th-250">Identification Number</th>
-                                        <th class="table-th-150"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if (Model is null)
-                                    {
-                                        <tr>
-                                            <td colspan="5">
-                                                <div class="text-center">No Data Found</div>
-                                            </td>
-                                        </tr>
-                                    }
-                                    else
-                                    {
-                                        @foreach (var item in Model)
-                                        {
-                                            <tr>
-                                                <td>@Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.OtherNames) @Html.DisplayFor(modelItem => item.LastName)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.IdentificationNumber)</td>
-                                                <td>
-                                                    <a asp-action="Details" asp-route-PatientId="@item.PatientId">
-                                                        <i class="fa fa-search"></i><span class="with-icon">View Symptoms</span>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        }
-                                    }
-                                </tbody>
-                            </table>
+                    <div class="col-lg-12 no-charts text-center">
+                        <h4>
+                            No Results Found
+                        </h4>
+                    </div>
+                    <div class="col-lg-6 charts">
+                        <div class="panel panel-default card-view">
+                            <div class="panel-heading">
+                                <div class="pull-left">
+                                    <h6 class="panel-title txt-dark"><i class="icon-chart mr-10"></i></h6>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="panel-wrapper collapse in">
+                                <div class="panel-body">
+                                    <canvas id="barChart" height="200"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 charts">
+                        <div class="panel panel-default card-view">
+                            <div class="panel-heading">
+                                <div class="pull-left">
+                                    <h6 class="panel-title txt-dark"><i class="icon-disc mr-10"></i></h6>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="panel-wrapper collapse in">
+                                <div class="panel-body">
+                                    <canvas id="pieChart" height="200"></canvas>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -121,6 +127,8 @@
 <!-- /Row -->
 @section scripts
 {
+    <!-- ChartJS JavaScript -->
+    <script src="~/vendors/chart.js/Chart.min.js"></script>
     <!-- Moment JavaScript -->
     <script type="text/javascript" src="~/vendors/bower_components/moment/min/moment-with-locales.min.js"></script>
 
@@ -145,6 +153,27 @@
                     $("#daterange").attr("disabled", true);
                 }
             });
+
+        /******************Charts***********************/
+            var url = 'GetSymptomStatisticsByDate?fromDate=' + '@DateTime.UtcNow.Date' + '&toDate=' + '@DateTime.UtcNow';
+
+            $.get(url, function () {
+            }).done(function (data) {
+                if (data.length == 0) {
+                    $(".charts").fadeOut();
+                    $(".no-charts").fadeIn(2500);
+                } else {
+                    $(".charts").fadeIn(2500);
+                    $(".no-charts").fadeOut();
+                    barChart(data);
+                    pieChart(data);
+                }
+
+            }).fail(function () {
+                console.log("failed")
+            });
+
+
         });
 
         function getPatients() {
@@ -153,9 +182,7 @@
                 dates = $("#daterange").val().split("-");
                 var fromDate = dates[0].trim();
                 var toDate = dates[1].trim();
-                console.log("Checked");
             } else {
-                console.log("Not Checked");
                 switch ($("#selPriodRange option:selected").val()) {
                     case "T":
                         var fromDate = '@DateTime.UtcNow.Date';
@@ -174,7 +201,7 @@
 
                 }
             }
-            
+
             var getPatientsByDateUrl = 'GetPatientsByDate?fromDate=' + fromDate + '&toDate=' + toDate;
             var patientDetailsUrl = 'Details?patientId=';
 
@@ -184,7 +211,7 @@
 
             $.get(getPatientsByDateUrl, function () {
             }).done(function (data) {
-                              
+
                 let patients = data;
                 for (let i = 0; i < patients.length; i++) {
                     let patientName = patients[i].firstName + " " + patients[i].otherNames + " " + patients[i].lastName;
@@ -199,6 +226,208 @@
             }).fail(function () {
                 console.log("failed")
             });
+        }
+
+        function getSymptomStatistics() {
+            if ($("#chckCustomRange").prop("checked") == true) {
+                dates = $("#daterange").val().split("-");
+                var fromDate = dates[0].trim();
+                var toDate = dates[1].trim();
+            } else {
+                switch ($("#selPriodRange option:selected").val()) {
+                    case "T":
+                        var fromDate = '@DateTime.UtcNow.Date';
+                        var toDate = '@DateTime.UtcNow';
+                        break;
+                    case "W":
+                        var fromDate = '@DateTime.UtcNow.AddDays(-Double.Parse("7"))';
+                        var toDate = '@DateTime.UtcNow';
+                        break;
+                    case "M":
+                        var fromDate = '@DateTime.UtcNow.AddDays(-DateTime.UtcNow.Day)';
+                        var toDate = '@DateTime.UtcNow';
+                        break;
+                    default:
+                        break;
+
+                }
+            }
+
+            var url = 'GetSymptomStatisticsByDate?fromDate=' + fromDate + '&toDate=' + toDate;
+
+            $.get(url, function () {
+            }).done(function (data) {
+                if (data.length == 0) {
+                    $(".charts").fadeOut();
+                    $(".no-charts").fadeIn(2500);
+                } else {
+                    $(".no-charts").fadeOut();
+                    $(".charts").fadeIn(2500);
+                    
+                    barChart(data);
+                    pieChart(data);
+                }
+            }).fail(function () {
+                console.log("failed")
+            });
+        }
+
+        function barChart(data) {
+            var labels = [];
+            var dataValues = [];
+            for (let i = 0; i < data.length; i++) {
+                labels.push(data[i].symptomName);
+                dataValues.push(data[i].totalNumberOfReports*23141);
+            }
+            console.log(labels);
+            console.log(dataValues);
+            var ctx2 = document.getElementById("barChart").getContext("2d");
+		        var data2 = {
+			        labels: labels,
+			        datasets: [
+				        {
+					        label: "Number of reported symtptoms",
+					        backgroundColor:  [
+				            "rgba(86,111,201,.8)",
+				            "rgba(60,184,120,.8)",
+				            "rgba(241,91,38,.8)",
+				            "rgba(252,176,59,.8)",
+                            "rgba(234,101,162,.8)",
+                            "rgba(204,111,162,.8)",
+                            "rgba(214,121,162,.8)",
+                            "rgba(224,131,162,.8)"
+			                ],
+                            borderColor: "rgba(60,184,120,.8)",
+                            data: dataValues
+				        }
+			        ]
+		        };
+
+		        var hBar = new Chart(ctx2, {
+			        type:"horizontalBar",
+			        data:data2,
+
+			        options: {
+				        tooltips: {
+					        mode:"label"
+				        },
+				        scales: {
+					        yAxes: [{
+						        stacked: true,
+						        gridLines: {
+							        color: "#eee",
+						        },
+						        ticks: {
+							        fontFamily: "Varela Round",
+							        fontColor:"#2f2c2c"
+						        }
+					        }],
+					        xAxes: [{
+						        stacked: true,
+						        gridLines: {
+							        color: "#eee",
+						        },
+						        ticks: {
+							        fontFamily: "Varela Round",
+							        fontColor:"#2f2c2c"
+						        }
+					        }],
+
+				        },
+				        elements:{
+					        point: {
+						        hitRadius:40
+					        }
+				        },
+				        animation: {
+					        duration:	3000
+				        },
+				        responsive: true,
+				        legend: {
+					        display: false,
+				        },
+				        tooltips: {
+					        backgroundColor:'rgba(47,44,44,.9)',
+					        cornerRadius:0,
+					        footerFontFamily:"'Varela Round'"
+				        }
+
+			        }
+		        });
+        }
+
+        function pieChart(data) {
+            var labels = [];
+            var dataValues = [];
+            var largestDataValue = 0;
+            var smallestDataValue = 0;
+            for (let i = 0; i < data.length; i++) {
+                labels.push(data[i].symptomName);
+                dataValues.push(data[i].totalNumberOfReports*23141);
+                if (smallestDataValue > data[i].totalNumberOfReports*23141) {
+                    smallestDataValue = data[i].totalNumberOfReports*23141;
+                }
+                if (largestDataValue < data[i].totalNumberOfReports*23141) {
+                    largestDataValue = data[i].totalNumberOfReports*23141;
+                }
+            }
+            var ctx4 = document.getElementById("pieChart").getContext("2d");
+	            var data4 = {
+		            datasets: [{
+			            data: dataValues,
+			            backgroundColor: [
+				            "rgba(86,111,201,.8)",
+				            "rgba(60,184,120,.8)",
+				            "rgba(241,91,38,.8)",
+				            "rgba(252,176,59,.8)",
+                            "rgba(234,101,162,.8)",
+                            "rgba(204,111,162,.8)",
+                            "rgba(214,121,162,.8)",
+                            "rgba(224,131,162,.8)"
+
+			            ],
+			            label: 'Number of reported symptoms' // for legend
+		            }],
+		            labels: labels
+
+	            };
+	            var polarChart = new Chart(ctx4, {
+		            type: "polarArea",
+		            data: data4,
+		            options: {
+			            elements: {
+				            arc: {
+					            borderColor: "#fff"
+				            }
+			            },
+			            scale: {
+				            ticks: {
+                                beginAtZero: true,
+                                stepSize: Math.ceil((largestDataValue - smallestDataValue) / 10),
+					            fontFamily: "Varela Round",
+
+				            },
+				            gridLines: {
+					            color: "#eee",
+				            }
+			            },
+			            animation: {
+				            duration:	3000
+			            },
+			            responsive: true,
+			            legend: {
+				            labels: {
+				            fontFamily: "Varela Round",
+				            fontColor:"#2f2c2c"
+				            }
+			            },
+			            tooltips: {
+				            backgroundColor:'rgba(47,44,44,.9)',
+				            cornerRadius:0,
+				            footerFontFamily:"'Varela Round'"
+			            }
+		            }
+	            });
         }
     </script>
 }
