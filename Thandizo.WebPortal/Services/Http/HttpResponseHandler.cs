@@ -37,6 +37,11 @@ namespace Thandizo.WebPortal.Services
                 {
                     var response = httpResponse.Content.ReadAsStringAsync().Result.ToString();
                     friendlyMessage = response.Replace("\"", "");
+                    if(String.IsNullOrEmpty(friendlyMessage))
+                    {
+                        friendlyMessage = httpResponse.ReasonPhrase.ToString();
+                    }
+
                 }
                 catch (Exception)               
                 {
