@@ -15,6 +15,7 @@ using Thandizo.WebPortal.Services;
 using IdentityModel;
 using System;
 using Thandizo.DataModels.Patients.Responses;
+using Thandizo.DataModels.Statistics;
 
 namespace Thandizo.WebPortal.Controllers
 {
@@ -64,6 +65,26 @@ namespace Thandizo.WebPortal.Controllers
             return View(PatientDailyStatuses);
         }
 
+
+        public async Task<IActionResult> PendingStatusSubmission()
+        {
+            string url = $"{PatientsApiUrl}GetUnSubmittedPatientsByDate?fromSubmissionDate={DateTime.UtcNow.Date}&toSubmissionDate={DateTime.UtcNow}";
+            var patients = Enumerable.Empty<PatientDTO>();
+
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await HttpRequestFactory.Get(accessToken, url);
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                patients = response.ContentAsType<IEnumerable<PatientDTO>>();
+            }
+            else
+            {
+                ModelState.AddModelError("", HttpResponseHandler.Process(response));
+            }
+            return View(patients);
+        }
+
         [HandleExceptionFilter]
         public async Task<JsonResult> GetPatientsByDate(DateTime fromDate, DateTime toDate)
         {
@@ -90,7 +111,60 @@ namespace Thandizo.WebPortal.Controllers
                 }
             }
         }
+        
+        [HandleExceptionFilter]
+        public async Task<JsonResult> GetSymptomStatisticsByDate(DateTime fromDate, DateTime toDate)
+        {
+            string url = $"http://localhost:7600/api/PatientDailystatuses/GetSymptomStatisticsByDate?fromSubmissionDate={fromDate}&toSubmissionDate={toDate}";
+            var symptoms = Enumerable.Empty<SymptomStatisticsDTO>();
 
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await HttpRequestFactory.Get(accessToken, url);
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                symptoms = response.ContentAsType<IEnumerable<SymptomStatisticsDTO>>();
+                return Json(symptoms);
+            }
+            else
+            {
+                if (response.StatusCode != HttpStatusCode.NoContent)
+                {
+                    return Json(HttpResponseHandler.Process(response));
+                }
+                else
+                {
+                    return Json(symptoms);
+                }
+            }
+        }
+        
+        [HandleExceptionFilter]
+        public async Task<JsonResult> GetPatientSymptomStatsByDate(DateTime fromDate, DateTime toDate)
+        {
+            string url = $"{PatientsApiUrl}GetPatientSymptomStatsByDate?fromSubmissionDate={fromDate}&toSubmissionDate={toDate}";
+            var patientSymptoms = Enumerable.Empty<PatientDTO>();
+
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var response = await HttpRequestFactory.Get(accessToken, url);
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                patientSymptoms = response.ContentAsType<IEnumerable<PatientDTO>>();
+                return Json(patientSymptoms);
+            }
+            else
+            {
+                if (response.StatusCode != HttpStatusCode.NoContent)
+                {
+                    return Json(HttpResponseHandler.Process(response));
+                }
+                else
+                {
+                    return Json(patientSymptoms);
+                }
+            }
+        }
 
         [HandleExceptionFilter]
         public async Task<IEnumerable<PatientDailyStatusResponse>> GetPatientDailyStatuses(long patientId)
